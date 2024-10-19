@@ -7,12 +7,7 @@ export default {
   state: {
     grid: [],
     selectedGrid: [],
-    cellTypes: [1, 2, 3, 4, 5],
-    validationResults: {
-      flower: "",
-      wall: "",
-      ground: "",
-    }
+    cellTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9],
   },
   getters: {
     getGrid: (state) => state.grid,
