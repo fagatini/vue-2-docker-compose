@@ -1,5 +1,5 @@
 import { Player } from '@/engine/player';
-import { GamePhases, INIT_DECK, ROUNDS_TO_WIN, TurnStates, Winners, TIME_TO_TURN_MS } from '@/engine/constants';
+import { GamePhases, INIT_DECK, ROUNDS_TO_WIN, TurnStates, Winners } from '@/engine/constants';
 
 export class GameEngine {
   player = new Player(INIT_DECK);
@@ -10,9 +10,9 @@ export class GameEngine {
   opponentTurnsQuantity = 0;
 
   constructor() {
-    setTimeout(() => {
-      this.endPlayerTurn();
-    }, TIME_TO_TURN_MS);
+    // setTimeout(() => {
+    //   this.endPlayerTurn();
+    // }, TIME_TO_TURN_MS);
   }
 
   performMulligan(indexesToRemove) {
@@ -53,9 +53,9 @@ export class GameEngine {
       }
     }
 
-    setTimeout(() => {
-      this.endPlayerTurn();
-    }, TIME_TO_TURN_MS);
+    // setTimeout(() => {
+    //   this.endPlayerTurn();
+    // }, TIME_TO_TURN_MS);
 
     this.currentTurn = TurnStates.PLAYER;
   }

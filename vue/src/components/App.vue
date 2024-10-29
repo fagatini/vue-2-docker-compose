@@ -1,21 +1,19 @@
 <template>
   <div>
-    <GameCard
-      :strength="cardStrength"
-      :type="cardType"
-      :highlighted="isHighlighted"
-      :faceDown="isFaceDown"
-      @flip="flipCardState"
-    />
+    <PlayerHand :number-of-cards="4" opponent/>
+    <GameDesk/>
+    <PlayerHand :number-of-cards="4"/>
   </div>
 </template>
 
 <script>
-import GameCard from './card/card.vue';  // Обновим импорт
+import GameDesk from '@/components/game/Desk.vue';
+import PlayerHand from '@/components/game/PlayerHand.vue';  // Обновим импорт
 
 export default {
   components: {
-    GameCard
+    PlayerHand,
+    GameDesk,
   },
   data() {
     return {

@@ -13,13 +13,9 @@
 export default {
   name: 'GameCountDown',
   props: {
-    initialValue: {
-      type: Number,
-      required: true,
-    },
     radius: {
       type: Number,
-      default: 52,
+      default: 32,
     },
   },
   emits: [
@@ -28,7 +24,6 @@ export default {
   data() {
     return {
       intervalId: null,
-      currentValue: this.initialValue,
       circumference: 2 * Math.PI * this.radius,
     };
   },
@@ -75,10 +70,11 @@ export default {
   display: flex;
 
   width: 120px;
-  height: 120px;
+  height: 4vh;
 
   justify-content: center;
   align-items: center;
+  z-index: 666;
 
   &__progress-ring {
     position: absolute;

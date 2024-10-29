@@ -1,6 +1,6 @@
 <template>
   <div class="desk">
-    <div>
+    <div class="desk__enemy_line">
       <GameDeskLine :cards="opponentRangeCards" :isMelee="false" :isOpponent="true" />
       <GameDeskLine :cards="opponentMeleeCards" :isMelee="true" :isOpponent="true" />
     </div>
@@ -58,6 +58,15 @@ export default {
 .desk {
   display: flex;
   flex-direction: column;
+  margin: 4vh 0;
+  height: 15vh;
+  border-radius: 7px;
+  position: relative;
+  z-index: 0;
+
+  &__enemy_line {
+    margin-top: 2vh;
+  }
 
   &__separator {
     display: flex;
@@ -65,7 +74,7 @@ export default {
     align-items: center;
     text-align: center;
 
-    margin: 20px 0;
+    margin: 5px 0;
 
     &__line {
       flex: 1;
