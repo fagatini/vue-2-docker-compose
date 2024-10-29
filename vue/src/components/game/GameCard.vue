@@ -35,6 +35,7 @@
 
 <style scoped lang="less">
   .game-card {
+    cursor: move;
     user-select: none;
     width: 100px;
     height: 150px;
