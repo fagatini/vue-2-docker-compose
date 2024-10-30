@@ -57,7 +57,7 @@ export default {
   display: flex;
   position: absolute;
   z-index: 666;
-  width: 70vw;
+  width: 80vw;
   margin: auto;
   justify-content: center;
 
