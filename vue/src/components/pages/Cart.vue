@@ -35,6 +35,10 @@
                 <CustomButton @click="removeAllItemsFromCart">
                     Удалить все
                 </CustomButton>
+
+                <CustomButton @click="makingOrder" >
+                    Оформить заказ
+                </CustomButton>
             </div>
         </div>
     </PageLayout>
@@ -68,6 +72,9 @@ export default {
             }
             if (count === 0) this.removeItemFromCart(item);
         },
+        makingOrder() {
+            console.log("Оформление заказа")
+        }
     },
     computed: {
         ...mapGetters('cart', ['getCart']),

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import ButtonLike from "../parts/ButtonLike.vue";
+import ButtonLike from '../parts/ButtonLike.vue'
 import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'CartItem',
