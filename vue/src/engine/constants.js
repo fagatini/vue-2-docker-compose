@@ -23,10 +23,11 @@ export const CardType = {
 
 export const CARDS_IN_DECK_QUANTITY = 30;
 
+let cardId = 1;
+
 export const INIT_DECK = new Array(CARDS_IN_DECK_QUANTITY).fill({
   score: 1,
-  type: CardType.MELEE,
-});
+}).map(card => ({...card, type: ++cardId % 2 === 0 ? CardType.MELEE : CardType.RANGE}));
 
 export const MAX_CARDS_IN_HAND = 10;
 

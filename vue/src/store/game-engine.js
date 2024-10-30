@@ -7,5 +7,7 @@ export default {
   },
   getters: {
     getGameEngine: (state) => state.engine,
+    getPlayer: (state) => state.engine.player,
+    getPlayerCards: (state) => state.engine.player.cards,
   },
 }

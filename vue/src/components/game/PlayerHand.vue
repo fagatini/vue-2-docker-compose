@@ -1,8 +1,21 @@
 <template>
   <div class="hand-container">
     <div :class="this.opponent ? 'hand-opponent': 'hand-player'">
-      <div class="hand__card" v-for="index in numberOfCards" :key="index" :style="index === 1 ? {'margin-left': '0'} : {}">
-        <GameCard type="xd" :score=index :key="index" :face-down="opponent" :enlarged="!opponent"/>
+      <div
+          class="hand__card"
+          v-for="(card, index) in this.cards"
+          :key="index"
+          :style="index === 1 ? {'margin-left': '0'} : {}"
+      >
+        <GameCard
+            :type=card.type
+            :score=card.score
+            :key="index"
+            :face-down="opponent"
+            :enlarged="!opponent"
+            :index="index"
+            :on-drop="onCardDrop"
+        />
       </div>
     </div>
   </div>
@@ -10,20 +23,30 @@
 
 <script>
 import GameCard from '@/components/game/GameCard.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'PlayerHand',
   components: { GameCard },
   props: {
-    numberOfCards: {
-      type: Number,
-      required: true,
-      validator: value => value >= 0 && value <= 10
-    },
     opponent: {
       type: Boolean,
       required: false,
       default: false,
+    },
+    onCardDrop: {
+      type: Function,
+      default: null,
+    }
+  },
+  computed: {
+    ...mapGetters('gameEngine', [
+      'getGameEngine',
+    ]),
+    cards() {
+      return this.opponent ?
+          this.getGameEngine.opponent.cards :
+          this.getGameEngine.player.cards
     }
   }
 };
@@ -34,9 +57,9 @@ export default {
   display: flex;
   position: absolute;
   z-index: 666;
-  width: 40vw;
+  width: 70vw;
   margin: auto;
-  justify-content: space-between;
+  justify-content: center;
 
   &__card {
     width: 150px;

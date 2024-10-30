@@ -31,11 +31,14 @@
       </svg>
     </div>
     <div class="desk-line__cards">
-      <GameCard v-for="(card, index) in cards"
-        :key="index"
-        :score="card.score"
-        @click="() => removeCard(index)"
-        type="type"/>
+      <GameCard
+          v-for="(card, index) in cards"
+          :index="index"
+          :key="index"
+          :score="card.score"
+          @click="() => removeCard(card.id)"
+          :type="card.type"
+      />
     </div>
   </div>
 </template>
@@ -72,6 +75,7 @@ export default {
   },
   methods: {
     generateStyleByType(parentStyleName) {
+      console.log(this.cards)
       return `${parentStyleName}--${this.isMelee ? 'melee' : 'range'}`;
     },
     removeCard(index) {

@@ -10,7 +10,7 @@
       <span class="desk__separator__line" />
       <CountDown :initialValue="60" />
     </div>
-    <div>
+    <div ref="lines">
       <GameDeskLine :cards="playerMeleeCards" :isMelee="true" :isOpponent="false" />
       <GameDeskLine :cards="playerRangeCards" :isMelee="false" :isOpponent="false" />
     </div>
@@ -21,7 +21,6 @@
 import GameDeskLine from "./DeskLine";
 import CountDown from '../game/CountDown.vue';
 import { mapGetters } from 'vuex';
-import { CardType } from '@/engine/constants'
 
 export default {
   components: {
@@ -45,11 +44,6 @@ export default {
     ...mapGetters('gameEngine', [
       'getGameEngine',
     ]),
-  },
-  mounted() {
-    //! FIXME: mock
-    this.getGameEngine.player.board.firstLineCards = new Array(6).fill({ score: 1, type: CardType.MELEE })
-    this.getGameEngine.player.board.secondLineCards = new Array(6).fill({ score: 1, type: CardType.MELEE })
   },
 }
 </script>

@@ -17,19 +17,27 @@
     props: {
       score: {
         type: Number,
-        required: true
+        required: true,
       },
       type: {
         type: String,
-        required: true
+        required: true,
       },
       faceDown: {
         type: Boolean,
-        default: false
+        default: false,
       },
       enlarged: {
         type: Boolean,
         default: false,
+      },
+      onDrop: {
+        type: Function,
+        default: null,
+      },
+      index: {
+        type: Number,
+        required: true,
       }
     },
     data() {
@@ -70,13 +78,18 @@
         this.$refs.draggableCard.style.top = `${this.$refs.draggableCard.offsetTop - this.dragInfo.deltaY}px`;
         this.$refs.draggableCard.style.left = `${this.$refs.draggableCard.offsetLeft - this.dragInfo.deltaX}px`;
       },
-      stopDrag() {
+      stopDrag(event) {
+        event.preventDefault();
         this.$refs.draggableCard.style.position = 'relative';
         document.onmousemove = null;
         document.onmouseup = null;
-        this.$refs.draggableCard.style.top = `0px`;
-        this.$refs.draggableCard.style.left = `0px`;
+        this.$refs.draggableCard.style.top = '0px';
+        this.$refs.draggableCard.style.left = '0px';
         this.dragInfo.dragged = false;
+
+        if (this.onDrop) {
+          this.onDrop(this.index, event.clientX, event.clientY)
+        }
       }
     }
   };
