@@ -24,9 +24,6 @@ export default {
     };
   },
   methods: {
-    flipCardState() {
-      this.isFaceDown = !this.isFaceDown;
-    }
   }
 };
 </script>

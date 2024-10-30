@@ -1,6 +1,8 @@
 <template>
     <div
-      :class="['game-card', { faceDown }, { enlarged }]"
+      :class="['game-card', { faceDown }, { enlarged }, { dragged: this.dragInfo.dragged }]"
+      @mousedown="startDrag"
+      ref="draggableCard"
     >
       <div v-if="!faceDown">
         <h3>{{ type }}</h3>
@@ -29,6 +31,53 @@
         type: Boolean,
         default: false,
       }
+    },
+    data() {
+      return {
+        dragInfo: {
+          x: null,
+          y: null,
+          deltaX: 0,
+          deltaY: 0,
+          dragged: false,
+        }
+      }
+    },
+    methods: {
+      startDrag(event) {
+        if (!this.enlarged) {
+          return;
+        }
+
+        event.preventDefault();
+        const parentBounds = event.currentTarget.parentNode.parentNode.getBoundingClientRect();
+        const targetBounds = event.currentTarget.getBoundingClientRect();
+        this.$refs.draggableCard.style.top = `${targetBounds.top - parentBounds.top}px`;
+        this.$refs.draggableCard.style.left = `${targetBounds.left - parentBounds.left}px`;
+        this.dragInfo.x = event.clientX;
+        this.dragInfo.y = event.clientY;
+        document.onmousemove = this.processDrag;
+        document.onmouseup = this.stopDrag;
+        this.$refs.draggableCard.style.position = 'absolute';
+        this.dragInfo.dragged = true;
+      },
+      processDrag(event) {
+        event.preventDefault();
+        this.dragInfo.deltaX = this.dragInfo.x - event.clientX;
+        this.dragInfo.deltaY = this.dragInfo.y - event.clientY;
+        this.dragInfo.x = event.clientX;
+        this.dragInfo.y = event.clientY;
+        this.$refs.draggableCard.style.top = `${this.$refs.draggableCard.offsetTop - this.dragInfo.deltaY}px`;
+        this.$refs.draggableCard.style.left = `${this.$refs.draggableCard.offsetLeft - this.dragInfo.deltaX}px`;
+      },
+      stopDrag() {
+        this.$refs.draggableCard.style.position = 'relative';
+        document.onmousemove = null;
+        document.onmouseup = null;
+        this.$refs.draggableCard.style.top = `0px`;
+        this.$refs.draggableCard.style.left = `0px`;
+        this.dragInfo.dragged = false;
+      }
     }
   };
 </script>
@@ -47,6 +96,10 @@
       width: 150px;
       height: 225px;
     }
+  }
+
+  .dragged {
+    z-index: 777;
   }
 
   .game-card:hover {
