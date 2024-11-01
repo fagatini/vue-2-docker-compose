@@ -68,6 +68,11 @@ class GameEngine {
     }
 
     const cards = this.opponent.cards;
+
+    if (!cards.length) {
+      return;
+    }
+
     const bestCardIndex = cards.reduce((bestCardIndex, card, i) => card.score > cards[bestCardIndex].score ? i : bestCardIndex, 0);
     this.opponent.playCard(bestCardIndex);
     this.opponentTurnsQuantity++;
