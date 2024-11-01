@@ -1,5 +1,5 @@
 import { Player } from '@/engine/player';
-import { GamePhases, INIT_DECK, ROUNDS_TO_WIN, TurnStates, Winners } from '@/engine/constants';
+import { GamePhases, INIT_DECK, ROUNDS_TO_WIN, TIME_TO_TURN_MS, TurnStates, Winners } from '@/engine/constants';
 
 class GameEngine {
   player = new Player(INIT_DECK);
@@ -10,9 +10,9 @@ class GameEngine {
   opponentTurnsQuantity = 0;
 
   constructor() {
-    // setTimeout(() => {
-    //   this.endPlayerTurn();
-    // }, TIME_TO_TURN_MS);
+    setTimeout(() => {
+      this.endPlayerTurn();
+    }, TIME_TO_TURN_MS);
   }
 
   performMulligan(indexesToRemove) {
@@ -21,10 +21,10 @@ class GameEngine {
   }
 
   endPlayerTurn(passed) {
+    this.player.board.firstLineCards.map(card => card.new = false)
+    this.player.board.secondLineCards.map(card => card.new = false)
     if (passed) {
       if (this.opponent.passed) {
-        this.player.board.firstLineCards.map(card => card.new = false)
-        this.player.board.secondLineCards.map(card => card.new = false)
         this.endRound();
         return;
       } else {
@@ -55,9 +55,9 @@ class GameEngine {
       }
     }
 
-    // setTimeout(() => {
-    //   this.endPlayerTurn();
-    // }, TIME_TO_TURN_MS);
+    setTimeout(() => {
+      this.endPlayerTurn();
+    }, TIME_TO_TURN_MS);
 
     this.currentTurn = TurnStates.PLAYER;
   }
@@ -68,7 +68,7 @@ class GameEngine {
     }
 
     const cards = this.opponent.cards;
-    const bestCardIndex = cards.reduce((card, bestCardIndex, i) => card.score > cards[bestCardIndex].score ? i : bestCardIndex, 0);
+    const bestCardIndex = cards.reduce((bestCardIndex, card, i) => card.score > cards[bestCardIndex].score ? i : bestCardIndex, 0);
     this.opponent.playCard(bestCardIndex);
     this.opponentTurnsQuantity++;
     this.endOpponentTurn(this.opponentTurnsQuantity > 3);
