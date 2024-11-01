@@ -23,6 +23,8 @@ class GameEngine {
   endPlayerTurn(passed) {
     if (passed) {
       if (this.opponent.passed) {
+        this.player.board.firstLineCards.map(card => card.new = false)
+        this.player.board.secondLineCards.map(card => card.new = false)
         this.endRound();
         return;
       } else {

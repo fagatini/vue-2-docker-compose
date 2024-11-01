@@ -29,7 +29,6 @@ export default {
       const player = this.getPlayer;
       const {left, right, top, bottom} = this.$refs.playerDesk.$refs.lines.getBoundingClientRect();
       if (x > left && x < right && y < bottom && y > top) {
-        console.log(cardIndex);
         player.playCard(cardIndex);
       }
     }

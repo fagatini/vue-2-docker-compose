@@ -76,6 +76,14 @@ export class Board {
     }
   }
 
+  getCard(index, type) {
+    if (type === CardType.MELEE) {
+      return this.firstLineCards[index];
+    } else {
+      return this.secondLineCards[index];
+    }
+  }
+
   reset() {
     this.firstLineCards = [];
     this.secondLineCards = [];
