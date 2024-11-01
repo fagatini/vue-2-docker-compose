@@ -36,7 +36,6 @@
           :index="index"
           :key="index"
           :score="card.score"
-          @click="() => removeCard(card.id)"
           :type="card.type"
       />
     </div>
@@ -45,7 +44,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { TurnStates } from '@/engine/constants';
 import GameCard from '@/components/game/GameCard.vue';
 
 export default {
@@ -75,20 +73,8 @@ export default {
   },
   methods: {
     generateStyleByType(parentStyleName) {
-      console.log(this.cards)
       return `${parentStyleName}--${this.isMelee ? 'melee' : 'range'}`;
-    },
-    removeCard(index) {
-      if (this.isOpponent || this.getGameEngine.currentTurn !== TurnStates.PLAYER) {
-        return;
-      }
-
-      if (this.isMelee) {
-        this.getGameEngine.player.board.removeCardFromFirstLine(index);
-      } else {
-        this.getGameEngine.player.board.removeCardFromSecondLine(index);
-      }
-    },
+    }
   },
   computed: {
     ...mapGetters('gameEngine', [

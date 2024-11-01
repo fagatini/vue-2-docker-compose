@@ -1,9 +1,9 @@
-import { GameEngine } from "@/engine/game-engine";
+import { getGameEngineSingleton } from '@/engine/game-engine';
 
 export default {
   namespaced: true,
   state: {
-    engine: new GameEngine(),
+    engine: getGameEngineSingleton(),
   },
   getters: {
     getGameEngine: (state) => state.engine,

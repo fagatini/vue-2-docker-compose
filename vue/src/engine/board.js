@@ -1,4 +1,5 @@
-import { CardType, MAX_CARDS_PER_LINE } from '@/engine/constants';
+import { CardType, MAX_CARDS_PER_LINE, TurnStates } from '@/engine/constants';
+import { getGameEngineSingleton } from '@/engine/game-engine';
 
 export class Board {
   firstLineCards = [];
@@ -35,13 +36,29 @@ export class Board {
   }
 
   removeCardFromFirstLine(index) {
-    this.firstLineCards.splice(index, 1);
+    const removed = this.firstLineCards.splice(index, 1);
     this.firstLineCards = [...this.firstLineCards];
+    return removed[0];
   }
 
   removeCardFromSecondLine(index) {
-    this.secondLineCards.splice(index, 1);
+    const removed = this.secondLineCards.splice(index, 1);
     this.secondLineCards = [...this.secondLineCards];
+    return removed[0];
+  }
+
+  removeCard(index, type) {
+    const engine = getGameEngineSingleton();
+
+    if (engine.currentTurn !== TurnStates.PLAYER) {
+      return;
+    }
+
+    if (type === CardType.MELEE) {
+      return this.removeCardFromFirstLine(index);
+    } else {
+      return this.removeCardFromSecondLine(index);
+    }
   }
 
   addCard(card) {

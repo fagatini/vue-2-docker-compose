@@ -48,4 +48,9 @@ export class Player {
     this.board.reset();
     this.drawCards(NEW_ROUND_DRAW_CARDS_QUANTITY);
   }
+
+  removeCardFromBoard(index, type) {
+    const removed = this.board.removeCard(index, type);
+    this.cards.push(removed);
+  }
 }

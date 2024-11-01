@@ -1,7 +1,7 @@
 <template>
     <div
       :class="['game-card', { faceDown }, { enlarged }, { dragged: this.dragInfo.dragged }]"
-      @mousedown="startDrag"
+      @mousedown="(e) => enlarged ? startDrag(e) : tryRemoveCard(index, type)"
       ref="draggableCard"
     >
       <div v-if="!faceDown">
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
     name: 'GameCard',
     props: {
@@ -51,12 +53,20 @@
         }
       }
     },
+    computed: {
+      ...mapGetters('gameEngine', [
+        'getGameEngine',
+      ]),
+    },
     methods: {
-      startDrag(event) {
-        if (!this.enlarged) {
+      tryRemoveCard(index, type) {
+        if (this.isOpponent) {
           return;
         }
 
+        this.getGameEngine.player.removeCardFromBoard(index, type);
+      },
+      startDrag(event) {
         event.preventDefault();
         const parentBounds = event.currentTarget.parentNode.parentNode.getBoundingClientRect();
         const targetBounds = event.currentTarget.getBoundingClientRect();

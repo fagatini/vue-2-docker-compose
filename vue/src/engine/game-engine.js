@@ -1,7 +1,7 @@
 import { Player } from '@/engine/player';
 import { GamePhases, INIT_DECK, ROUNDS_TO_WIN, TurnStates, Winners } from '@/engine/constants';
 
-export class GameEngine {
+class GameEngine {
   player = new Player(INIT_DECK);
   opponent =  new Player(INIT_DECK);
   currentPhase = GamePhases.MULLIGAN;
@@ -108,3 +108,7 @@ export class GameEngine {
     return null;
   }
 }
+
+const engine = new GameEngine();
+
+export const getGameEngineSingleton = () => engine;
