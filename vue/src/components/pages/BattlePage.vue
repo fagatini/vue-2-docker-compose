@@ -54,8 +54,6 @@ export default {
   },
   methods: {
     showCardPile(cards) {
-      //this.$refs.cardPile.setCardList(cards);
-      //this.$refs.cardPile.show();
       this.bus.$emit('setPile', cards);
       this.bus.$emit('showPile', cards);
     },
