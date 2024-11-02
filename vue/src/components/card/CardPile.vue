@@ -15,23 +15,24 @@
       </div>
       <div v-if="showingCard"
         class="card-showcase center-horizontal center-vertical"
-        @click.self="() => showingCard = null"
+        @click.self="() => setShowingCard(null)"
       >
-        <CardComponent
-          :card="showingCard"
-          :style="enlargedCard"
-          />
+        <CardComponent :card="showingCard" :style="enlargedCard"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CardComponent from './CardComponent.vue'
+import CardComponent from './CardComponent.vue';
+import Vue from 'vue';
 
 export default {
   components: {
     CardComponent,
+  },
+  props: {
+    bus: Vue,
   },
   data() {
     return {
@@ -40,6 +41,10 @@ export default {
       visible: false,
       hoveredIndex: null,
     };
+  },
+  mounted() {
+    this.bus.$on('setPile', (cards) => this.setCardList(cards));
+    this.bus.$on('showPile', () => this.show());
   },
   computed: {
     getScaling() {
@@ -57,17 +62,19 @@ export default {
     applyTransform(index) {
       const isHovered = this.hoveredIndex == index;
       if (isHovered)
+      {
         return {
           transform: `scale(${this.getScaling + 0.05})`,
           transition: `transform 0.1s ease-out`,
           boxShadow: `2px 2px 7px 2px rgba(45, 255, 255, 0.9)`,
-          zIndex: 100
+          zIndex: 100,
         }
-      else
+      } else {
         return {
           transform: `scale(${this.getScaling})`,
           transition: `transform 0.05s ease-in`,
         }
+      }
     },
 
     handleCardClick(card) {
@@ -75,11 +82,15 @@ export default {
         return;
 
       this.hoveredIndex = null;
-      this.showingCard = card;
+      this.setShowingCard(card);
     },
 
     handleMouseOver(isHovered, index) {
       this.hoveredIndex = isHovered ? index : null;
+    },
+
+    setShowingCard(card) {
+      this.showingCard = card;
     },
 
     setCardList(cards) {
@@ -129,22 +140,22 @@ export default {
     left: 1%;
     border-radius: 10px;
     overflow-y: scroll;
-    background: #72727259
-  }
+    background: #72727259;
 
-  *::-webkit-scrollbar {
-    background: transparent;
-    width: 15px;
-  }
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 15px;
+    }
 
-  *::-webkit-scrollbar-track {
-    margin: 0px 0px;
-    background: radial-gradient(circle at center, #000 75%, transparent);
-  }
+    &::-webkit-scrollbar-track {
+      margin: 0px 0px;
+      background: radial-gradient(circle at center, #000 75%, transparent);
+    }
 
-  *::-webkit-scrollbar-thumb {
-    background: #747474;
-    border-radius: 0px 15px 15px 0px;
+    &::-webkit-scrollbar-thumb {
+      background: #747474;
+      border-radius: 0px 15px 15px 0px;
+    }
   }
 }
 
@@ -156,5 +167,6 @@ export default {
   height: 100vh;
   width: 100vw;
   background: #000000ce;
+  backdrop-filter: blur(3px);
 }
 </style>

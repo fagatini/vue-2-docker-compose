@@ -1,8 +1,7 @@
 <template>
   <div class="battle-screen">
     <div class="header">
-      <div class="btn"
-        @click="() => showCardPile(getDeck)">
+      <div class="btn" @click="() => showCardPile(getDeck)">
         deck
       </div>
     </div>
@@ -11,36 +10,39 @@
     </div>
 
     <div class="footer">
-      <div class="btn"
-        @click="() => showCardPile(getDrawPile)">
+      <div class="btn" @click="() => showCardPile(getDrawPile)">
         draw
       </div>
       <div class="mana">
         2/3
       </div>
       <DeckComponent />
-      <div class="btn"
-        @click="() => endTurn()">
+      <div class="btn" @click="() => endTurn()">
         end
       </div>
-      <div class="btn"
-        @click="() => showCardPile(getDiscardPile)">
+      <div class="btn" @click="() => showCardPile(getDiscardPile)">
         discard
       </div>
     </div>
-    <CardLibrary ref="cardLibrary"/>
+    <CardPile :bus="bus"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import CardLibrary from '../card/CardPile.vue';
+import CardPile from '../card/CardPile.vue';
 import DeckComponent from '../deck/DeckComponent.vue';
+import Vue from 'vue';
 
 export default {
   components: {
     DeckComponent,
-    CardLibrary,
+    CardPile,
+  },
+  data() {
+    return {
+      bus: new Vue(),
+    }
   },
   computed: {
     ...mapGetters("deck", [
@@ -52,8 +54,10 @@ export default {
   },
   methods: {
     showCardPile(cards) {
-      this.$refs.cardLibrary.setCardList(cards);
-      this.$refs.cardLibrary.show();
+      //this.$refs.cardPile.setCardList(cards);
+      //this.$refs.cardPile.show();
+      this.bus.$emit('setPile', cards);
+      this.bus.$emit('showPile', cards);
     },
 
     endTurn() {
