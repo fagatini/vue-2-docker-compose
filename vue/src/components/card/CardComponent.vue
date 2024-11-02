@@ -108,6 +108,7 @@ export default {
   width: @cardWidth;
   transform-origin: center;
   cursor: pointer;
+  border-radius: 15px;
 
   &__content {
     display: flex;

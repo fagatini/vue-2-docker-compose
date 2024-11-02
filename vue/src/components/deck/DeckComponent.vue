@@ -58,6 +58,7 @@ export default {
         return {
           transform: `scale(${this.getScaling + 0.05}) rotate(0deg) translateY(-35px)`,
           transition: `transform 0.1s ease-out`,
+          boxShadow: `2px 2px 7px 2px rgba(45, 255, 255, 0.9)`,
           zIndex: 100
         }
       else

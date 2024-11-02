@@ -9,6 +9,7 @@
           :key="card.id"
           :card="card"
           :style="applyTransform(index)"
+          @onMouseOver="(isHovered) => handleMouseOver(isHovered, index)"
           @onCardClick="() => handleCardClick(card)"
         />
       </div>
@@ -36,16 +37,20 @@ export default {
     return {
       cardList: [],
       showingCard: null,
-      visible: false
+      visible: false,
+      hoveredIndex: null,
     };
   },
   computed: {
     getScaling() {
-      return Math.min(1, )
+      return 1;
     },
 
     enlargedCard() {
-      return "transform: scale(1.9)";
+      return {
+        transform: `scale(1.9)`, 
+        boxShadow: `2px 2px 15px 4px rgba(45, 255, 255, 0.9)`,
+      };
     },
   },
   methods: {
@@ -55,6 +60,7 @@ export default {
         return {
           transform: `scale(${this.getScaling + 0.05})`,
           transition: `transform 0.1s ease-out`,
+          boxShadow: `2px 2px 7px 2px rgba(45, 255, 255, 0.9)`,
           zIndex: 100
         }
       else
@@ -69,6 +75,10 @@ export default {
         return;
 
       this.showingCard = card;
+    },
+
+    handleMouseOver(isHovered, index) {
+      this.hoveredIndex = isHovered ? index : null;
     },
 
     setCardList(cards) {
