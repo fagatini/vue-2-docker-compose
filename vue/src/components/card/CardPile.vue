@@ -1,0 +1,151 @@
+<template>
+  <div v-if="visible"
+    class="card-pile__wrapper center-horizontal center-vertical"
+    @click.self="() => close()"
+  >
+    <div class="card-pile center-horizontal center-vertical">
+      <div class="card-pile__container">
+        <CardComponent v-for="(card, index) in cardList"
+          :key="card.id"
+          :card="card"
+          :style="applyTransform(index)"
+          @onCardClick="() => handleCardClick(card)"
+        />
+      </div>
+      <div v-if="showingCard"
+        class="card-showcase center-horizontal center-vertical"
+        @click.self="() => showingCard = null"
+      >
+        <CardComponent
+          :card="showingCard"
+          :style="enlargedCard"
+          />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import CardComponent from './CardComponent.vue'
+
+export default {
+  components: {
+    CardComponent,
+  },
+  data() {
+    return {
+      cardList: [],
+      showingCard: null,
+      visible: false
+    };
+  },
+  computed: {
+    getScaling() {
+      return Math.min(1, )
+    },
+
+    enlargedCard() {
+      return "transform: scale(1.9)";
+    },
+
+  },
+  methods: {
+    applyTransform(index) {
+      const isHovered = this.hoveredIndex == index;
+      if (isHovered)
+        return {
+          transform: `scale(${this.getScaling + 0.05})`,
+          transition: `transform 0.1s ease-out`,
+          zIndex: 100
+        }
+      else
+        return {
+          transform: `scale(${this.getScaling})`,
+          transition: `transform 0.05s ease-in`,
+        }
+    },
+
+    handleCardClick(card) {
+      if (this.showingCard)
+        return;
+
+      this.showingCard = card;
+    },
+
+    setCardList(cards) {
+      this.cardList = cards;
+    },
+
+    show() {
+      this.visible = true;
+    },
+
+    close() {
+      this.visible = false;
+    },
+  },
+}
+</script>
+
+<style scoped lang="less">
+.card-pile {
+  position: absolute;
+  top: 5%;
+  bottom: 5%;
+  left: 10%;
+  right: 10%;
+  padding: 10px;
+  border: 3px solid #353434;
+  border-radius: 15px;;
+  background: #3b3b3bf3;
+
+  &__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: #22222281;
+    backdrop-filter: blur(10px);
+  }
+
+  &__container {
+    display: grid;
+    padding: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    height: 95%;
+    right: 1%;
+    left: 1%;
+
+    border-radius: 10px;
+    overflow-y: scroll;
+    background: #72727259
+  }
+
+  *::-webkit-scrollbar {
+    background: transparent;
+    width: 15px;
+  }
+
+  *::-webkit-scrollbar-track {
+    margin: 0px 0px;
+    background: radial-gradient(circle at center, #000 75%, transparent);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #747474;
+    border-radius: 0px 15px 15px 0px;
+  }
+}
+
+.card-showcase{
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000000ce;
+}
+</style>

@@ -9,7 +9,7 @@
         :card="card"
         :style="applyTransform(index)"
         @onMouseOver="(isHovered) => handleMouseOver(isHovered, index)"
-        @onCardClick="() => handleCardClick()"
+        @onCardClick="() => handleCardClick(card)"
       />
     </div>
   </div>

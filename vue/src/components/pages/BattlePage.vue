@@ -1,0 +1,116 @@
+<template>
+  <div class="battle-screen">
+    <div class="header">
+      <div class="btn"
+        @click="() => showCardLibrary(getDeck)">
+        deck
+      </div>
+    </div>
+
+    <div class="middle">
+    </div>
+
+    <div class="footer">
+      <div class="btn"
+        @click="() => showCardLibrary(getDrawPile)">
+        draw
+      </div>
+      <div class="mana">
+        2/3
+      </div>
+      <DeckComponent />
+      <div class="btn"
+        @click="() => endTurn()">
+        end
+      </div>
+      <div class="btn"
+        @click="() => showCardLibrary(getDiscardPile)">
+        discard
+      </div>
+    </div>
+    <CardLibrary ref="cardLibrary"/>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+import CardLibrary from '../card/CardPile.vue';
+import DeckComponent from '../deck/DeckComponent.vue';
+
+export default {
+  components: {
+    DeckComponent,
+    CardLibrary,
+  },
+  computed: {
+    ...mapGetters("deck", [
+      "getDeck",
+      "getHand",
+      "getDrawPile",
+      "getDiscardPile",
+    ]),
+  },
+  methods: {
+    showCardLibrary(cards) {
+      this.$refs.cardLibrary.setCardList(cards)
+      this.$refs.cardLibrary.show();
+    },
+
+    endTurn() {
+
+    }
+  }
+ 
+}
+</script>
+
+<style scoped lang="less" >
+.battle-screen {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+}
+
+.header {
+  position: fixed;
+  height: 60px;
+  width: 100vw;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+  overflow: hidden;
+  
+  background: #ff0;
+}
+
+.footer {
+  position: fixed;
+  height: fit-content;
+  width: 100vw;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow: hidden;
+
+  background: #ff0;
+}
+
+.mana {
+  height: 60px;
+  width: 60px;
+  background: #00f;
+}
+
+.btn {
+  height: 60px;
+  width: 60px;
+  background: rgb(153, 12, 12);
+}
+</style>
