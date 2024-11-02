@@ -2,6 +2,7 @@
   <div class="card noselect"
     @mouseenter="() => onMouseOver(true)"
     @mouseleave="() => onMouseOver(false)"
+    @contextmenu="(event) => onCardRightClick(event)"
     @click="() => onCardClick()"
   >
     <div class="card__content center-horizontal">
@@ -49,6 +50,11 @@ export default {
   methods: {
     onCardClick() {
       this.$emit('onCardClick', this.card);
+    },
+
+    onCardRightClick(event) {
+      event.preventDefault();
+      this.$emit('onCardRightClick', this.card);
     },
 
     onMouseOver(isHovered) {

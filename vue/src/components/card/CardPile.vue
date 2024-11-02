@@ -74,6 +74,7 @@ export default {
       if (this.showingCard)
         return;
 
+      this.hoveredIndex = null;
       this.showingCard = card;
     },
 
