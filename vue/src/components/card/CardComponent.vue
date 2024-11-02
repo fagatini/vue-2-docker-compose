@@ -1,5 +1,5 @@
 <template>
-  <div class="card"
+  <div class="card noselect"
     @mouseenter="() => onMouseOver(true)"
     @mouseleave="() => onMouseOver(false)"
     @click="() => onCardClick()"
@@ -11,10 +11,12 @@
       <div class="card__image center-horizontal">
         <img class="card__image-img"
           src='../../assets/cards/background.png'
+          draggable="false"
         />
         <img v-if="card.image"
           class="card__image-img"
           :src="card.image"
+          draggable="false"
         />
       </div>
       <div class="card__info">
