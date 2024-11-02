@@ -47,7 +47,6 @@ export default {
     enlargedCard() {
       return "transform: scale(1.9)";
     },
-
   },
   methods: {
     applyTransform(index) {
@@ -117,7 +116,6 @@ export default {
     height: 95%;
     right: 1%;
     left: 1%;
-
     border-radius: 10px;
     overflow-y: scroll;
     background: #72727259

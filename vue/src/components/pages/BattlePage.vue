@@ -2,7 +2,7 @@
   <div class="battle-screen">
     <div class="header">
       <div class="btn"
-        @click="() => showCardLibrary(getDeck)">
+        @click="() => showCardPile(getDeck)">
         deck
       </div>
     </div>
@@ -12,7 +12,7 @@
 
     <div class="footer">
       <div class="btn"
-        @click="() => showCardLibrary(getDrawPile)">
+        @click="() => showCardPile(getDrawPile)">
         draw
       </div>
       <div class="mana">
@@ -24,7 +24,7 @@
         end
       </div>
       <div class="btn"
-        @click="() => showCardLibrary(getDiscardPile)">
+        @click="() => showCardPile(getDiscardPile)">
         discard
       </div>
     </div>
@@ -51,16 +51,15 @@ export default {
     ]),
   },
   methods: {
-    showCardLibrary(cards) {
-      this.$refs.cardLibrary.setCardList(cards)
+    showCardPile(cards) {
+      this.$refs.cardLibrary.setCardList(cards);
       this.$refs.cardLibrary.show();
     },
 
     endTurn() {
-
-    }
+      console.log("Turn Ended!");
+    },
   }
- 
 }
 </script>
 
@@ -82,7 +81,6 @@ export default {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-
   overflow: hidden;
   
   background: #ff0;
