@@ -7,6 +7,7 @@ export default {
     player: {
       maxHealth: 60,
       health: 60,
+      shield: 0,
       status: [],
     },
     currentEnemies: [],
@@ -23,6 +24,7 @@ export default {
           {
             base: base,
             health: base.maxHealth,
+            shield: 0,
             status: [],
             currentPattern: selectRandomPattern(base.actionPatterns),
           },
@@ -34,8 +36,8 @@ export default {
     },
 
     applyEnemyDamage: (state, payload) => {
-      const target = state.currentEnemies.find((enemy) => enemy == payload);
-      target.health -= 12;
+      const target = state.currentEnemies.find((enemy) => enemy == payload.enemy);
+      target.health -= payload.damage;
     }
   },
   actions: {

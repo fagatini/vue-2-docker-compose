@@ -15,7 +15,7 @@
     <div class="enemy__image">
       <img class="enemy_image" :src="enemy.base.image" draggable="false"/>
     </div>
-    <HealthbarComponent :health="[enemy.health, enemy.base.maxHealth]"/>
+    <HealthbarComponent :health="[enemy.health, enemy.base.maxHealth]" :shield="enemy.shield"/>
   </div>
 </template>
 
@@ -59,7 +59,7 @@ export default {
     height: 30px;
     width: fit-content;
     line-height: 30px;
-    
+
     img {
       height: 100%;
     }

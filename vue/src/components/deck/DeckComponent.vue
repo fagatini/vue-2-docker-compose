@@ -55,7 +55,7 @@ export default {
     handleMouseOver(isHovered, index) {
       this.hoveredIndex = isHovered ? index : null;
       this.sfx.currentTime = 0;
-      this.sfx.play();
+      this.sfx.play().catch(() => console.log("Can't play sound without user interaction"));
     },
 
     applyTransform(index) {
