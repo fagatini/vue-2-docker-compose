@@ -50,6 +50,9 @@ export default {
 
     handleMouseOver(isHovered, index) {
       this.hoveredIndex = isHovered ? index : null;
+      var sfx = new Audio(require('../../assets/sounds/card/tap.mp3'));
+      sfx.volume = 0.1;
+      sfx.play();
     },
 
     applyTransform(index) {
