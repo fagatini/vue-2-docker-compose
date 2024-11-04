@@ -42,12 +42,11 @@ export default {
   
   span {
     position: absolute;
-    top: 2px;
-    left: 0;
-    //margin: 0 auto;
     width: 100%;
-    margin-top: -4px;
+    top: -2px;
+    left: 0;
     font-size: 17px;
+    font-weight: bold;
     text-shadow: #fff 0px 1px 1px ;
   }
 

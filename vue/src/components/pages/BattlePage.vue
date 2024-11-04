@@ -62,6 +62,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters("deck", [
+      "getDeck",
+      "getHand",
+      "getDrawPile",
+      "getDiscardPile",
+    ]),
     ...mapGetters("battle", [
       "getPlayer",
       "getEnemies",
@@ -99,7 +105,7 @@ export default {
 
     tryPlayCard(target) {
       console.log("tryPlayCard", target);
-      this.enemies[0].health -= 145;
+      this.enemies[0].health -= 1;
     },
 
     endTurn() {
@@ -159,7 +165,6 @@ export default {
 
       background: rgba(255, 0, 0, 0.253);
     }
-
   }
 
   .footer {
@@ -184,7 +189,7 @@ export default {
   .btn {
     height: 60px;
     width: 60px;
-    
+
     background: rgb(153, 12, 12);
   }
 }

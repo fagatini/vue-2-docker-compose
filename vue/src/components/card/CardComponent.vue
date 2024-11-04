@@ -10,15 +10,8 @@
         <p>{{  card.cost }}</p>
       </div>
       <div class="card__image center-horizontal">
-        <img class="card__image"
-          src='../../assets/cards/background.png'
-          draggable="false"
-        />
-        <img v-if="card.image"
-          class="card__image-img"
-          :src="card.image"
-          draggable="false"
-        />
+        <img src='../../assets/cards/background.png' draggable="false"/>
+        <img v-if="card.image" :src="card.image" draggable="false"/>
       </div>
       <div class="card__info">
         <div class="card__title">

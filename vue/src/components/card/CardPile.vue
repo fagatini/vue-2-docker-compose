@@ -119,6 +119,7 @@ export default {
   border: 3px solid #353434;
   border-radius: 15px;;
   background: #3b3b3bf3;
+  justify-items: normal;
 
   &__wrapper {
     position: fixed;
@@ -133,11 +134,11 @@ export default {
   &__container {
     display: grid;
     padding: 15px;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
     height: 95%;
     right: 1%;
     left: 1%;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
     border-radius: 10px;
     overflow-y: scroll;
     background: #72727259;
