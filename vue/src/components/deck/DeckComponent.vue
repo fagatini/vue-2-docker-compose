@@ -26,7 +26,11 @@ export default {
   data() {
     return {
       hoveredIndex: null,
+      sfx: new Audio(require('../../assets/sounds/card/tap.mp3')),
     };
+  },
+  mounted() {
+    this.sfx.volume = 0.1;
   },
   computed: {
     ...mapGetters("deck", ["getHand"]),
@@ -50,9 +54,8 @@ export default {
 
     handleMouseOver(isHovered, index) {
       this.hoveredIndex = isHovered ? index : null;
-      var sfx = new Audio(require('../../assets/sounds/card/tap.mp3'));
-      sfx.volume = 0.1;
-      sfx.play();
+      this.sfx.currentTime = 0;
+      this.sfx.play();
     },
 
     applyTransform(index) {
