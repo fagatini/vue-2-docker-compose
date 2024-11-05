@@ -2,6 +2,35 @@
   <div class="search-by-details">
     <div class="search-by-details__details">
       <div class="search-by-details__details__detail">
+        <label>Категория блюда</label>
+
+        <select class="form">
+          <option v-for="dish_category in dish_categories" :key="dish_category.id">
+            {{ dish_category.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="search-by-details__details__detail">
+        <label>Время приёма пищи</label>
+        <select class="form">
+          <option v-for="dish_time in dish_time" :key="dish_time.id">
+            {{ dish_time.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="search-by-details__details__detail">
+        <label>Национальная кухня</label>
+        <select class="form">
+          <option v-for="dish_cuisine in dish_cuisine" :key="dish_cuisine.id">
+            {{ dish_cuisine.name }}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="search-by-details__details__detail">
         <label>Включить ингредиенты </label>
         <input 
           v-model="included"
@@ -82,7 +111,16 @@ export default {
     }),
     ...mapGetters('ingredients', [
       'getIngredientById'
-    ])
+    ]),
+    ...mapGetters('dish_categories', {
+      dish_categories: 'getDishCategories'
+    }),
+    ...mapGetters('dish_time', {
+      dish_time: 'getDishTime'
+    }),
+    ...mapGetters('dish_cuisine', {
+      dish_cuisine: 'getDishCuisine'
+    }),
   },
   methods: {
     formIncludedList() {
