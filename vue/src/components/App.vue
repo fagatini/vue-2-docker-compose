@@ -1,27 +1,39 @@
 <template>
-  <div id="app">
+  <div class="app">
     <div class="search-wrapper">
+      <img src="../assets/cooking_logo.png">
       <input 
         v-model="search" 
         class="search-input" 
         type="text" 
-        placeholder="Искать рецепт..."
+        placeholder="искать на cooking"
         @keyup.enter="() => findByName()" />
 
-      <button class="search-button" @click="() => findByName()">Найти</button>
+      <!-- <button class="search-button" @click="() => findByName()">Найти</button> -->
     </div>
+    <span v-if="showDetails">
+      <DetailSearch />
+    </span>
+
     <nav class="top-nav">
       <RouterLink :to="{ name: ROUTES.HOME }">Главная</RouterLink> |
       <RouterLink :to="{ name: ROUTES.ALL_RECIPES }">Все рецепты</RouterLink> |
       <RouterLink :to="{ name: ROUTES.ALL_INGREDIENTS }">Все ингредиенты</RouterLink> |
     </nav>
-    <RouterView />
+
+    <div class="app__body"> 
+      <nav class="left-nav"></nav>
+      <div class="content">
+        <RouterView />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import router from '@/router';
 import { ROUTES } from '@/router/routes';
+import DetailSearch from './parts/HomeDetailSearch.vue';
 
 export default {
   computed: {
@@ -31,13 +43,20 @@ export default {
   },
   data() {
     return {
-      search: ''
+      search: null,
+      showDetails: false
     }
+  },
+  components: {
+    DetailSearch
   },
   methods: {
     findByName() {
-      router.push({ name: ROUTES.SEARCH_RESULT, query: { search: this.search } })
-    }
+      if(this.search) {
+        router.push({ name: ROUTES.SEARCH_RESULT, query: { search: this.search } })
+      }
+      this.search = null
+    },
   }
 }
 </script>
@@ -45,12 +64,26 @@ export default {
 <style lang="less">
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap');
 
+.app {
+  width: 100%;
+  height: 100vh;
+
+  &__body {
+    display: flex;
+    justify-content: center;
+    min-height: 750px;
+    margin: 12px 35px;
+  }
+}
+
 body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #ECECEC;
+  margin: 0;
 }
 
 .top-nav {
@@ -70,21 +103,29 @@ body {
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  justify-content: space-around;
-  width: 630px;
-  margin: auto;
+  align-items: center;
+  justify-content: left;
+  background-color: white;
+  width: auto;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 3px 200px 3px 80px;
+  border-bottom: 1px solid #ECECEC;
 }
 
 .search-input {
-  padding: 4px 12px;
-  color: rgba(0, 0, 0, .70);
-  border: 1px solid rgba(0, 0, 0, .12);
-  transition: .15s all ease-in-out;
-  background: white;
+  padding: 12px 30px 12px 60px;
+  color: rgba(0, 0, 0, 0.7);
+  transition: 0.15s all ease-in-out;
+  background: #ECECEC;
   line-height: 22px;
-  font-size: 18px;
+  font-size: 14pt;
   min-width: 500px;
+  max-width: 1200px;
+  border-radius: 30px;
+  border: none;
+  margin: 10px 80px;
+  width: -webkit-fill-available;
 
   &:focus {
     outline: none;
@@ -116,6 +157,7 @@ body {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  width: max-content;
 
   &:hover {
     background-color: #7dc7a6;
@@ -128,6 +170,39 @@ body {
 
   &:focus-visible {
     box-shadow: none;
+  }
+}
+
+.left-nav {
+  min-width: 250px;
+  min-height: 300px;
+  max-height: fit-content;
+  background-color: white;
+  border-radius: 70px;
+}
+
+.content {
+  display: flex;
+  background-color: white;
+  min-width: 700px;
+  max-width: 1000px;
+  width: -webkit-fill-available;
+  margin-left: 12px;
+  border-radius: 70px;
+  padding: 70px 8%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.recipes {
+  display: flex;
+  flex-direction: column;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px 5px 0 0;
+    align-items: center;
   }
 }
 </style>

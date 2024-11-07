@@ -1,16 +1,17 @@
 <template>
   <div class="home">
-    <DetailSearch />
+    <!-- <DetailSearch />
+    <div class="content"></div> -->
   </div>
 </template>
 
 <script>
-import DetailSearch from '../parts/DetailSearch.vue';
+// import DetailSearch from '../parts/HomeDetailSearch.vue';
 
 export default {
   name: 'HomePage',
-  components: {
-    DetailSearch
-  }
+  // components: {
+  //   DetailSearch
+  // }
 }
 </script>
