@@ -7,7 +7,8 @@ export default {
   },
   getters: {
     getDishTime: (state) => state.dish_time,
-    getDishTimeById: (state) => (id) => state.dish_time.find(i => i.id === id)
+    getDishTimeById: (state) => (id) => state.dish_time.find(i => i.id === id),
+    getDishTimeName: (state) => (id) => state.dish_time.find(i => i.id === id).name
   },
   mutations: {
     SET_DISH_TIME: (state, payload) => {
