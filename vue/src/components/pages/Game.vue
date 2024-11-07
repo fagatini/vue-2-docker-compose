@@ -2,17 +2,20 @@
   <div class="game-page">
     <h2>Level {{ levelNumber }}</h2>
     <GameGrid />
+    <KeyboardController @key-action="handleKeyAction"/>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import GameGrid from "../parts/GameGrid.vue";
+import KeyboardController from '../parts/KeyboardController.vue';
 
 export default {
   name: 'GamePage',
   components: {
     GameGrid,
+    KeyboardController
   },
   props: {
     levelNumber: {
@@ -29,7 +32,11 @@ export default {
     this.loadLevel({levelNumber: this.levelNumber, isCustom: this.isCustom});
   },
   methods: {
-    ...mapActions('game', ['loadLevel'])
+    ...mapActions('game', ['loadLevel']),
+
+    handleKeyAction(action) {
+      console.log(action);
+    }
   }
 };
 </script>
