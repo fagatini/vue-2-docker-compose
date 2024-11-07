@@ -43,9 +43,21 @@
         </div>
 
         <div class="ingredients-info">
-          <ul v-for="itemInfo in recipe.ingredients" :key="itemInfo.ingredient_id">
-            <li>{{ getIngredientName(itemInfo) }} ..... {{ calcAmount(itemInfo) }} {{ getIngredientMeasureUnit(itemInfo) }}</li>
-          </ul>
+          <div class="ingredient-row" v-for="itemInfo in recipe.ingredients" :key="itemInfo.ingredient_id">
+              <div class="ingredient-row__name">
+                <p>
+                  {{ getIngredientName(itemInfo) }}
+                </p>
+              </div>
+              <div class="ingredient-row__spacing">
+                <p class="additional-text"></p>
+              </div>
+              <div class="ingredient-row__measure">
+                <p class="additional-text">
+                  {{ calcAmount(itemInfo) }} {{ getIngredientMeasureUnit(itemInfo) }}
+                </p>
+              </div>
+            </div>
         </div>
 
       </div>
@@ -54,7 +66,7 @@
     <h2>Инструкция приготовления</h2>
 
     <div class="preparation-info">
-      <h4>Подготовка</h4>
+      <h4 class="additional-text">Подготовка</h4>
       <p>{{ recipe.preparation_step }}</p>
     </div>
 
@@ -65,10 +77,19 @@
         <img class="step-card__pic" v-bind:src="step.img">
 
         <div class="step-card__text">
-          <h4> Шаг {{ index + 1 }} из {{ recipe.steps.length }}</h4>
+          <h4 class="additional-text"> Шаг {{ index + 1 }} из {{ recipe.steps.length }}</h4>
           <p>{{ step.description }}</p>
         </div>
 
+      </div>
+      
+      <h2> Комментарии <span class="additional-text">({{ comments.length }})</span></h2>
+      <div class="comment-section">
+        <div class="comment" v-for="comment in comments" :key="comment.id">
+          <p><b>{{ getUserById(comment.user_id).username }}</b></p>
+          <p class="additional-text">{{ formatDate(comment.date) }} </p>
+          <p>{{ comment.content }} </p>
+        </div>
       </div>
 
     </div>
@@ -98,9 +119,19 @@ export default {
     ...mapGetters('ingredients', [
       'getIngredientById'
     ]),
+    ...mapGetters('comments', [
+      'getCommentById',
+      'getCommentsByRecipeId'
+    ]),
+    ...mapGetters('users', [
+      'getUserById'
+    ]),
     recipe() {
       return this.getRecipeById(this.$route.params.id) || null
-    }
+    },
+    comments() {
+      return this.getCommentsByRecipeId(this.$route.params.id)
+    },
   },
   methods: {
     getIngredientName(ingredientInfo) {
@@ -119,6 +150,11 @@ export default {
       if (this.portionCounter > 1) {
         this.portionCounter -= 1
       }
+    },
+    formatDate(dateStr) {
+      let date = new Date(dateStr)
+      let formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString().slice(0, 5)
+      return formattedDate
     }
   }
 }
@@ -128,6 +164,10 @@ export default {
 .recipe {
   text-align: left;
   padding: 5%;
+}
+
+.additional-text {
+  color: #7d7d7d;
 }
 
 .recipe-card {
@@ -142,8 +182,36 @@ export default {
   }
 
   &__description {
-    margin: 0px 7px 0px 7px;
-    padding: 0px 10px 0px 20px; 
+    width: 100%;
+    margin: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 0px; 
+  }
+}
+
+.ingredients-info {
+  display: grid;
+  width: 600px;
+}
+
+.ingredient-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__name {
+    flex-basis: max-content;
+  }
+
+  &__spacing {
+    flex-grow: 1;
+    overflow: hidden;
+    height: 13px;
+    border-bottom: dotted 2px;
+  }
+
+  &__measure {
+    flex-basis: max-content;
+    justify-content: start;
   }
 }
 
@@ -206,5 +274,16 @@ export default {
     margin: 0px 7px 0px 7px;
     padding: 0px 10px 0px 20px; 
   }
+}
+
+.comment-section {
+  width: 100%;
+  display: grid;
+  margin-bottom: 1%;
+}
+
+.comment {
+  width: fit-content;
+  padding: 0px 0px 0px 0px;
 }
 </style>
