@@ -99,8 +99,12 @@ export default {
 
 <style lang="less">
 .search-block {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
+
+  &__item {
+    margin-right: 21px;
+  }
 }
 
 .selected {
@@ -111,6 +115,7 @@ export default {
   font-size: 12px;
   margin: 2px;
   cursor: pointer;
+  width: max-content;
 
   &--exclude {
     background-color: #ffc8d7;

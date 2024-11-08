@@ -65,6 +65,8 @@ export default {
 
 <style lang="less">
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 .app {
   width: 100%;
@@ -79,11 +81,13 @@ export default {
 }
 
 body {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #39333f;
   background-color: #ECECEC;
   margin: 0;
 }
@@ -165,6 +169,8 @@ body {
 .recipes {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  width: -webkit-fill-available;
 
   &-container {
     display: flex;
@@ -192,5 +198,11 @@ body {
 @keyframes hide  {
   from { top: 100px; }
   to { top: 0px; }
+}
+
+.nav-main {
+  text-decoration: none;
+  color: #49454F;
+  font-size: 14px;
 }
 </style>

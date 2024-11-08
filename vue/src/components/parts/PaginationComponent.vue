@@ -4,7 +4,7 @@
       @click="() => setFirstPage()"
       class="pagination-container__first-button"
     >
-      First 
+      В начало 
     </button>
 
     <button v-for="page in paginatedPages" :key="page"
@@ -19,7 +19,7 @@
       @click="() => setLastPage()"
       class="pagination-container__last-button"
     >
-      Last
+      В конец
     </button>
   </div>
 </template>
@@ -88,28 +88,44 @@ export default {
 
 <style lang="less" scoped>
 .pagination-container {
-  background-color: white;
-  margin-top: 10px;
+  margin-top: 30px;
+  align-self: center;
   
   &__first-button,
   &__last-button {
-    margin-left: 5px;
-    margin-right: 5px;
+    border: none;
+    background: none;
+    font-size: 15px;
+    font-family: inherit;
+    font-weight: bold;
+    border-radius: 100px;
+    padding: 8px 20px;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #F5F5F5;
+    }
   }
 
   &__page-button {
-    width: 1.8rem;
     align-items: center;
-    height: 1.5rem;
-    border-radius: 0.4rem;
+    border: none;
+    border-radius: 100px;
+    background: none;
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    margin: 0 2px;
+    color: inherit;
+    cursor: pointer;
 
     &:hover {
-      color: greenyellow;
+      background-color: #F5F5F5;
     }
 
     &.active {
-      color: black;
-      background-color: rgb(156, 161, 156);
+      background-color: #ECECEC;
     }
   }
 }

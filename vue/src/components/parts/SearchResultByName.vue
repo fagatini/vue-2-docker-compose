@@ -1,17 +1,21 @@
 <template>
   <div class="search-result__seach-by-name">
-    <RouterLink :to="{ name: ROUTES.HOME }">Главная</RouterLink>
-    <h2>{{ firstCapital(search) }}</h2>
-    <h3>рецептов найдено: {{ getFoundCount() }}</h3>
+    <RouterLink :to="{ name: ROUTES.HOME }" class="nav-main">Главная</RouterLink>
+
+    <div class="search-title">
+      <h2 class="search-title__search">{{ firstCapital(search) }}</h2>
+      <span class="search-title__found">рецептов найдено: {{ getFoundCount() }}</span>
+    </div>
+    
 
     <IngredientsPicker :include-list="includeList" :exclude-list="excludeList"/>
 
-    <div class="recipes" v-for="(recipe, indx) in recipesInclude" :key="indx">
+    <div class="recipes" v-for="(recipe, indx) in filtered" :key="indx">
       <RecipeComponent :key="recipe.id" :recipe="recipe" />
       <RouterView />
     </div>
       
-    <h2 v-if="getFoundCount() == 0">Нет совпадений</h2>
+    <h2 v-if="!found">Нет совпадений</h2>
   </div>
 </template>
 
@@ -27,7 +31,7 @@ export default {
     return {
       found: false,
       includeList: [],
-      excludeList: [],
+      excludeList: []
     }
   },
   components: {
@@ -41,12 +45,24 @@ export default {
     search() {
       return this.$route.query.search
     },
-    ...mapGetters('recipes', {
-      recipes: 'getRecipes'
-    }),
-    recipesInclude() {
-      return this.recipes.filter( recipe => 
+    ...mapGetters('recipes', [
+      'getRecipes',
+      'getRecipesByIngredientsOrAll'
+    ]),
+    recipesByIngredients() {
+      return this.getRecipesByIngredientsOrAll({
+        includeList: this.includeList,
+        excludeList: this.excludeList
+      })
+    },
+    recipesIncludeSearch() {
+      return this.getRecipes.filter( recipe => 
         recipe.name.toLowerCase().includes(this.search.toLowerCase())
+      )
+    },
+    filtered() {
+      return this.recipesIncludeSearch.filter( recipe =>
+        this.recipesByIngredients.includes(recipe)
       )
     }
   },
@@ -58,8 +74,16 @@ export default {
       return name.charAt(0).toUpperCase() + name.slice(1)
     },
     getFoundCount() {
-      return this.recipesInclude.length
+      let foundCount = this.filtered.length
+      this.found = foundCount != 0
+      return foundCount
     }
   }
 }
 </script>
+
+<style lang="less" scoped>
+.search-block {
+  justify-content: flex-start;
+}
+</style>

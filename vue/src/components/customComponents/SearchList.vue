@@ -81,8 +81,16 @@ export default {
   outline: none;
 
   &:focus {
-    border: 2px solid #dfdfdf;
+    outline: 2px solid #dfdfdf;
+    outline-offset: -2px;
     border-radius: 30px;
+  }
+
+  &::placeholder {
+    color: #878787;
+    text-transform: lowercase;
+    font-size: 15px;
+    letter-spacing: 0.25px;
   }
 }
 

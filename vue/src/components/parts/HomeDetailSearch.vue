@@ -113,6 +113,7 @@ export default {
 <style lang="less">
 .search-by-details {
   width: -webkit-fill-available;
+  min-width: 825px;
   position: relative;
   margin: 0 60px;
   background-color: white;
@@ -124,7 +125,8 @@ export default {
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    width: auto;
+    justify-self: center;
+    width: fit-content;
 
     &__detail {
       display: flex;
@@ -138,9 +140,13 @@ export default {
 }
 
 .filter-label {
+  display: block;
   font-size: 14px;
   text-align: left;
   padding-bottom: 5px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .form {
@@ -148,30 +154,32 @@ export default {
   border-radius: 8px;
   border: 1px solid #ECECEC;
   background-color: white;
-  padding: 8px 24px;
+  padding: 8px 40px 8px 24px;
   line-height: 17px;
   font-size: 14px;
   color: #343434;
   height: fit-content;
+  max-height: 205px;
   width: -webkit-fill-available;
-  appearance: none;
-  outline: none;
+  min-width: 150px;
+  max-width: 220px;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
-
+  font-family: 'Inter';
+  
   &::after {
     position: absolute;
-    content: "";
+    content: url(../../assets/chevron_down.png);
     right: 1.5rem;
     pointer-events: none;
-    border-left: 0.3rem solid transparent;
-    border-right: 0.3rem solid transparent;
-    border-top: 0.3rem solid black;
-    top: 45%;
   }
   
   &:focus {
-    border: 2px solid #dfdfdf;
+    outline: 2px solid #dfdfdf;
+    outline-offset: -2px;
     border-radius: 8px;
   }
 }
@@ -194,6 +202,7 @@ export default {
     padding: 10px 70px;
     margin-top: 15px;
     cursor: pointer;
+    font-family: 'Roboto';
   }
 }
 
@@ -206,7 +215,7 @@ export default {
   font-weight: bold;
   color: #7D7D7D;
   font-size: 14px;
-  margin: 0 15px;
+  margin-left: 20px;
 
   &--active {
     background-color: rgb(230, 205, 255);
