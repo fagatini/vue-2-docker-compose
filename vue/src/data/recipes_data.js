@@ -37,6 +37,7 @@ export default [
         }
       ],
       presentation_step: null,
+      tags: ['Рецепты для самых маленьких', 'Ежедневные рецепты']
     },
     {
       id: 2,
@@ -78,7 +79,8 @@ export default [
       {
         img: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDI0MDkyMS96dHhiRW4uanBlZw.webp',
         description: 'Украсьте морковный суп-пюре тыквенными семечками, перцем чили и базиликом.'
-      }
+      },
+      tags: ['Рецепты для самых маленьких', 'Ежедневные рецепты']
     },
     {
       id: 3,
@@ -132,7 +134,8 @@ export default [
       {
         img: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDI0MDgyNC8zRGFNVVAuanBlZw.webp',
         description: 'Подайте пасту с томатами, украсив порцию листочками базилика или сыром моцарелла.'
-      }
+      },
+      tags: ['Рецепты для самых маленьких']
     },
     {
       id: 4,
@@ -178,7 +181,8 @@ export default [
       {
         img: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDIzMTIyMi8za3ZDWXQuanBlZw.webp',
         description: 'Украсьте овсянку ягодами клубники и подайте на стол.'
-      }
+      },
+      tags: ['Рецепты для самых маленьких','Ежедневные рецепты']
     },
     {
       id: 5,
@@ -232,7 +236,8 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: ['Рецепты для самых маленьких']
     },
     {
       id: 7,
@@ -286,7 +291,8 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: []
     },
     {
       id: 8,
@@ -340,7 +346,8 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: []
     },
     {
       id: 9,
@@ -394,7 +401,8 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: ['Ежедневные рецепты']
     },
     {
       id: 10,
@@ -448,7 +456,8 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: ['Ежедневные рецепты']
     },
     {
       id: 11,
@@ -487,7 +496,9 @@ export default [
         }
       ],
       presentation_step: null,
-    },   {
+      tags: []
+    },   
+    {
       id: 12,
       name: 'Тест 12',
       dish_id: 12,
@@ -524,5 +535,6 @@ export default [
         }
       ],
       presentation_step: null,
+      tags: []
     }
   ]

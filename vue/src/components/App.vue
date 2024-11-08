@@ -15,14 +15,35 @@
       <DetailSearch />
     </span>
 
-    <nav class="top-nav">
-      <RouterLink :to="{ name: ROUTES.HOME }">Главная</RouterLink> |
-      <RouterLink :to="{ name: ROUTES.ALL_RECIPES }">Все рецепты</RouterLink> |
-      <RouterLink :to="{ name: ROUTES.ALL_INGREDIENTS }">Все ингредиенты</RouterLink> |
-    </nav>
-
     <div class="app__body"> 
-      <nav class="left-nav"></nav>
+      <nav class="nav">
+        <div class="nav__content">
+          <div class="nav-base__container">
+            <div class="nav-base__container__content" 
+              v-for="(baseLink, ROUTE, i) in LINKS" 
+              :key="i">
+              <img class="nav-base__container__content__icon" src="../assets/nav_icon.png">
+              <RouterLink class="nav-base__container__content__link" 
+              :to="{ name: ROUTE }"
+              >
+                {{baseLink}}
+              </RouterLink> 
+            </div>
+          </div>
+          <div class="nav-category__container">
+            <div class="nav-category__container__content" 
+              v-for="(dish_category, i) in dish_categories" 
+              :key="i">
+              <img class="nav-category__container__content__icon" src="../assets/nav_icon.png">
+              <RouterLink class="nav-category__container__content__link" 
+              :to="{ name: ROUTES.SEARCH_RESULT, query: { dish_category: dish_category.id} }"
+              >
+                {{ dish_category.name }}
+              </RouterLink> 
+            </div>
+          </div>
+        </div>
+      </nav>
       <div class="content">
         <RouterView />
       </div>
@@ -34,12 +55,23 @@
 import router from '@/router';
 import { ROUTES } from '@/router/routes';
 import DetailSearch from './parts/HomeDetailSearch.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   computed: {
     ROUTES() {
       return ROUTES
-    }
+    },
+    ...mapGetters('dish_categories', {
+      dish_categories: 'getDishCategories'
+    }),
+    LINKS() {
+      return {
+        [ROUTES.HOME]: 'Главная',
+        [ROUTES.ALL_RECIPES]: 'Все рецепты',
+        [ROUTES.ALL_INGREDIENTS]: 'Все ингредиенты'
+      }
+  }
   },
   data() {
     return {
@@ -71,7 +103,7 @@ export default {
   &__body {
     display: flex;
     justify-content: center;
-    min-height: 750px;
+    min-height: 100%;
     margin: 12px 35px;
   }
 }
@@ -84,19 +116,6 @@ body {
   color: #2c3e50;
   background-color: #ECECEC;
   margin: 0;
-}
-
-.top-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 
 .search-wrapper {
@@ -173,12 +192,80 @@ body {
   }
 }
 
-.left-nav {
+.nav {
   min-width: 250px;
-  min-height: 300px;
-  max-height: fit-content;
+  min-height: 100%;
   background-color: white;
   border-radius: 70px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-align: start;
+  }
+}
+
+.nav-base {
+  margin-bottom: 15px;
+
+  &__container{
+    width: 200px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-top: 50px;
+    border-bottom: 2px solid;
+
+    &__content {
+      width: 200px;
+      display: flex;
+      margin-top: 10px;
+      align-items: center;
+
+      &__icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      &__link {
+        text-decoration: none;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.nav-category {
+  margin-bottom: 15px;
+
+  &__container {
+    width: 200px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+
+    &__content {
+      width: 220px;
+      display: flex;
+      margin-top: 20px;
+      align-items: center;
+
+      &__icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      &__link {
+        text-decoration: none;
+        font-size: 20px;
+      }
+    }
+  }
 }
 
 .content {
@@ -205,4 +292,5 @@ body {
     align-items: center;
   }
 }
+
 </style>

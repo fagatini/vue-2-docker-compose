@@ -41,6 +41,9 @@ export default {
     ),
     getRecipesByCuisineId: (state) => (cuisine_id) => state.recipes.filter(recipe => 
       recipe.dish_cuisine_id === cuisine_id
+    ),
+    getRecipesByTags: (state) => (tags) => state.recipes.filter(recipe => 
+      recipe.tags.some(tag => tags.includes(tag))
     )
   },
   mutations: {

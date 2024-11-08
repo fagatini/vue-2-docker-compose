@@ -56,10 +56,10 @@ export default {
       return this.$route.query.dish_cuisine
     },
     includeIngredients() {
-      return this.$route.query.include
+      return this.$route.query.include || []
     },
     excludeIngredients() {
-      return this.$route.query.exclude
+      return this.$route.query.exclude || []  
     },
     ...mapGetters('recipes', [
       'getRecipes',
