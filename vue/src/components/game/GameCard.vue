@@ -60,7 +60,7 @@
     },
     methods: {
       tryRemoveCard(index, type) {
-        if (this.isOpponent) {
+        if (this.faceDown) {
           return;
         }
 
