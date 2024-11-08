@@ -26,6 +26,7 @@ export default {
       ingredients: [],
       images: [],
       newIngredient: {
+        id: "",
         name: "",
         cover: "",
         description: "",
@@ -49,7 +50,7 @@ export default {
       if (!this.newIngredient) {
         return;
       }
-
+      this.newIngredient.id = this.ingredients.length + 1
       this.ingredients.push(Vue.util.extend({}, this.newIngredient));
       this.saveIngredient();
     },

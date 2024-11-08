@@ -9,8 +9,10 @@
       <IngredientComponent 
         v-for="ingredient in ingredients" 
         :key="ingredient.id" 
-        :ingredient="ingredient" />
+        :ingredient="ingredient"
+      />
     </div>
+    <RouterView />
   </div>
 </template>
 
