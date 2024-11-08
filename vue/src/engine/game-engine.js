@@ -19,6 +19,7 @@ class GameEngine {
   roundNumber = 1;
   opponentTurnsQuantity = 0;
   msRemainToTurn = TIME_TO_TURN_MS;
+  cardPlayed = false;
 
   constructor() {
     setInterval(() => {
@@ -67,12 +68,12 @@ class GameEngine {
   }
 
   playCard(cardIndex) {
-    if (this.currentTurn !== TurnStates.PLAYER) {
+    if (this.currentTurn !== TurnStates.PLAYER || this.cardPlayed) {
       return;
     }
 
+    this.cardPlayed = true;
     this.player.playCard(cardIndex);
-    this.endPlayerTurn(false);
   }
 
   endOpponentTurn(passed) {
@@ -92,6 +93,7 @@ class GameEngine {
 
     this.currentTurn = TurnStates.PLAYER;
     this.msRemainToTurn = TIME_TO_TURN_MS;
+    this.cardPlayed = false;
   }
 
   async performOpponentActions() {
@@ -132,6 +134,7 @@ class GameEngine {
     this.opponent.prepareToRound();
     this.opponentTurnsQuantity = 0;
     this.msRemainToTurn = TIME_TO_TURN_MS;
+    this.cardPlayed = false;
 
     if (this.roundNumber % 2 === 0) {
       this.currentTurn = TurnStates.OPPONENT
@@ -155,6 +158,11 @@ class GameEngine {
     }
 
     return null;
+  }
+
+  removeCardFromBoard(index, type) {
+    this.cardPlayed = false;
+    this.player.removeCardFromBoard(index, type);
   }
 }
 

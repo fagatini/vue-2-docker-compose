@@ -65,7 +65,7 @@
           return;
         }
 
-        this.getGameEngine.player.removeCardFromBoard(index, type);
+        this.getGameEngine.removeCardFromBoard(index, type);
       },
       startDrag(event) {
         event.preventDefault();
