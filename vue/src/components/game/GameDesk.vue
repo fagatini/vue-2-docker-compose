@@ -8,7 +8,7 @@
       <span class="desk__separator__line" />
       <span class="desk__separator__text">VS</span>
       <span class="desk__separator__line" />
-      <CountDown :initialValue="60" />
+      <CountDown :initialValue="TIME_TO_TURN()" />
     </div>
     <div ref="lines">
       <GameDeskLine :cards="playerMeleeCards" :isMelee="true" :isOpponent="false" />
@@ -21,8 +21,14 @@
 import GameDeskLine from "./DeskLine";
 import CountDown from '../game/CountDown.vue';
 import { mapGetters } from 'vuex';
+import { TIME_TO_TURN_MS } from '@/engine/constants';
 
 export default {
+  methods: {
+    TIME_TO_TURN() {
+      return TIME_TO_TURN_MS / 1000
+    }
+  },
   components: {
     GameDeskLine,
     CountDown,
