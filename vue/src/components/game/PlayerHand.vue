@@ -14,7 +14,7 @@
             :face-down="opponent"
             :enlarged="!opponent"
             :index="index"
-            :on-drop="onCardDrop"
+            @onDrop="(index, clientX, clientY) => $emit('onCardDrop', index, clientX, clientY)"
         />
       </div>
     </div>
@@ -28,16 +28,15 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'PlayerHand',
   components: { GameCard },
+  emits: [
+    "onCardDrop",
+  ],
   props: {
     opponent: {
       type: Boolean,
       required: false,
       default: false,
     },
-    onCardDrop: {
-      type: Function,
-      default: null,
-    }
   },
   computed: {
     ...mapGetters('gameEngine', [

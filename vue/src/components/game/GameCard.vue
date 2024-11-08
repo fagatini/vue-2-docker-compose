@@ -17,6 +17,9 @@
 
   export default {
     name: 'GameCard',
+    emits: [
+      "onDrop",
+    ],
     props: {
       score: {
         type: Number,
@@ -33,10 +36,6 @@
       enlarged: {
         type: Boolean,
         default: false,
-      },
-      onDrop: {
-        type: Function,
-        default: null,
       },
       index: {
         type: Number,
@@ -102,9 +101,7 @@
         this.$refs.draggableCard.style.left = '0px';
         this.dragInfo.dragged = false;
 
-        if (this.onDrop) {
-          this.onDrop(this.index, event.clientX, event.clientY)
-        }
+        this.$emit('onDrop', this.index, event.clientX, event.clientY);
       }
     }
   };

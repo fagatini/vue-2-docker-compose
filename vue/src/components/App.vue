@@ -2,7 +2,7 @@
   <div>
     <PlayerHand :number-of-cards="4" opponent/>
     <GameDesk ref="playerDesk"/>
-    <PlayerHand :on-card-drop="(id, x, y) => this.onCardDrop(id, x, y)"/>
+    <PlayerHand @onCardDrop="(id, x, y) => this.onCardDrop(id, x, y)"/>
   </div>
 </template>
 
