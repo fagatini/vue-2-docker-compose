@@ -147,12 +147,12 @@ class GameEngine {
   }
 
   getWinner() {
-    if (this.player.gameScore.gameScore >= ROUNDS_TO_WIN) {
+    if (this.player.gameScore >= ROUNDS_TO_WIN) {
       this.currentPhase = GamePhases.END;
       return Winners.PLAYER;
     }
 
-    if (this.opponent.gameScore.gameScore >= ROUNDS_TO_WIN) {
+    if (this.opponent.gameScore >= ROUNDS_TO_WIN) {
       this.currentPhase = GamePhases.END;
       return Winners.OPPONENT;
     }

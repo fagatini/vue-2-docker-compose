@@ -3,6 +3,7 @@
     <PlayerHand :number-of-cards="4" opponent/>
     <GameDesk ref="playerDesk"/>
     <PlayerHand @onCardDrop="(id, x, y) => this.onCardDrop(id, x, y)"/>
+    <ModalContainer />
   </div>
 </template>
 
@@ -10,19 +11,13 @@
 import GameDesk from '@/components/game/GameDesk.vue';
 import PlayerHand from '@/components/game/PlayerHand.vue';
 import { mapGetters } from 'vuex';
+import ModalContainer from '@/components/parts/ModalContainer.vue';
 
 export default {
   components: {
+    ModalContainer,
     PlayerHand,
     GameDesk,
-  },
-  data() {
-    return {
-      cardStrength: 5,
-      cardType: 'Warrior',
-      isHighlighted: false,
-      isFaceDown: false
-    };
   },
   methods: {
     onCardDrop(cardIndex, x, y) {

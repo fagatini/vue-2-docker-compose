@@ -7,9 +7,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { endGameModal } from '@/mixins/modals';
 
 export default {
   name: 'GameScore',
+  mixins: [endGameModal],
   computed: {
     opponentHasPoint() {
       return !!this.getGameEngine.opponent.gameScore;
@@ -21,6 +23,13 @@ export default {
       'getGameEngine',
     ]),
   },
+  updated() {
+    const winner = this.getGameEngine.getWinner();
+
+    if (winner) {
+      this.openEndGameModal();
+    }
+  }
 }
 </script>
 

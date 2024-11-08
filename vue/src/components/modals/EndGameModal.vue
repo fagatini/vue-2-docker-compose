@@ -1,11 +1,13 @@
 <template>
   <ModalComponent>
-    <div>
-      {{ this.getText }}
+    <div class="endgame-container">
+      <h1>
+        {{ this.getText }}
+      </h1>
+      <button class="restart-button" @click="() => this.restart()">
+        Restart
+      </button>
     </div>
-    <button @click="() => restart">
-      Close
-    </button>
   </ModalComponent>
 </template>
 
@@ -29,11 +31,11 @@ export default {
     }
   },
   computed: {
-    getWinner() {
+    winner() {
       return this.getGameEngine.getWinner();
     },
     getText() {
-      if (this.getWinner() === Winners.PLAYER) {
+      if (this.winner === Winners.PLAYER) {
         return 'You won';
       } else {
         return 'You lost';
@@ -47,5 +49,25 @@ export default {
 </script>
 
 <style scoped>
+.endgame-container {
+  height: 60vh;
+  width: 60vw;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.restart-button {
+  height: 64px;
+  width: 128px;
+  border: none;
+  border-radius: 4px;
+  background-color: burlywood;
+
+  &:hover {
+    background-color: bisque;
+  }
+}
 </style>
