@@ -29,7 +29,7 @@
       <div class="mana">
         2/3
       </div>
-      <DeckComponent />
+      <DeckComponent :bus="bus"/>
       <div class="btn" @click="() => endTurn()">
         end
       </div>

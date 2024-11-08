@@ -120,6 +120,7 @@ export default {
   border-radius: 15px;;
   background: #3b3b3bf3;
   justify-items: normal;
+  z-index: 5;
 
   &__wrapper {
     position: fixed;

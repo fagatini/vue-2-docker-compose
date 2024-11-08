@@ -24,10 +24,10 @@ export default {
   },
   computed: {
     healthPercent() {
-      return (Math.max(0, this.health[0] / this.health[1])*100);
+      return (Math.max(0, Math.min((100, this.health[0] / this.health[1])*100)));
     },
     shieldPercent() {
-      return (Math.max(Math.min(100, this.shield / this.health[1])*100, 0));
+      return (Math.max(0, Math.min(100, this.shield / this.health[1])*100));
     }
   },
 };
@@ -37,21 +37,22 @@ export default {
 .healthbar {
   position: relative;
   height: 15px;
-  width: 100%;
+  width: 95%;
   margin: 0;
   border-radius: 20px;
   border: #000 solid 2px;
   background: #a09595;
   display: flex;
+  z-index: 0;
   
   span {
     position: absolute;
     width: 100%;
-    top: -2px;
-    z-index: 100;
+    top: -3px;
+    z-index: 1;
     font-size: 17px;
     font-weight: bold;
-    text-shadow: #fff 0px 1px 1px ;
+    text-shadow: #fff 0px 1px 1px;
   }
 
   &__fill {

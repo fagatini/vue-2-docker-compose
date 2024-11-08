@@ -9,13 +9,14 @@
         :card="card"
         :style="applyTransform(index)"
         @onMouseOver="(isHovered) => handleMouseOver(isHovered, index)"
-        @onCardClick="() => handleCardClick(card)"
+        @onCardClick="() => handleCardClick(card, index)"
       />
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
 import { mapGetters } from "vuex";
 import CardComponent from '../card/CardComponent.vue';
 
@@ -23,9 +24,14 @@ export default {
   components: {
     CardComponent,
   },
+  props: {
+    bus: Vue,
+  },
   data() {
     return {
       hoveredIndex: null,
+      selectedIndex: null,
+      selectedCard: Object,
       sfx: new Audio(require('../../assets/sounds/card/tap.mp3')),
     };
   },
@@ -48,7 +54,9 @@ export default {
     },
   },
   methods: {
-    handleCardClick(card) {
+    handleCardClick(card, index) {
+      this.selectedCard = card;
+      this.selectedIndex = index;
       console.log("Handling Card Click", card);
     },
 
@@ -60,7 +68,8 @@ export default {
 
     applyTransform(index) {
       const isHovered = this.hoveredIndex == index;
-      if (isHovered)
+      const isSelected = this.selectedIndex == index;
+      if (isHovered || isSelected)
       {
         return {
           transform: `scale(${this.getScaling + 0.05}) rotate(0deg) translateY(-35px)`,
