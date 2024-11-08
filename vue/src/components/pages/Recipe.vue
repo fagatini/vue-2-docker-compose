@@ -12,14 +12,11 @@
           v-bind:src="recipe.cover" 
           v-bind:alt="recipe.name"
         >
-
       <div class="recipe-card__description">
         <p>{{ recipe.time }} мин</p>
         <h3>Ингредиенты</h3>
-        
         <div class="portions">
           <p> Порции </p>
-
           <div class="recount-element">
             <button 
               class="recount-element__button"
@@ -27,11 +24,9 @@
             > 
               – 
             </button>
-
             <form>
               <output class="recount-element__output">{{ portionCounter }}</output> 
             </form> 
-
             <button 
               class="recount-element__button"
               @click="() => addPortion()"
@@ -39,7 +34,6 @@
               + 
             </button>
           </div>
-          
         </div>
 
         <div class="ingredients-info">
@@ -64,35 +58,31 @@
     </div>
 
     <h2>Инструкция приготовления</h2>
-
     <div class="preparation-info">
       <h4 class="additional-text">Подготовка</h4>
       <p>{{ recipe.preparation_step }}</p>
     </div>
-
     <div class="recipe-steps">
-
       <div class="step-card" v-for="(step, index) in recipe.steps" :key="index">
-
         <img class="step-card__pic" v-bind:src="step.img">
-
         <div class="step-card__text">
           <h4 class="additional-text"> Шаг {{ index + 1 }} из {{ recipe.steps.length }}</h4>
           <p>{{ step.description }}</p>
         </div>
-
       </div>
-      
-      <h2> Комментарии <span class="additional-text">({{ comments.length }})</span></h2>
+    </div>
+
+    <h2> Комментарии <span class="additional-text">({{ comments.length }})</span></h2>
       <div class="comment-section">
-        <div class="comment" v-for="comment in comments" :key="comment.id">
-          <p><b>{{ getUserById(comment.user_id).username }}</b></p>
-          <p class="additional-text">{{ formatDate(comment.date) }} </p>
-          <p>{{ comment.content }} </p>
+        <div v-if="userComment">
+          <h3> Ваш комментарий </h3>
+          <CommentComponent :comment=userComment></CommentComponent>
+        </div>
+        <CommentForm v-else :recipeId="$route.params.id" :userId="currentUserId"></CommentForm>
+        <div class="comment" v-for="comment in otherComments" :key="comment.id">
+          <CommentComponent :comment=comment></CommentComponent>
         </div>
       </div>
-
-    </div>
 
   </div>
 
@@ -101,9 +91,15 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import CommentForm from '../parts/CommentForm.vue';
+import CommentComponent from '../parts/CommentComponent.vue';
 
 export default {
   name: 'RecipePage',
+  components: {
+    CommentForm,
+    CommentComponent
+  },
   data() {
     return {
       portionCounter: 1
@@ -123,15 +119,29 @@ export default {
       'getCommentById',
       'getCommentsByRecipeId'
     ]),
-    ...mapGetters('users', [
-      'getUserById'
-    ]),
     recipe() {
       return this.getRecipeById(this.$route.params.id) || null
     },
     comments() {
       return this.getCommentsByRecipeId(this.$route.params.id)
     },
+    currentUserId() {
+      // делаем вид, что мы какой-то аутентифицированный пользователь
+      return 3
+    },
+    userComment() {
+      for (var comment of this.comments) {
+        if (comment.userId === this.currentUserId) {
+          return comment
+        }
+      }
+      return null
+    },
+    otherComments() {
+      if (this.userComment)
+        return this.comments.filter((item) => item.id != this.userComment.id)
+      return this.comments
+    }
   },
   methods: {
     getIngredientName(ingredientInfo) {
@@ -150,11 +160,6 @@ export default {
       if (this.portionCounter > 1) {
         this.portionCounter -= 1
       }
-    },
-    formatDate(dateStr) {
-      let date = new Date(dateStr)
-      let formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString().slice(0, 5)
-      return formattedDate
     }
   }
 }

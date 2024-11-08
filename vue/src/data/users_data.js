@@ -7,4 +7,8 @@ export default [
     id: 2,
     username: 'Alex'
   },
+  {
+    id: 3,
+    username: 'Auth user'
+  }
 ]
