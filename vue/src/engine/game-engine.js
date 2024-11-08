@@ -164,6 +164,16 @@ class GameEngine {
     this.cardPlayed = false;
     this.player.removeCardFromBoard(index, type);
   }
+
+  restart() {
+    this.player = new Player(INIT_DECK);
+    this.opponent =  new Player(INIT_DECK);
+    this.currentTurn = TurnStates.PLAYER;
+    this.roundNumber = 1;
+    this.opponentTurnsQuantity = 0;
+    this.msRemainToTurn = TIME_TO_TURN_MS;
+    this.cardPlayed = false;
+  }
 }
 
 const engine = new GameEngine();

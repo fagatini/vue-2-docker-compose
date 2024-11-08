@@ -25,7 +25,7 @@ export default {
   methods: {
     restart () {
       this.$emit('close');
-      // TODO: restart game
+      return this.getGameEngine.restart();
     }
   },
   computed: {
