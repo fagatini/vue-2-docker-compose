@@ -5,6 +5,7 @@
       <GameDeskLine :cards="opponentMeleeCards" :isMelee="true" :isOpponent="true" />
     </div>
     <div class="desk__separator">
+      <GameScore />
       <span class="desk__separator__line" />
       <span class="desk__separator__text">VS</span>
       <span class="desk__separator__line" />
@@ -25,9 +26,11 @@ import CountDown from '../game/CountDown.vue';
 import { mapGetters } from 'vuex';
 import EndTurnButton from '@/components/game/EndTurnButton.vue';
 import PassButton from '@/components/game/PassButton.vue';
+import GameScore from '@/components/game/GameScore.vue';
 
 export default {
   components: {
+    GameScore,
     PassButton,
     EndTurnButton,
     GameDeskLine,
