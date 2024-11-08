@@ -9,6 +9,7 @@
       <span class="desk__separator__text">VS</span>
       <span class="desk__separator__line" />
       <CountDown />
+      <PassButton />
       <EndTurnButton />
     </div>
     <div ref="lines">
@@ -23,9 +24,11 @@ import GameDeskLine from "./DeskLine";
 import CountDown from '../game/CountDown.vue';
 import { mapGetters } from 'vuex';
 import EndTurnButton from '@/components/game/EndTurnButton.vue';
+import PassButton from '@/components/game/PassButton.vue';
 
 export default {
   components: {
+    PassButton,
     EndTurnButton,
     GameDeskLine,
     CountDown,

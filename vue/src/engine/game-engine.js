@@ -3,7 +3,7 @@ import {
   COUNTDOWN_STEP_MS,
   GamePhases,
   INIT_DECK,
-  MAX_OPPONENT_WAIT_MS,
+  MAX_OPPONENT_WAIT_MS, OPPONENT_TURNS_PER_ROUND,
   ROUNDS_TO_WIN,
   TIME_TO_TURN_MS,
   TurnStates,
@@ -29,6 +29,7 @@ class GameEngine {
       this.msRemainToTurn -= COUNTDOWN_STEP_MS;
 
       if (this.msRemainToTurn <= 0) {
+        this.player.pass();
         this.endPlayerTurn();
       }
     }, COUNTDOWN_STEP_MS)
@@ -42,13 +43,19 @@ class GameEngine {
   endPlayerTurn(passed) {
     this.player.board.firstLineCards.map(card => card.new = false)
     this.player.board.secondLineCards.map(card => card.new = false)
-    if (passed) {
-      if (this.opponent.passed) {
+
+    if (this.opponent.passed) {
+      if (passed) {
         this.endRound();
-        return;
       } else {
-        this.player.pass();
+        this.endOpponentTurn()
       }
+
+      return;
+    }
+
+    if (passed) {
+      this.player.pass();
     }
 
     this.currentTurn = TurnStates.OPPONENT;
@@ -69,13 +76,18 @@ class GameEngine {
   }
 
   endOpponentTurn(passed) {
-    if (passed) {
-      if (this.player.passed) {
+    if (this.player.passed) {
+      if (passed) {
         this.endRound();
-        return;
       } else {
-        this.opponent.pass();
+        this.endPlayerTurn();
       }
+
+      return;
+    }
+
+    if (passed) {
+      this.opponent.pass();
     }
 
     this.currentTurn = TurnStates.PLAYER;
@@ -83,7 +95,7 @@ class GameEngine {
   }
 
   async performOpponentActions() {
-    if (this.currentTurn !== TurnStates.OPPONENT) {
+    if (this.currentTurn !== TurnStates.OPPONENT || this.opponent.passed) {
       return;
     }
 
@@ -98,7 +110,7 @@ class GameEngine {
     const bestCardIndex = cards.reduce((bestCardIndex, card, i) => card.score > cards[bestCardIndex].score ? i : bestCardIndex, 0);
     this.opponent.playCard(bestCardIndex);
     this.opponentTurnsQuantity++;
-    this.endOpponentTurn(this.opponentTurnsQuantity > 3);
+    this.endOpponentTurn(this.opponentTurnsQuantity >= OPPONENT_TURNS_PER_ROUND);
   }
 
   endRound() {

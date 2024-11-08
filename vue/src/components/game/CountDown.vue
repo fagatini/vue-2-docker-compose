@@ -53,9 +53,6 @@ export default {
       'getGameEngine',
     ]),
   },
-  mounted() {
-    this.startCountdown();
-  },
 };
 </script>
 
