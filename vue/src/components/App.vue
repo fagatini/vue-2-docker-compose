@@ -26,16 +26,16 @@ export default {
   },
   methods: {
     onCardDrop(cardIndex, x, y) {
-      const player = this.getPlayer;
+      const engine = this.getGameEngine;
       const {left, right, top, bottom} = this.$refs.playerDesk.$refs.lines.getBoundingClientRect();
       if (x > left && x < right && y < bottom && y > top) {
-        player.playCard(cardIndex);
+        engine.playCard(cardIndex);
       }
     }
   },
   computed: {
     ...mapGetters('gameEngine', [
-      'getPlayer',
+      'getGameEngine',
     ]),
   }
 };

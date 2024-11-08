@@ -41,6 +41,7 @@ export class Player {
 
   drawCards(amount) {
     const newCards = this.deck.splice(0, amount);
+    newCards.splice(MAX_CARDS_IN_HAND - this.cards.length)
     this.cards.push(...newCards);
   }
 

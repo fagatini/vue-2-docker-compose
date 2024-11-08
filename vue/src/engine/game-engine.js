@@ -16,7 +16,7 @@ class GameEngine {
   opponent =  new Player(INIT_DECK);
   currentPhase = GamePhases.MULLIGAN;
   currentTurn = TurnStates.PLAYER;
-  round = 1;
+  roundNumber = 1;
   opponentTurnsQuantity = 0;
   msRemainToTurn = TIME_TO_TURN_MS;
 
@@ -123,7 +123,7 @@ class GameEngine {
     const winner = this.getWinner();
 
     if (!winner) {
-      this.round++;
+      this.roundNumber++;
     } else {
       this.currentPhase = GamePhases.END;
     }
@@ -131,6 +131,14 @@ class GameEngine {
     this.player.prepareToRound();
     this.opponent.prepareToRound();
     this.opponentTurnsQuantity = 0;
+    this.msRemainToTurn = TIME_TO_TURN_MS;
+
+    if (this.roundNumber % 2 === 0) {
+      this.currentTurn = TurnStates.OPPONENT
+      void this.performOpponentActions();
+    } else {
+      this.currentTurn = TurnStates.PLAYER
+    }
 
     return winner;
   }

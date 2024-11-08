@@ -13,6 +13,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import { TurnStates } from '@/engine/constants';
 
   export default {
     name: 'GameCard',
@@ -68,6 +69,10 @@
       },
       startDrag(event) {
         event.preventDefault();
+        if (this.getGameEngine.currentTurn !== TurnStates.PLAYER) {
+          return;
+        }
+
         const parentBounds = event.currentTarget.parentNode.parentNode.getBoundingClientRect();
         const targetBounds = event.currentTarget.getBoundingClientRect();
         this.$refs.draggableCard.style.top = `${targetBounds.top - parentBounds.top}px`;
