@@ -2,14 +2,19 @@
   <div class="game-page">
     <h2>Level {{ levelNumber }}</h2>
     <GameGrid />
+    <p v-if="message" class="game-page__message">{{ message }}</p>
     <KeyboardController @key-action="handleKeyAction" />
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import GameGrid from "../parts/GameGrid.vue";
 import KeyboardController from "../parts/KeyboardController.vue";
+import mapValidator from "@/GameEngine/GridValidationFunctions";
+import { RouteNames } from "@/router/routes";
+import gameLogic from "@/GameEngine/GameLogic";
+import gameStorage from "@/GameEngine/gameStorage";
 
 export default {
   name: "GamePage",
@@ -28,13 +33,61 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      message: null,
+    };
+  },
+  computed: {
+    ...mapGetters('game', [
+      'getGrid',
+      'getHasWon',
+      'getHasLost'
+    ]),
+  },
+  watch: {
+    getHasWon(newVal) {
+      if (newVal) {
+        this.message = "Ура! Вы победили! Запуск следующего уровня...";
+        setTimeout(() => {
+          this.message = null;
+          const nextLevel = this.levelNumber + 1;
+          const maxLevels = gameStorage.getNumberOfLevels(this.isCustom);
+
+          if (nextLevel <= maxLevels) {
+            this.$router.push({
+              name: this.isCustom ? RouteNames.CUSTOM_GAME : RouteNames.GAME,
+              params: { level_number: nextLevel },
+            });
+          } else {
+            this.$router.push({ name: RouteNames.LEVEL_MENU });
+          }
+        }, 5000);
+      }
+    },
+    getHasLost(newVal) {
+      if (newVal) {
+        this.message = " Вы проиграли, перезапуск уровня...";
+        setTimeout(() => {
+          this.message = null;
+          this.loadLevel({ levelNumber: this.levelNumber, isCustom: this.isCustom });
+        }, 5000);
+      }
+    },
+    '$route.params.level_number'(newLevel) {
+      this.loadLevel({ levelNumber: Number(newLevel), isCustom: this.isCustom });
+    }
+  },
   mounted() {
     this.loadLevel({ levelNumber: this.levelNumber, isCustom: this.isCustom });
   },
   methods: {
-    ...mapActions("game", ["loadLevel", "moveFlower", "expandFlower"]),
+    ...mapActions("game", ["loadLevel", "moveFlower", "expandFlower", "win", "lose"]),
 
     handleKeyAction(action) {
+      if (this.getHasWon || this.getHasLost) {
+        return;
+      }
       switch (action) {
         case "move-up":
           this.moveFlower([-1, 0]);
@@ -55,9 +108,29 @@ export default {
         case "action-space":
           this.expandFlower();
           break;
+        
+        case "restart-level":
+          this.loadLevel({ levelNumber: this.levelNumber, isCustom: this.isCustom });
+          break;
+        
+        case "return-to-menu":
+          this.$router.push({ name: RouteNames.LEVEL_MENU });
+          break;
 
         default:
           break;
+      }
+      const result = mapValidator.validateFlower(this.getGrid);
+      if (result !== "Всё ок") {
+        console.log(result);
+        this.lose();
+      }
+      else if (gameLogic.hasWon(this.getGrid))
+      {
+        console.log('btuuuuuh')
+        console.log(gameLogic.hasWon(this.getGrid))
+        console.log(this.getGrid)
+        this.win();
       }
       console.log(action);
     },
@@ -67,5 +140,10 @@ export default {
 
 <style scoped lang="less">
 .game-page {
+  &__message {
+    font-size: 1.5em;
+    color: red;
+    text-align: center;
+  }
 }
 </style>

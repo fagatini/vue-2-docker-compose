@@ -17,6 +17,8 @@ export default {
       wall: "",
       ground: "",
     },
+    hasLost: false,
+    hasWon: false
   },
   getters: {
     getGrid: (state) => state.grid,
@@ -27,6 +29,8 @@ export default {
     currentLevel: (state) => state.currentLevel,
     isCustomLevel: (state) => state.isCustomLevel,
     getValidationResults: (state) => state.validationResults,
+    getHasLost: (state) => state.hasLost,
+    getHasWon: (state) => state.hasWon
   },
   mutations: {
     setGrid(state, grid) {
@@ -81,6 +85,12 @@ export default {
         return row;
       });
     },
+    win(state, hasWon) {
+      state.hasWon = hasWon;
+    },
+    lose(state, hasLost) {
+      state.hasLost = hasLost;
+    }
   },
   actions: {
     loadLevel({ state, commit }, payload) {
@@ -97,6 +107,8 @@ export default {
           levelData.map((row) => row.map(() => false))
         );
         commit("setCurrentLevel", { levelNumber, isCustom });
+        commit("win", false);
+        commit("lose", false);
       } else {
         console.error("Level not found");
       }
@@ -154,6 +166,12 @@ export default {
         commit("setFlowerCells", result.newFlowerCells);
       }
     },
+    win({ commit }) {
+      commit("win", true);
+    },
+    lose({ commit }) {
+      commit("lose", true);
+    }
   },
 };
 

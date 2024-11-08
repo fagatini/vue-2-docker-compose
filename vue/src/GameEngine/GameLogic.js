@@ -68,31 +68,26 @@ const gameLogic = {
     return { newGrid, newFlowerCells };
   },
 
-  calculateFlowerGrowDirections(grid) {
-    const directions = [0, 0, 0, 0];
-    const flowerValueList = [8, 9];
-
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid[i].length; j++) {
-        if (grid[i][j] === 6) {
-          if (i > 0 && flowerValueList.includes(grid[i - 1][j])) {
-            directions[0]++; // up
-          }
-          if (i < grid.length - 1 && flowerValueList.includes(grid[i + 1][j])) {
-            directions[1]++; // down
-          }
-          if (j > 0 && flowerValueList.includes(grid[i][j - 1])) {
-            directions[2]++; // left
-          }
-          if (
-            j < grid[i].length - 1 &&
-            flowerValueList.includes(grid[i][j + 1])
-          ) {
-            directions[3]++; // right
-          }
-        }
+  calculateFlowerGrowDirections(grid, flowerCells) {
+    let directions = [0, 0, 0, 0];
+    
+    flowerCells.forEach(flower => {
+      const {row: i, col: j} = flower;
+      let sunCounter = 0
+      if ((grid[i + 1][j] === 5 ? ++sunCounter : 1) && grid[i + 1][j] === 6) {
+        directions[0]++;
       }
-    }
+      if ((grid[i - 1][j] === 5 ? ++sunCounter : 1) && grid[i - 1][j] === 6) {
+        directions[1]++;
+      }
+      if ((grid[i][j + 1] === 5 ? ++sunCounter: 1) && grid[i][j + 1] === 6) {
+        directions[2]++;
+      }
+      if ((grid[i][j - 1] === 5 ? ++sunCounter : 1) && grid[i][j - 1] === 6) {
+        directions[3]++;
+      }
+      directions = directions.map(i => i + sunCounter);
+    });
 
     return directions;
   },
@@ -100,7 +95,7 @@ const gameLogic = {
   expandFlower(grid, flowerCells) {
     const newGrid = grid.map((row) => [...row]);
     const newFlowerCells = [...flowerCells];
-    const directions = this.calculateFlowerGrowDirections(grid);
+    const directions = this.calculateFlowerGrowDirections(grid, flowerCells);
     let expanded = false;
 
     const directionOffsets = [
@@ -149,6 +144,10 @@ const gameLogic = {
 
     return expanded ? { newGrid, newFlowerCells } : null;
   },
+
+  hasWon(grid) {
+    return !grid.some(i => i.some(j => j === 7));
+  }
 };
 
 export default gameLogic;
