@@ -39,7 +39,7 @@
             @mouseover="() => setHighlightedOption(type)"
             @click="() => onOptionClick(type)"
           >
-            {{ type }}
+            {{ cellTypeLabels[type] || type }}
           </li>
         </ul>
       </div>
@@ -59,6 +59,17 @@ export default {
       isOpen: false,
       isTextHover: false,
       isFocused: false,
+      cellTypeLabels: {
+        1: "Воздух",
+        2: "Стенка",
+        3: "Поле",
+        4: "Тень",
+        5: "Солнце",
+        6: "Капля",
+        7: "Горшок",
+        8: "Цветочек на поле",
+        9: "Цветочек в горшке",
+      }
     };
   },
   props:{
@@ -83,7 +94,7 @@ export default {
           if (cell) {
             const rowIndex = Math.floor(index / this.selectedGrid[0].length);
             const colIndex = index % this.selectedGrid[0].length;
-            return this.getGrid[rowIndex][colIndex];
+            return this.cellTypeLabels[this.getGrid[rowIndex][colIndex]];
           }
           return null;
         })
@@ -162,6 +173,7 @@ export default {
 </script>
 
 <style scoped lang="less">
+
 .select {
   position: relative;
   width: 100%;
@@ -169,7 +181,8 @@ export default {
 
   &--disabled {
     pointer-events: none;
-    filter: brightness(0.7);
+    color: var(--button-background-color);
+    font-weight: bold;
   }
 
   &__toggle {
@@ -180,22 +193,27 @@ export default {
     font-size: 14px;
     line-height: 1.4;
     background-color: white;
-    border: 1px solid grey;
+    border: 1px solid black;
     border-radius: 2px;
     cursor: pointer;
     user-select: text;
+    text-align: center;
+    font-family: "Babayka", sans-serif;
+    font-size: 20px;
 
     &--highlighted {
       border-color: #a5a5a5;
     }
 
     &--focused {
-      border-color: #5089f3;
+      border-color: var(--button-background-color);
       outline: none;
+      background-color: var(--flower-cell-color);
     }
 
     &--disabled {
       pointer-events: none;
+      background-color: var(--flower-cell-color);
     }
 
     &::after {
@@ -221,24 +239,27 @@ export default {
     left: 0;
     z-index: 2;
     display: block;
+    font-family: "Babayka", sans-serif;
+    font-size: 20px;
+    text-align: center;
 
     &::before {
       content: "";
       position: absolute;
-      top: 3px;
+      top: 8px;
       left: 10%;
       z-index: 2;
       width: 0;
       height: 0;
       border-left: 13px solid transparent;
       border-right: 13px solid transparent;
-      border-bottom: 13px solid grey;
+      border-bottom: 13px solid var(--button-background-color);
     }
 
     &::after {
       content: "";
       position: absolute;
-      top: 4px;
+      top: 10px;
       left: 10%;
       z-index: 2;
       width: 0;
@@ -261,7 +282,7 @@ export default {
     max-height: 10rem;
     overflow-y: auto;
     background-color: white;
-    border: 1px solid grey;
+    border: 1px solid var(--button-background-color);
     border-radius: 2px;
     box-shadow: 0px 0px 10px #dbd6d6;
     padding: 0;
@@ -275,7 +296,6 @@ export default {
 
     &--selected {
       font-weight: bolder;
-      color: #5089f3;
     }
 
     &--highlighted {

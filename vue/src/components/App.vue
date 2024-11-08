@@ -14,4 +14,8 @@
   max-height: 100vh;
   overflow: hidden;
 }
+
+body {
+  margin: 0px;
+}
 </style>
