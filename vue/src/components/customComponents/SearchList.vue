@@ -81,8 +81,16 @@ export default {
   outline: none;
 
   &:focus {
-    border: 2px solid #dfdfdf;
+    outline: 2px solid #dfdfdf;
+    outline-offset: -2px;
     border-radius: 30px;
+  }
+
+  &::placeholder {
+    color: #878787;
+    text-transform: lowercase;
+    font-size: 15px;
+    letter-spacing: 0.25px;
   }
 }
 
@@ -96,6 +104,7 @@ export default {
     border-bottom: 1px solid #ECECEC;
     padding: 5px;
     font-size: 14px;
+    cursor: pointer;
 
     &:hover {
       background-color: #ECECEC;

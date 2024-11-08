@@ -28,8 +28,9 @@
 </template>
 
 <script>
+
 import RecommendationComponent from '../parts/RecommendationComponent.vue';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { TAGS } from '../../core/tags';
 
 export default {
@@ -37,13 +38,19 @@ export default {
   components: {
     RecommendationComponent
   },
+  mounted() {
+    this.showDetails
+  },
   computed: {
     TAGS() {
       return TAGS
     },
     ...mapGetters('recipes', {
       recipes: 'getRecipesByTags'
-    })
+    }),
+    ...mapActions('detail_search', [
+      'showDetails'
+    ])
   },
   methods: {
     recipesByTags(tags) {
