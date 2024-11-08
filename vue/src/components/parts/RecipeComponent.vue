@@ -1,25 +1,21 @@
 <template>
-  <div class="recipe">
+  <RouterLink :to="{ name: ROUTES.RECIPE, params: { id: recipe.id } }" class="recipe">
     <div class="recipe__image">
       <img :src="recipe.cover" />
     </div>
     <div class="recipe__content">
       <div class="recipe__content__name">
-        <RouterLink :to="{ name: ROUTES.RECIPE, params: { id: recipe.id } }">
-          {{ recipe.name }}
-        </RouterLink>
+        {{ recipe.name }}
       </div>
       <div class="recipe__content__description">
         {{ recipe.description }}
       </div>
       <div class="recipe__content__ingredients">
-        <div>
-          <span> Продукты: </span>
-          {{ makeIngredientsList(recipe.ingredients) }}
-        </div>
+        <span> Продукты: </span>
+        {{ makeIngredientsList(recipe.ingredients) }}
       </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <script>
@@ -47,7 +43,7 @@ export default {
       let ingredientsString = ""
 
       ingredients.forEach(ingredient => {
-        ingredientsString += `${this.getIngredientName(ingredient.ingredient_id)}, `
+        ingredientsString += `${this.getIngredientName(ingredient.ingredient_id).toLowerCase()}, `
       })
       ingredientsString = ingredientsString.slice(0, ingredientsString.lastIndexOf(',')) + '.'
 
@@ -59,48 +55,55 @@ export default {
 
 <style lang="less" scoped>
 .recipe {
-  margin-left: 20px;
   margin-top: 20px;
-  border: 1px solid #f5f5f5;
-  border-radius: 5px;
   display: flex;
-  width: 600px;
+  width: 760px;
+  height: 200px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
 
   &__image {
-    width: 150px;
-    height: 120px;
+    min-width: 240px;
+    height: inherit;
     background-position: center;
-    border-radius: 5px 5px 0 0;
+    border-radius: 8px;
 
     img {
       width: 100%;
       height: 100%;
-      object-fit: fill;
+      object-fit: cover;
+      border-radius: inherit;
     }
   }
 
   &__content {
-    width: 100%;
+    width: -webkit-fill-available;
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+    padding: 15px 25px;
     text-align: start;
 
     &__name {
-      font-size: 15px;
+      font-size: 18px;
       font-weight: bold;
       margin-bottom: 10px;
     }
 
     &__description {
-      font-size: 14px;
+      font-size: 15px;
       margin-bottom: 10px;
       height: 50px;
     }
 
     &__ingredients {
-      font-size: 14px;
+      font-size: 15px;
+      color: #878787;
     }
+  }
+
+  &:hover {
+    background-color: #F5F5F5;
   }
 }
 </style>

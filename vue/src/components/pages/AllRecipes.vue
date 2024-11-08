@@ -1,10 +1,26 @@
 <template>
   <div class="recipes">
-    <nav>
+    <RouterLink :to="{ name: ROUTES.HOME }" class="nav-main">Главная</RouterLink>
+    <div class="search-title">
+      <h2 class="search-title__search">Все рецепты</h2>
+      <span class="search-title__found">рецептов найдено: {{ getFoundCount() }}</span>
+    </div>
+
+    <div class="search-line">
+      <input 
+        v-model="search" 
+        class="search-input" 
+        type="text" 
+        placeholder="искать на cooking"
+        @keyup.enter="() => findByName()" />
+      
+      <button class="search-line__button" @click="() => findByName()">Найти</button>
+    </div>
+
+    <nav class="temp">
       <RouterLink :to="{ name: ROUTES.CREATE_RECIPE }">Добавить новый рецепт</RouterLink>
     </nav>
     <RouterView />
-    <h2>Страница со всеми рецептами</h2>
     <div class="recipes-container">
       <RecipeComponent 
         v-for="recipe in recipesToShow" 
@@ -23,8 +39,9 @@
 </template>
 
 <script>
+import router from '@/router';
 import { ROUTES } from '@/router/routes';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import RecipeComponent from '../parts/RecipeComponent.vue';
 import PaginationComponent from '../parts/PaginationComponent.vue';
 
@@ -38,12 +55,16 @@ export default {
     return {
       maxItemsPerPage: 5,
       recipesOnPage: [],
+      search: null
     }
   },
   computed: {
     ROUTES() {
       return ROUTES
     },
+    ...mapActions('detail_search', [
+      'hideDetails'
+    ]),
     ...mapGetters('recipes', {
       recipes: 'getRecipes'
     }),
@@ -57,6 +78,9 @@ export default {
       return recipesToReturn
     }
   },
+  mounted() {
+    this.hideDetails
+  },
   methods: {
     changePage(page) {
       this.recipesOnPage = this.recipes.slice((page - 1) * this.maxItemsPerPage, page * this.maxItemsPerPage)
@@ -65,21 +89,40 @@ export default {
       this.recipesToShow = this.recipes.slice((page - 1) * this.maxItemsPerPage, this.maxItemsPerPage)
 
       return this.recipesToShow
+    },
+    getFoundCount() {
+      return this.recipes.length
+    }, 
+    findByName() {
+      if(this.search) {
+        router.push({ name: ROUTES.SEARCH_RESULT, query: { search: this.search } })
+      }
+      this.search = null
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.recipes {
+.search-line {
   display: flex;
-  flex-direction: column;
+  align-items: center;
 
-  &-container {
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px 5px 0 0;
-    align-items: center;
+  &__button {
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    line-height: 22px;
+    background-color: #ececec;
+    font-size: 16px;
+    font-family: inherit;
   }
+}
+.search-input {
+  margin: 0 8px 0 0;
+}
+
+.temp {
+  margin: 30px 0;
 }
 </style>
