@@ -12,8 +12,9 @@
 </template>
 
 <script>
-import SearchResultByName from '../parts/SearchResultByName.vue'
+import SearchResultByName from '../parts/SearchResultByName.vue';
 import SearchResultByFilters from '../parts/SearchResultByFilters.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'SearchResultPage',
@@ -22,9 +23,15 @@ export default {
     SearchResultByFilters
   },
   computed: {
+    ...mapActions('detail_search', [
+      'hideDetails'
+    ]),
     isSearchByName() {
       return this.$route.query.search != null
     }
+  },
+  mounted() {
+    this.hideDetails
   }
 }
 </script>

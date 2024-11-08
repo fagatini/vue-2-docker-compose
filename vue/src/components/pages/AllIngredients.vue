@@ -16,7 +16,7 @@
 
 <script>
 import { ROUTES } from '@/router/routes';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import IngredientComponent from '../parts/IngredientComponent.vue';
 
 export default {
@@ -28,9 +28,15 @@ export default {
     ROUTES() {
       return ROUTES
     },
+    ...mapActions('detail_search', [
+      'hideDetails'
+    ]),
     ...mapGetters('ingredients', {
       ingredients: 'getIngredients'
     })
+  },
+  mounted() {
+    this.hideDetails
   }
 }
 </script>

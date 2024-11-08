@@ -96,6 +96,7 @@ export default {
     border-bottom: 1px solid #ECECEC;
     padding: 5px;
     font-size: 14px;
+    cursor: pointer;
 
     &:hover {
       background-color: #ECECEC;

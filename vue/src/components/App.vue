@@ -1,19 +1,18 @@
 <template>
   <div class="app">
     <div class="search-wrapper">
-      <img src="../assets/cooking_logo.png">
+      <RouterLink :to="{ name: ROUTES.HOME }"><img src="../assets/cooking_logo.png"></RouterLink>
       <input 
         v-model="search" 
         class="search-input" 
         type="text" 
         placeholder="искать на cooking"
         @keyup.enter="() => findByName()" />
-
-      <!-- <button class="search-button" @click="() => findByName()">Найти</button> -->
     </div>
-    <span v-if="showDetails">
+
+    <div v-if="showDetails" class="details-to-show--show">
       <DetailSearch />
-    </span>
+    </div>
 
     <nav class="top-nav">
       <RouterLink :to="{ name: ROUTES.HOME }">Главная</RouterLink> |
@@ -21,7 +20,7 @@
       <RouterLink :to="{ name: ROUTES.ALL_INGREDIENTS }">Все ингредиенты</RouterLink> |
     </nav>
 
-    <div class="app__body"> 
+    <div class="app__body" :class="{'details-to-show--show': showDetails, 'details-to-show--hide': !showDetails}"> 
       <nav class="left-nav"></nav>
       <div class="content">
         <RouterView />
@@ -34,17 +33,20 @@
 import router from '@/router';
 import { ROUTES } from '@/router/routes';
 import DetailSearch from './parts/HomeDetailSearch.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
     ROUTES() {
       return ROUTES
-    }
+    },
+    ...mapGetters('detail_search', {
+      showDetails: 'getDetailsFlag'
+    })
   },
   data() {
     return {
-      search: null,
-      showDetails: false
+      search: null
     }
   },
   components: {
@@ -111,6 +113,7 @@ body {
   height: fit-content;
   padding: 3px 200px 3px 80px;
   border-bottom: 1px solid #ECECEC;
+  z-index: 1;
 }
 
 .search-input {
@@ -135,41 +138,6 @@ body {
     font-size: 18px;
     color: rgba(0, 0, 0, .50);
     font-weight: 100;
-  }
-}
-
-.search-button {
-  background-color: #9bdfc0;
-  border: 1px solid #82b9a0;
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: #111827;
-  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: .875rem;
-  font-weight: 600;
-  line-height: 1rem;
-  padding: .75rem 1rem;
-  text-align: center;
-  text-decoration: none #D1D5DB solid;
-  text-decoration-thickness: auto;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: max-content;
-
-  &:hover {
-    background-color: #7dc7a6;
-  }
-
-  &:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  &:focus-visible {
-    box-shadow: none;
   }
 }
 
@@ -204,5 +172,25 @@ body {
     border-radius: 5px 5px 0 0;
     align-items: center;
   }
+}
+
+.details-to-show--show {
+    animation: 0.3s show ease;
+    position: relative; 
+}
+
+.details-to-show--hide {
+  animation: 0.5s hide ease;
+  position: relative;
+}
+
+@keyframes show  {
+  from { top: -100px; }
+  to { top: 0px; }
+}
+
+@keyframes hide  {
+  from { top: 100px; }
+  to { top: 0px; }
 }
 </style>

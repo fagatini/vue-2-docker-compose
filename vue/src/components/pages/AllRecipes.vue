@@ -24,7 +24,7 @@
 
 <script>
 import { ROUTES } from '@/router/routes';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import RecipeComponent from '../parts/RecipeComponent.vue';
 import PaginationComponent from '../parts/PaginationComponent.vue';
 
@@ -44,6 +44,9 @@ export default {
     ROUTES() {
       return ROUTES
     },
+    ...mapActions('detail_search', [
+      'hideDetails'
+    ]),
     ...mapGetters('recipes', {
       recipes: 'getRecipes'
     }),
@@ -56,6 +59,9 @@ export default {
 
       return recipesToReturn
     }
+  },
+  mounted() {
+    this.hideDetails
   },
   methods: {
     changePage(page) {
@@ -71,15 +77,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.recipes {
-  display: flex;
-  flex-direction: column;
+// .recipes {
+//   display: flex;
+//   flex-direction: column;
 
-  &-container {
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px 5px 0 0;
-    align-items: center;
-  }
-}
+//   &-container {
+//     display: flex;
+//     flex-direction: column;
+//     border-radius: 5px 5px 0 0;
+//     align-items: center;
+//   }
+// }
 </style>

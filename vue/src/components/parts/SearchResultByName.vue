@@ -1,17 +1,17 @@
 <template>
   <div class="search-result__seach-by-name">
     <RouterLink :to="{ name: ROUTES.HOME }">Главная</RouterLink>
-    <h2>Результаты поиска по запросу {{ search }}</h2>
-    <div class="recipes-container">
-      <div class="recipes" v-for="(recipe, indx) in recipes" :key="indx">
-        <span v-if="recipe.name.toLowerCase().includes(search.toLowerCase())">
-          <RecipeComponent :key="recipe.id" :recipe="recipe" />
-          <RouterView />
-          {{ foundTrue() }}
-        </span>
-      </div>
+    <h2>{{ firstCapital(search) }}</h2>
+    <h3>рецептов найдено: {{ getFoundCount() }}</h3>
+
+    <IngredientsPicker :include-list="includeList" :exclude-list="excludeList"/>
+
+    <div class="recipes" v-for="(recipe, indx) in recipesInclude" :key="indx">
+      <RecipeComponent :key="recipe.id" :recipe="recipe" />
+      <RouterView />
     </div>
-    <h2 v-if="!found">Нет совпадений</h2>
+      
+    <h2 v-if="getFoundCount() == 0">Нет совпадений</h2>
   </div>
 </template>
 
@@ -19,16 +19,20 @@
 import { ROUTES } from '@/router/routes'
 import { mapGetters } from 'vuex'
 import RecipeComponent from './RecipeComponent.vue';
+import IngredientsPicker from './IngredientsPicker.vue';
 
 export default {
   name: 'SearchResultByName',
   data() {
     return {
-      found: false
+      found: false,
+      includeList: [],
+      excludeList: [],
     }
   },
   components: {
-    RecipeComponent
+    RecipeComponent,
+    IngredientsPicker
   },
   computed: {
     ROUTES() {
@@ -39,11 +43,22 @@ export default {
     },
     ...mapGetters('recipes', {
       recipes: 'getRecipes'
-    })
+    }),
+    recipesInclude() {
+      return this.recipes.filter( recipe => 
+        recipe.name.toLowerCase().includes(this.search.toLowerCase())
+      )
+    }
   },
   methods: {
     foundTrue() {
       this.found = true
+    },
+    firstCapital(name) {
+      return name.charAt(0).toUpperCase() + name.slice(1)
+    },
+    getFoundCount() {
+      return this.recipesInclude.length
     }
   }
 }
