@@ -8,7 +8,7 @@ export default {
   getters: {
     getRecipes: (state) => state.recipes,
     getRecipeById: (state) => (id) => state.recipes.find(i => i.id === id),
-    getRecipesByIngredients: (state) => ({includeList, excludeList}) => {
+    getRecipesByIngredientsOrAll: (state) => ({includeList, excludeList}) => {
       let result = state.recipes
       
       if (includeList.length > 0) {
@@ -32,11 +32,24 @@ export default {
       }
 
       return result
-    }
+    },
+    getRecipesByCategoryId: (state) => (category_id) => state.recipes.filter(recipe => 
+      recipe.dish_category_id === category_id
+    ),
+    getRecipesByTimeId: (state) => (time_id) => state.recipes.filter(recipe => 
+      recipe.dish_time_id === time_id
+    ),
+    getRecipesByCuisineId: (state) => (cuisine_id) => state.recipes.filter(recipe => 
+      recipe.dish_cuisine_id === cuisine_id
+    ),
+    getRecipesByTags: (state) => (tags) => state.recipes.filter(recipe => 
+      recipe.tags.some(tag => tags.includes(tag))
+    )
   },
   mutations: {
     SET_RECIPES: (state, payload) => {
       state.recipes = payload
+      localStorage.setItem('recipes', JSON.stringify(state.recipes))
     },
     ADD_RECIPE: (state, payload) => {
       state.recipes.push(payload)

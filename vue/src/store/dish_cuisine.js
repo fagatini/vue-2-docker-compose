@@ -7,7 +7,8 @@ export default {
   },
   getters: {
     getDishCuisine: (state) => state.dish_cuisine,
-    getDishCuisineById: (state) => (id) => state.dish_cuisine.find(i => i.id === id)
+    getDishCuisineById: (state) => (id) => state.dish_cuisine.find(i => i.id === id),
+    getDishCuisineName: (state) => (id) => state.dish_cuisine.find(i => i.id === id).name
   },
   mutations: {
     SET_DISH_CUISINE: (state, payload) => {

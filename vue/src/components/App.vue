@@ -1,43 +1,94 @@
 <template>
-  <div id="app">
+  <div class="app">
     <div class="search-wrapper">
+      <img src="../assets/cooking_logo.png">
       <input 
         v-model="search" 
         class="search-input" 
         type="text" 
-        placeholder="Искать рецепт..."
+        placeholder="искать на cooking"
         @keyup.enter="() => findByName()" />
 
-      <button class="search-button" @click="() => findByName()">Найти</button>
+      <!-- <button class="search-button" @click="() => findByName()">Найти</button> -->
     </div>
-    <nav class="top-nav">
-      <RouterLink :to="{ name: ROUTES.HOME }">Главная</RouterLink> |
-      <RouterLink :to="{ name: ROUTES.ALL_RECIPES }">Все рецепты</RouterLink> |
-      <RouterLink :to="{ name: ROUTES.ALL_INGREDIENTS }">Все ингредиенты</RouterLink> |
-    </nav>
-    <RouterView />
+    <span v-if="showDetails">
+      <DetailSearch />
+    </span>
+
+    <div class="app__body"> 
+      <nav class="nav">
+        <div class="nav__content">
+          <div class="nav-base__container">
+            <div class="nav-base__container__content" 
+              v-for="(baseLink, ROUTE, i) in LINKS" 
+              :key="i">
+              <img class="nav-base__container__content__icon" src="../assets/nav_icon.png">
+              <RouterLink class="nav-base__container__content__link" 
+              :to="{ name: ROUTE }"
+              >
+                {{baseLink}}
+              </RouterLink> 
+            </div>
+          </div>
+          <div class="nav-category__container">
+            <div class="nav-category__container__content" 
+              v-for="(dish_category, i) in dish_categories" 
+              :key="i">
+              <img class="nav-category__container__content__icon" src="../assets/nav_icon.png">
+              <RouterLink class="nav-category__container__content__link" 
+              :to="{ name: ROUTES.SEARCH_RESULT, query: { dish_category: dish_category.id} }"
+              >
+                {{ dish_category.name }}
+              </RouterLink> 
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="content">
+        <RouterView />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import router from '@/router';
 import { ROUTES } from '@/router/routes';
+import DetailSearch from './parts/HomeDetailSearch.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   computed: {
     ROUTES() {
       return ROUTES
-    }
+    },
+    ...mapGetters('dish_categories', {
+      dish_categories: 'getDishCategories'
+    }),
+    LINKS() {
+      return {
+        [ROUTES.HOME]: 'Главная',
+        [ROUTES.ALL_RECIPES]: 'Все рецепты',
+        [ROUTES.ALL_INGREDIENTS]: 'Все ингредиенты'
+      }
+  }
   },
   data() {
     return {
-      search: ''
+      search: null,
+      showDetails: false
     }
+  },
+  components: {
+    DetailSearch
   },
   methods: {
     findByName() {
-      router.push({ name: ROUTES.SEARCH_RESULT, query: { search: this.search } })
-    }
+      if(this.search) {
+        router.push({ name: ROUTES.SEARCH_RESULT, query: { search: this.search } })
+      }
+      this.search = null
+    },
   }
 }
 </script>
@@ -45,46 +96,55 @@ export default {
 <style lang="less">
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap');
 
+.app {
+  width: 100%;
+  height: 100vh;
+
+  &__body {
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
+    margin: 12px 35px;
+  }
+}
+
 body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-.top-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  background-color: #ECECEC;
+  margin: 0;
 }
 
 .search-wrapper {
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  justify-content: space-around;
-  width: 630px;
-  margin: auto;
+  align-items: center;
+  justify-content: left;
+  background-color: white;
+  width: auto;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 3px 200px 3px 80px;
+  border-bottom: 1px solid #ECECEC;
 }
 
 .search-input {
-  padding: 4px 12px;
-  color: rgba(0, 0, 0, .70);
-  border: 1px solid rgba(0, 0, 0, .12);
-  transition: .15s all ease-in-out;
-  background: white;
+  padding: 12px 30px 12px 60px;
+  color: rgba(0, 0, 0, 0.7);
+  transition: 0.15s all ease-in-out;
+  background: #ECECEC;
   line-height: 22px;
-  font-size: 18px;
+  font-size: 14pt;
   min-width: 500px;
+  max-width: 1200px;
+  border-radius: 30px;
+  border: none;
+  margin: 10px 80px;
+  width: -webkit-fill-available;
 
   &:focus {
     outline: none;
@@ -116,6 +176,7 @@ body {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  width: max-content;
 
   &:hover {
     background-color: #7dc7a6;
@@ -130,4 +191,106 @@ body {
     box-shadow: none;
   }
 }
+
+.nav {
+  min-width: 250px;
+  min-height: 100%;
+  background-color: white;
+  border-radius: 70px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-align: start;
+  }
+}
+
+.nav-base {
+  margin-bottom: 15px;
+
+  &__container{
+    width: 200px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-top: 50px;
+    border-bottom: 2px solid;
+
+    &__content {
+      width: 200px;
+      display: flex;
+      margin-top: 10px;
+      align-items: center;
+
+      &__icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      &__link {
+        text-decoration: none;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.nav-category {
+  margin-bottom: 15px;
+
+  &__container {
+    width: 200px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+
+    &__content {
+      width: 220px;
+      display: flex;
+      margin-top: 20px;
+      align-items: center;
+
+      &__icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      &__link {
+        text-decoration: none;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.content {
+  display: flex;
+  background-color: white;
+  min-width: 700px;
+  max-width: 1000px;
+  width: -webkit-fill-available;
+  margin-left: 12px;
+  border-radius: 70px;
+  padding: 70px 8%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.recipes {
+  display: flex;
+  flex-direction: column;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px 5px 0 0;
+    align-items: center;
+  }
+}
+
 </style>
