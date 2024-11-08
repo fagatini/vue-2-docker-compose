@@ -90,7 +90,7 @@ export default {
 .pagination-container {
   margin-top: 30px;
   align-self: center;
-  
+
   &__first-button,
   &__last-button {
     border: none;
