@@ -1,18 +1,22 @@
 <template>
   <div class="game-page">
-    <h2>Level {{ levelNumber }}</h2>
-    <GameGrid />
+    <StartScreen>
+      <h2>Level {{ levelNumber }}</h2>
+      <GameGrid />
+    </StartScreen>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import GameGrid from "../parts/GameGrid.vue";
+import StartScreen from "../parts/PageBackground.vue";
 
 export default {
   name: 'GamePage',
   components: {
     GameGrid,
+    StartScreen,
   },
   props: {
     levelNumber: {
