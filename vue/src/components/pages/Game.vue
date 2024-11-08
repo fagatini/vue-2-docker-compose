@@ -2,20 +2,20 @@
   <div class="game-page">
     <h2>Level {{ levelNumber }}</h2>
     <GameGrid />
-    <KeyboardController @key-action="handleKeyAction"/>
+    <KeyboardController @key-action="handleKeyAction" />
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 import GameGrid from "../parts/GameGrid.vue";
-import KeyboardController from '../parts/KeyboardController.vue';
+import KeyboardController from "../parts/KeyboardController.vue";
 
 export default {
-  name: 'GamePage',
+  name: "GamePage",
   components: {
     GameGrid,
-    KeyboardController
+    KeyboardController,
   },
   props: {
     levelNumber: {
@@ -25,19 +25,43 @@ export default {
     isCustom: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
   },
   mounted() {
-    this.loadLevel({levelNumber: this.levelNumber, isCustom: this.isCustom});
+    this.loadLevel({ levelNumber: this.levelNumber, isCustom: this.isCustom });
   },
   methods: {
-    ...mapActions('game', ['loadLevel']),
+    ...mapActions("game", ["loadLevel", "moveFlower", "expandFlower"]),
 
     handleKeyAction(action) {
+      switch (action) {
+        case "move-up":
+          this.moveFlower([-1, 0]);
+          break;
+
+        case "move-down":
+          this.moveFlower([1, 0]);
+          break;
+
+        case "move-left":
+          this.moveFlower([0, -1]);
+          break;
+
+        case "move-right":
+          this.moveFlower([0, 1]);
+          break;
+
+        case "action-space":
+          this.expandFlower();
+          break;
+
+        default:
+          break;
+      }
       console.log(action);
-    }
-  }
+    },
+  },
 };
 </script>
 
