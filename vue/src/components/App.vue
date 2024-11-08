@@ -17,30 +17,24 @@
     <div class="app__body" :class="{'details-to-show--show': showDetails, 'details-to-show--hide': !showDetails}"> 
       <nav class="nav">
         <div class="nav__content">
-          <div class="nav-base__container">
-            <div class="nav-base__container__content" 
-              v-for="(baseLink, ROUTE, i) in LINKS" 
-              :key="i">
-              <img class="nav-base__container__content__icon" src="../assets/nav_icon.png">
-              <RouterLink class="nav-base__container__content__link" 
-              :to="{ name: ROUTE }"
-              >
-                {{baseLink}}
-              </RouterLink> 
-            </div>
-          </div>
-          <div class="nav-category__container">
-            <div class="nav-category__container__content" 
-              v-for="(dish_category, i) in dish_categories" 
-              :key="i">
-              <img class="nav-category__container__content__icon" src="../assets/nav_icon.png">
-              <RouterLink class="nav-category__container__content__link" 
-              :to="{ name: ROUTES.SEARCH_RESULT, query: { dish_category: dish_category.id} }"
-              >
-                {{ dish_category.name }}
-              </RouterLink> 
-            </div>
-          </div>
+          <RouterLink class="nav__container"
+            :to="{ name: ROUTE }"
+            v-for="(baseLink, ROUTE, i) in LINKS" 
+            :key="i">
+            <div class="nav__container__link">
+              {{baseLink}}
+            </div> 
+          </RouterLink>
+          <div class="nav__delimeter"></div>
+          <RouterLink class="nav__container"
+            :to="{ name: ROUTES.SEARCH_RESULT, query: { dish_category: dish_category.id} }"
+            v-for="(dish_category, i) in dish_categories" 
+            :key="i">
+            <img class="nav__container__icon" :src="dish_category.img">
+            <div class="nav__container__link">
+              {{ dish_category.name }}
+            </div> 
+          </RouterLink>
         </div>
       </nav>
       <div class="content">
@@ -71,7 +65,7 @@ export default {
       return {
         [ROUTES.HOME]: 'Главная',
         [ROUTES.ALL_RECIPES]: 'Все рецепты',
-        [ROUTES.ALL_INGREDIENTS]: 'Все ингредиенты'
+        [ROUTES.ALL_INGREDIENTS]: 'Ингредиенты'
       }
   }
   },
@@ -89,7 +83,7 @@ export default {
         router.push({ name: ROUTES.SEARCH_RESULT, query: { search: this.search } })
       }
       this.search = null
-    },
+    }
   }
 }
 </script>
@@ -163,114 +157,44 @@ body {
   }
 }
 
-.search-button {
-  background-color: #9bdfc0;
-  border: 1px solid #82b9a0;
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: #111827;
-  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: .875rem;
-  font-weight: 600;
-  line-height: 1rem;
-  padding: .75rem 1rem;
-  text-align: center;
-  text-decoration: none #D1D5DB solid;
-  text-decoration-thickness: auto;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: max-content;
-
-  &:hover {
-    background-color: #7dc7a6;
-  }
-
-  &:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-
-  &:focus-visible {
-    box-shadow: none;
-  }
-}
-
 .nav {
-  min-width: 250px;
-  min-height: 100%;
+  width: 304px;
+  height: fit-content;
   background-color: white;
   border-radius: 70px;
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
+    width: max-content;
+    padding: 60px 40px;
     text-align: start;
   }
-}
-
-.nav-base {
-  margin-bottom: 15px;
 
   &__container{
-    width: 200px;
-    height: 120px;
     display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-    margin-top: 50px;
-    border-bottom: 2px solid;
+    margin: 2px 0;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: inherit;
 
-    &__content {
-      width: 200px;
-      display: flex;
-      margin-top: 10px;
-      align-items: center;
+    &__icon {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      border-radius: 8px;
+    }
 
-      &__icon {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-      }
+    &__link {
+      font-size: 16px;
+    }
 
-      &__link {
-        text-decoration: none;
-        font-size: 20px;
-      }
+    &:hover {
+      background-color: #ECECEC;
     }
   }
-}
 
-.nav-category {
-  margin-bottom: 15px;
-
-  &__container {
-    width: 200px;
-    height: 120px;
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-
-    &__content {
-      width: 220px;
-      display: flex;
-      margin-top: 20px;
-      align-items: center;
-
-      &__icon {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-      }
-
-      &__link {
-        text-decoration: none;
-        font-size: 20px;
-      }
-    }
+  &__delimeter {
+    border-bottom: 1px solid #ECECEC;
   }
 }
 
@@ -281,6 +205,7 @@ body {
   max-width: 1000px;
   width: -webkit-fill-available;
   margin-left: 12px;
+  margin-bottom: 12px;
   border-radius: 70px;
   padding: 70px 8%;
   justify-content: flex-start;
