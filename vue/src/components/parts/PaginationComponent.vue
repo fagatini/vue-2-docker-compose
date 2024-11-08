@@ -89,8 +89,9 @@ export default {
 <style lang="less" scoped>
 .pagination-container {
   background-color: white;
-  margin-top: 10px;
-  
+  margin-top: 20px;
+  align-self: center;
+
   &__first-button,
   &__last-button {
     margin-left: 5px;
