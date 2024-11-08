@@ -8,7 +8,7 @@
       <span class="desk__separator__line" />
       <span class="desk__separator__text">VS</span>
       <span class="desk__separator__line" />
-      <CountDown :initialValue="TIME_TO_TURN()" />
+      <CountDown />
       <EndTurnButton />
     </div>
     <div ref="lines">
@@ -22,15 +22,9 @@
 import GameDeskLine from "./DeskLine";
 import CountDown from '../game/CountDown.vue';
 import { mapGetters } from 'vuex';
-import { TIME_TO_TURN_MS } from '@/engine/constants';
 import EndTurnButton from '@/components/game/EndTurnButton.vue';
 
 export default {
-  methods: {
-    TIME_TO_TURN() {
-      return TIME_TO_TURN_MS / 1000
-    }
-  },
   components: {
     EndTurnButton,
     GameDeskLine,

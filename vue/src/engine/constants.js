@@ -38,6 +38,10 @@ export const ROUNDS_TO_WIN = 2;
 
 export const NEW_ROUND_DRAW_CARDS_QUANTITY = 3;
 
-export const TIME_TO_TURN_MS = 60 * 1000;
+export const TIME_TO_TURN_S = 60;
+
+export const TIME_TO_TURN_MS = TIME_TO_TURN_S * 1000;
 
 export const MAX_OPPONENT_WAIT_MS = 5000;
+
+export const COUNTDOWN_STEP_MS = 1000;

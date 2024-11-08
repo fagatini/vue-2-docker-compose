@@ -5,11 +5,14 @@
         :stroke-dashoffset="strokeDashoffset" stroke="currentColor" stroke-width="4" fill="transparent" :r="radius"
         cx="60" cy="60" />
     </svg>
-    <div class="count-down__timer">{{ currentValue }}</div>
+    <div class="count-down__timer">{{ currentCountValue }}</div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { TIME_TO_TURN_S } from '@/engine/constants';
+
 export default {
   name: 'GameCountDown',
   props: {
@@ -29,11 +32,11 @@ export default {
   },
   computed: {
     strokeDashoffset() {
-      const progress = this.currentValue / this.initialValue;
+      const progress = this.currentCountValue / TIME_TO_TURN_S;
       return this.circumference * (1 - progress);
     },
     circumferenceColor() {
-      const progress = this.currentValue / this.initialValue;
+      const progress = this.currentCountValue / TIME_TO_TURN_S;
 
       if (progress > 0.67) {
         return "count-down__progress-ring__circle--high";
@@ -42,24 +45,16 @@ export default {
       } else {
         return "count-down__progress-ring__circle--low";
       }
-    }
+    },
+    currentCountValue() {
+      return this.getGameEngine.getRemainTurnSeconds();
+    },
+    ...mapGetters('gameEngine', [
+      'getGameEngine',
+    ]),
   },
   mounted() {
     this.startCountdown();
-  },
-  methods: {
-    startCountdown() {
-      const stepMilliseconds = 1000;
-
-      this.intervalId = setInterval(() => {
-        if (this.currentValue > 0) {
-          this.currentValue--;
-        } else {
-          this.$emit('elapsed');
-          clearInterval(this.intervalId);
-        }
-      }, stepMilliseconds);
-    },
   },
 };
 </script>

@@ -1,5 +1,6 @@
 import { Player } from '@/engine/player';
 import {
+  COUNTDOWN_STEP_MS,
   GamePhases,
   INIT_DECK,
   MAX_OPPONENT_WAIT_MS,
@@ -17,11 +18,20 @@ class GameEngine {
   currentTurn = TurnStates.PLAYER;
   round = 1;
   opponentTurnsQuantity = 0;
+  msRemainToTurn = TIME_TO_TURN_MS;
 
   constructor() {
-    setTimeout(() => {
-      this.endPlayerTurn();
-    }, TIME_TO_TURN_MS);
+    setInterval(() => {
+      if (this.currentTurn !== TurnStates.PLAYER) {
+        return;
+      }
+
+      this.msRemainToTurn -= COUNTDOWN_STEP_MS;
+
+      if (this.msRemainToTurn <= 0) {
+        this.endPlayerTurn();
+      }
+    }, COUNTDOWN_STEP_MS)
   }
 
   performMulligan(indexesToRemove) {
@@ -45,6 +55,10 @@ class GameEngine {
     void this.performOpponentActions();
   }
 
+  getRemainTurnSeconds() {
+    return this.msRemainToTurn / 1000;
+  }
+
   playCard(cardIndex) {
     if (this.currentTurn !== TurnStates.PLAYER) {
       return;
@@ -64,11 +78,8 @@ class GameEngine {
       }
     }
 
-    setTimeout(() => {
-      this.endPlayerTurn();
-    }, TIME_TO_TURN_MS);
-
     this.currentTurn = TurnStates.PLAYER;
+    this.msRemainToTurn = TIME_TO_TURN_MS;
   }
 
   async performOpponentActions() {
