@@ -1,5 +1,14 @@
 import { Player } from '@/engine/player';
-import { GamePhases, INIT_DECK, ROUNDS_TO_WIN, TIME_TO_TURN_MS, TurnStates, Winners } from '@/engine/constants';
+import {
+  GamePhases,
+  INIT_DECK,
+  MAX_OPPONENT_WAIT_MS,
+  ROUNDS_TO_WIN,
+  TIME_TO_TURN_MS,
+  TurnStates,
+  Winners
+} from '@/engine/constants';
+import { sleep } from '@/utils/utils';
 
 class GameEngine {
   player = new Player(INIT_DECK);
@@ -33,7 +42,7 @@ class GameEngine {
     }
 
     this.currentTurn = TurnStates.OPPONENT;
-    this.performOpponentActions();
+    void this.performOpponentActions();
   }
 
   playCard(cardIndex) {
@@ -62,10 +71,12 @@ class GameEngine {
     this.currentTurn = TurnStates.PLAYER;
   }
 
-  performOpponentActions() {
+  async performOpponentActions() {
     if (this.currentTurn !== TurnStates.OPPONENT) {
       return;
     }
+
+    await sleep(Math.floor(Math.random() * MAX_OPPONENT_WAIT_MS));
 
     const cards = this.opponent.cards;
 
