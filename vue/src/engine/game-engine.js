@@ -14,7 +14,7 @@ import { sleep } from '@/utils/utils';
 class GameEngine {
   player = new Player(INIT_DECK);
   opponent =  new Player(INIT_DECK);
-  currentPhase = GamePhases.MULLIGAN;
+  currentPhase = GamePhases.ROUND_IN_PROGRESS;
   currentTurn = TurnStates.PLAYER;
   roundNumber = 1;
   opponentTurnsQuantity = 0;
@@ -23,7 +23,7 @@ class GameEngine {
 
   constructor() {
     setInterval(() => {
-      if (this.currentTurn !== TurnStates.PLAYER) {
+      if (this.currentTurn !== TurnStates.PLAYER || this.currentPhase !== GamePhases.ROUND_IN_PROGRESS) {
         return;
       }
 
@@ -97,7 +97,7 @@ class GameEngine {
   }
 
   async performOpponentActions() {
-    if (this.currentTurn !== TurnStates.OPPONENT || this.opponent.passed) {
+    if (this.currentTurn !== TurnStates.OPPONENT || this.opponent.passed || this.currentPhase !== GamePhases.ROUND_IN_PROGRESS) {
       return;
     }
 
@@ -172,6 +172,7 @@ class GameEngine {
     this.roundNumber = 1;
     this.opponentTurnsQuantity = 0;
     this.msRemainToTurn = TIME_TO_TURN_MS;
+    this.currentPhase = GamePhases.ROUND_IN_PROGRESS;
     this.cardPlayed = false;
   }
 }
