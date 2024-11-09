@@ -1,7 +1,7 @@
 <template>
   <div class="player center-horizontal center-vertical noselect">
     <img src="../../assets/player/Player.png" />
-    <HealthbarComponent :health="[player.health, player.maxHealth]" :shield="player.shield"/>
+    <HealthbarComponent :health="[player.health, player.maxHealth]" :shield="15"/>
   </div>
 </template>
 

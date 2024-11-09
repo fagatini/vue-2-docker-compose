@@ -99,7 +99,7 @@ export default {
 
     handleEnemyClick(enemy) {
       console.log(enemy);
-      this.tryPlayCard(enemy)
+      //this.tryPlayCard(enemy)
       this.applyEnemyDamage({enemy: enemy, damage: 12});
     },
 
