@@ -74,16 +74,16 @@
     </div>
 
     <h2> Комментарии <span class="additional-text">({{ comments.length }})</span></h2>
-      <div class="comment-section">
-        <div v-if="userComment">
-          <h3> Ваш комментарий </h3>
-          <CommentComponent :comment=userComment></CommentComponent>
-        </div>
-        <CommentForm v-else :recipeId="$route.params.id" :userId="currentUserId"></CommentForm>
-        <div class="comment" v-for="comment in otherComments" :key="comment.id">
-          <CommentComponent :comment=comment></CommentComponent>
-        </div>
+    <div class="comment-section">
+      <div v-if="userComment">
+        <h3> Ваш комментарий </h3>
+        <CommentComponent :comment=userComment></CommentComponent>
       </div>
+      <CommentForm v-else :recipeId="this.id" :userId="currentUserId"></CommentForm>
+      <div class="comment" v-for="comment in otherComments" :key="comment.id">
+        <CommentComponent :comment=comment></CommentComponent>
+      </div>
+    </div>
 
   </div>
 
@@ -101,6 +101,9 @@ export default {
   components: {
     CommentForm,
     CommentComponent
+  },
+  props: {
+    id: Number 
   },
   data() {
     return {
@@ -125,10 +128,10 @@ export default {
       'getCommentsByRecipeId'
     ]),
     recipe() {
-      return this.getRecipeById(this.$route.params.id) || null
+      return this.getRecipeById(this.id) || null
     },
     comments() {
-      return this.getCommentsByRecipeId(this.$route.params.id)
+      return this.getCommentsByRecipeId(this.id)
     },
     currentUserId() {
       // делаем вид, что мы какой-то аутентифицированный пользователь

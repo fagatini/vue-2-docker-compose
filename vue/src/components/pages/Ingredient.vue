@@ -27,12 +27,15 @@ import { ROUTES } from '@/router/routes';
 
 export default {
   name: 'IngredientPage',
+  props: {
+    id: Number
+  },
   computed: {
     ROUTES() {
       return ROUTES
     },
     ingredient() {
-      return this.getIngredientById(this.$route.params.id) || null
+      return this.getIngredientById(this.id) || null
     },
     ...mapGetters('ingredients', [
       'getIngredientById'

@@ -22,7 +22,10 @@ const routes = [
   {
     path: '/all-recipes/:id',
     name: ROUTES.RECIPE,
-    component: RecipePage
+    component: RecipePage,
+    props: (route: any) => ({
+      id: Number(route.params.id) || undefined
+    })
   },
   {
     path: '/all-recipes',
@@ -37,7 +40,10 @@ const routes = [
   {
     path: '/all-ingredients/:id',
     name: ROUTES.INGREDIENT,
-    component: IngredientPage
+    component: IngredientPage,
+    props: (route: any) => ({
+      id: Number(route.params.id) || undefined
+    })
   },
   {
     path: '/all-recipes/create-recipe',
