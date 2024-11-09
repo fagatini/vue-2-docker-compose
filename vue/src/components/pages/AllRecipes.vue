@@ -17,9 +17,6 @@
       <button class="search-line__button" @click="() => findByName()">Найти</button>
     </div>
 
-    <nav class="temp">
-      <RouterLink :to="{ name: ROUTES.CREATE_RECIPE }">Добавить новый рецепт</RouterLink>
-    </nav>
     <RouterView />
     <div class="recipes-container">
       <RecipeComponent 
@@ -35,6 +32,8 @@
       :maxItemsPerPage="this.maxItemsPerPage"
       @changePage="(page) => changePage(page)" 
     />
+
+    <RouterLink :to="{ name: ROUTES.CREATE_RECIPE }" class="floating-button">+</RouterLink>
   </div>
 </template>
 
@@ -69,13 +68,7 @@ export default {
       recipes: 'getRecipes'
     }),
     recipesToShow() {
-      let recipesToReturn = this.recipesOnPage
-
-      if(this.recipesOnPage.length == 0) {
-        recipesToReturn = this.recipes.slice(0, this.maxItemsPerPage)
-      }
-
-      return recipesToReturn
+      return this.recipesOnPage.length > 0 ? this.recipesOnPage : this.recipes.slice(0, this.maxItemsPerPage)
     }
   },
   mounted() {
@@ -107,6 +100,7 @@ export default {
 .search-line {
   display: flex;
   align-items: center;
+  margin: 5px 0 25px;
 
   &__button {
     border: none;
@@ -120,9 +114,5 @@ export default {
 }
 .search-input {
   margin: 0 8px 0 0;
-}
-
-.temp {
-  margin: 30px 0;
 }
 </style>

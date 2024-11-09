@@ -132,8 +132,7 @@
         <button @click="removeRecipe(n)">Remove</button>
       </p>
     </div> -->
-  </div>
-  
+  </div>  
   </template>
   
   <script>
@@ -184,6 +183,9 @@
           }
         }
       }
+    },
+    mounted() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     },
   
     components: {

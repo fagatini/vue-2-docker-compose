@@ -1,5 +1,6 @@
 <template>
   <div v-if="recipe" class="recipe">
+    <RouterLink :to="{ name: ROUTES.HOME }" class="nav-main">Главная</RouterLink>
 
     <div class="recipe-header">
       <h2>{{ recipe.name }}</h2>
@@ -91,6 +92,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { ROUTES } from '@/router/routes';
 import CommentForm from '../parts/CommentForm.vue';
 import CommentComponent from '../parts/CommentComponent.vue';
 
@@ -109,6 +111,9 @@ export default {
     this.portionCounter = this.recipe.portions
   },
   computed: {
+    ROUTES() {
+      return ROUTES
+    },
     ...mapGetters('recipes', [
       'getRecipeById'
     ]),
@@ -168,7 +173,6 @@ export default {
 <style lang="less" scoped>
 .recipe {
   text-align: left;
-  padding: 5%;
 }
 
 .additional-text {

@@ -1,5 +1,5 @@
 <template>
-  <div class="search-result__seach-by-name">
+  <div class="recipes">
     <RouterLink :to="{ name: ROUTES.HOME }" class="nav-main">Главная</RouterLink>
 
     <div class="search-title">
@@ -10,12 +10,19 @@
 
     <IngredientsPicker :include-list="includeList" :exclude-list="excludeList"/>
 
-    <div class="recipes" v-for="(recipe, indx) in filtered" :key="indx">
+    <div class="recipes-container" v-for="(recipe, indx) in recipesToShow" :key="indx">
       <RecipeComponent :key="recipe.id" :recipe="recipe" />
       <RouterView />
     </div>
       
     <h2 v-if="!found">Нет совпадений</h2>
+
+    <PaginationComponent 
+      :items="filtered" 
+      :maxVisiblePages="5" 
+      :maxItemsPerPage="maxItemsPerPage"
+      @changePage="(page) => changePage(page)" 
+    />
   </div>
 </template>
 
@@ -24,6 +31,7 @@ import { ROUTES } from '@/router/routes'
 import { mapGetters } from 'vuex'
 import RecipeComponent from './RecipeComponent.vue';
 import IngredientsPicker from './IngredientsPicker.vue';
+import PaginationComponent from '../parts/PaginationComponent.vue';
 
 export default {
   name: 'SearchResultByName',
@@ -31,12 +39,15 @@ export default {
     return {
       found: false,
       includeList: [],
-      excludeList: []
+      excludeList: [],
+      maxItemsPerPage: 5,
+      recipesOnPage: []
     }
   },
   components: {
     RecipeComponent,
-    IngredientsPicker
+    IngredientsPicker,
+    PaginationComponent
   },
   computed: {
     ROUTES() {
@@ -64,6 +75,9 @@ export default {
       return this.recipesIncludeSearch.filter( recipe =>
         this.recipesByIngredients.includes(recipe)
       )
+    },
+    recipesToShow() {
+      return this.recipesOnPage.length > 0 ? this.recipesOnPage : this.filtered.slice(0, this.maxItemsPerPage)
     }
   },
   methods: {
@@ -77,7 +91,15 @@ export default {
       let foundCount = this.filtered.length
       this.found = foundCount != 0
       return foundCount
-    }
+    },
+    changePage(page) {
+      this.recipesOnPage = this.filtered.slice((page - 1) * this.maxItemsPerPage, page * this.maxItemsPerPage)
+    },
+    getRecipesForPage(page) {
+      this.recipesToShow = this.filtered.slice((page - 1) * this.maxItemsPerPage, this.maxItemsPerPage)
+
+      return this.recipesToShow
+    },
   }
 }
 </script>
