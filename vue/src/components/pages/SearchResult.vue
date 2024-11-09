@@ -1,6 +1,5 @@
 <template>
   <div class="search-result">
-
     <div v-if="isSearchByName">
       <SearchResultByName/>
     </div>
@@ -36,4 +35,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.search-result {
+  width: -webkit-fill-available;
+}
+</style>

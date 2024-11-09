@@ -187,7 +187,9 @@ export default {
       recipes: 'getRecipes'
   })
   },
-
+  mounted() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  },
   methods: {
     //методы для добавления рецепта
     addRecipe() {

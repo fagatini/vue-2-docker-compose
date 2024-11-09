@@ -20,7 +20,7 @@
           <RouterLink class="nav__container"
             :to="{ name: ROUTE }"
             v-for="(baseLink, ROUTE, i) in LINKS" 
-            :key="i">
+            :key="'base' + i">
             <div class="nav__container__link">
               {{baseLink}}
             </div> 
@@ -29,7 +29,7 @@
           <RouterLink class="nav__container"
             :to="{ name: ROUTES.SEARCH_RESULT, query: { dish_category: dish_category.id} }"
             v-for="(dish_category, i) in dish_categories" 
-            :key="i">
+            :key="'categories' + i">
             <img class="nav__container__icon" :src="dish_category.img">
             <div class="nav__container__link">
               {{ dish_category.name }}
@@ -250,5 +250,22 @@ body {
   text-decoration: none;
   color: #49454F;
   font-size: 14px;
+}
+
+.floating-button {
+  position: sticky;
+  bottom: 10%;
+  left: 90%;
+  border-radius: 100px;
+  border: none;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  color: inherit;
+  background-color: #ececec;
+  text-decoration: none;
+  align-content: center;
+  text-align: center;
+  cursor: pointer;
 }
 </style>

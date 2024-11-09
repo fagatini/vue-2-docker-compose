@@ -1,16 +1,16 @@
 <template>
   <div class="all-ingredients">
-    <nav>
-      <RouterLink :to="{ name: ROUTES.CREATE_INGREDIENT }">Добавить новый ингредиент</RouterLink>
-    </nav>
+    <RouterLink :to="{ name: ROUTES.HOME }" class="nav-main">Главная</RouterLink>
     <RouterView />
-    <h2>Страница со всеми ингредиентами</h2>
+    <h2>Ингредиенты</h2>
     <div class="all-ingredients__container">
       <IngredientComponent 
         v-for="ingredient in ingredients" 
         :key="ingredient.id" 
         :ingredient="ingredient" />
     </div>
+
+    <RouterLink :to="{ name: ROUTES.CREATE_INGREDIENT }" class="floating-button">+</RouterLink>
   </div>
 </template>
 
@@ -45,16 +45,13 @@ export default {
 .all-ingredients {
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   &__container {
-    width: 900px;
-    height: 100%;
+    width: inherit;
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
     flex-direction: row;
-    margin-left: 180px;
   }
 }
 </style>

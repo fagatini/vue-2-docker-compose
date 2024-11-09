@@ -73,13 +73,14 @@ export default {
 
   &__title {
     font-size: 24px;
-    margin-bottom: 20px;
     font-weight: bold;
   }
 
   &__content {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    margin: 15px 10px;
   }
 }
 </style>

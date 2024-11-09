@@ -1,14 +1,10 @@
 <template>
-  <div class="ingredient">
-    <div class="ingredient__content">
-      <div class="ingredient__content__image">
-        <img :src="ingredient.cover"/>
-      </div>
-      <div class="ingredient__content__name">
-        <RouterLink :to="{ name: ROUTES.RECIPE, params: { id:ingredient.ingredient_id } }">{{ ingredient.name }}</RouterLink>
-      </div>
+  <RouterLink class="ingredient" :to="{ name: ROUTES.RECIPE, params: { id:ingredient.ingredient_id } }">
+    <img class="ingredient__image" :src="ingredient.cover"/>
+    <div class="ingredient__name">
+      {{ ingredient.name }}
     </div>
-  </div>
+  </RouterLink>
 </template>
   
 <script>
@@ -29,44 +25,32 @@ export default {
   
 <style lang="less" scoped>
 .ingredient {
-  margin: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: row;
-  width: 150px;
-  justify-content: start;
-  height: 120px;
+  width: fit-content;
+  height: fit-content;
+  padding: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
 
-  &__content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    padding-top: 10px;
-    margin-left: 10px;
+  &__image {
+    width: 205px;
+    height: 205px;
+    background-position: center;
+    border-radius: inherit;
+    border: 1px solid #f5f5f5;
+    object-fit: cover;
+  }
+    
+  &__name {
+    display: block;
+    font-size: 15px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
 
-    &__image {
-      width: 150px;
-      height: 130px;
-      background-position: center;
-      border-radius: 5px 5px 0 0;
-      border: 2px solid #f5f5f5;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: fill;
-      }
-    }
-      
-    &__name {
-      font-size: 15px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      text-align: center;
-      margin-top: 10px;
-    }
+  &:hover {
+    background-color: #f5f5f5;
   }
 }
 </style>

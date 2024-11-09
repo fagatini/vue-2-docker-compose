@@ -1,23 +1,23 @@
 <template>
-  <div class="search-result__search-by-ingredients">
+  <div class="recipes">
     <RouterLink :to="{ name: ROUTES.HOME }" class="nav-main">Главная</RouterLink>
     <div class="search-title">
       <h2 class="search-title__search">Результаты поиска</h2>
       <span class="search-title__found">рецептов найдено: {{ getFoundCount() }}</span>
     </div>
     <div class="filter-tags">
-      <p v-if="dish_category" class="selected" @click="() => popCategory()">{{ getDishCategoryName(dish_category) }}</p>
-      <p v-if="dish_time" class="selected" @click="() => popTime()">{{ getDishTimeName(dish_time) }}</p>
+      <p v-if="dish_category" class="selected">{{ getDishCategoryName(dish_category) }}</p>
+      <p v-if="dish_time" class="selected">{{ getDishTimeName(dish_time) }}</p>
       <p v-if="dish_cuisine" class="selected">{{ getDishCuisineName(dish_cuisine) }}</p>
 
-      <p v-if="includeIngredients.length > 0" class="filter-tags__group">
-        <span v-for="(plus, indx) in includeIngredients" :key="indx" class="selected">
-          {{ getIngredientName(plus) }}
+      <p class="filter-tags__group">
+        <span v-for="(include, indx) in includeIngredients" :key="'in' + indx" class="selected">
+          {{ getIngredientName(include) }}
         </span>
       </p>
-      <p v-if="excludeIngredients.length > 0" class="filter-tags__group">
-        <span v-for="(minus, indx) in excludeIngredients" :key="indx" class="selected selected--exclude">
-          {{ getIngredientName(minus) }}
+      <p class="filter-tags__group">
+        <span v-for="(exclude, indx) in excludeIngredients" :key="'ex' + indx" class="selected selected--exclude">
+          {{ getIngredientName(exclude) }}
         </span>
       </p>
     </div>
@@ -28,7 +28,7 @@
         <RouterView />
       </div>
     </span>
-    <span v-else>Результаты не найдены</span>
+    <span v-else class="not-found">Результаты не найдены</span>
   </div>
 </template>
 
@@ -41,20 +41,11 @@ export default {
   name: 'SearchResultPage',
   data() {
     return {
-      category: null,
-      time: null,
-      // cuisine: this.dish_cuisine,
-      // included: this.includeIngredients,
-      // excluded: this.excludeIngredients,
-      filtered: [],
-      // filteredRecipes: []
+      filtered: []
     }
   },
   components: {
     RecipeComponent
-  },
-  mounted() {
-    this.setParameters()
   },
   computed: {
     ROUTES() {
@@ -116,16 +107,6 @@ export default {
     },
     getFoundCount() {
       return this.filtered.length
-    },
-    popCategory() {
-      this.category = null
-    },
-    popTime() {
-      this.time = null
-    },
-    setParameters() {
-      this.category = this.$route.query.dish_category
-      this.time = this.$route.query.dish_time
     }
   }
 }
@@ -161,5 +142,9 @@ export default {
     font-style: normal;
     letter-spacing: 0.2px;
   }
+}
+
+.not-found {
+  margin: 30px 0;
 }
 </style>
