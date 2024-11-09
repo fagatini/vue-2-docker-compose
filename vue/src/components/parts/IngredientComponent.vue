@@ -1,14 +1,15 @@
 <template>
-  <RouterLink class="ingredient" :to="{ name: ROUTES.RECIPE, params: { id:ingredient.ingredient_id } }">
-    <img class="ingredient__image" :src="ingredient.cover"/>
+  <RouterLink class="ingredient" :to="{ name: ROUTES.INGREDIENT, params: { id: ingredient.id } }">
+    <img class="ingredient__image" :src="ingredient.cover" alt="Missing"/>
     <div class="ingredient__name">
       {{ ingredient.name }}
     </div>
   </RouterLink>
 </template>
-  
+
 <script>
 import { ROUTES } from '@/router/routes';
+import {mapGetters} from "vuex";
 
 export default {
   name: "IngredientComponent",
@@ -18,8 +19,11 @@ export default {
   computed: {
     ROUTES() {
       return ROUTES
-    }
-  }
+    },
+    ...mapGetters('ingredients', [
+      'getIngredientById'
+    ])
+  },
 }
 </script>
   

@@ -7,9 +7,9 @@
       <IngredientComponent 
         v-for="ingredient in ingredients" 
         :key="ingredient.id" 
-        :ingredient="ingredient" />
+        :ingredient="ingredient"
+      />
     </div>
-
     <RouterLink :to="{ name: ROUTES.CREATE_INGREDIENT }" class="floating-button">+</RouterLink>
   </div>
 </template>
