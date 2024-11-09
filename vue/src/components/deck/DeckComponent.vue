@@ -16,16 +16,12 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import { mapGetters } from "vuex";
 import CardComponent from '../card/CardComponent.vue';
 
 export default {
   components: {
     CardComponent,
-  },
-  props: {
-    bus: Vue,
   },
   data() {
     return {

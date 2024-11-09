@@ -3,7 +3,9 @@
     @click="() => onEnemyClick()"
   >
     <div class="enemy__intent">
-      <img :src="enemy.currentPattern[0].type"/>
+      <img class="enemy__sprite"
+        :src="enemy.currentPattern[0].type"
+      />
       <p>{{ enemy.currentPattern[0].values[0] }}</p>
       <p v-if="enemy.currentPattern[0].type == actions.ATTACK_MULTIPLE">
         x{{ enemy.currentPattern[0].values[1] }}
@@ -15,14 +17,13 @@
     <div class="enemy__image">
       <img class="enemy_image" :src="enemy.base.image" draggable="false"/>
     </div>
-    <HealthbarComponent :health="[enemy.health, enemy.base.maxHealth]" :shield="enemy.shield"/>
+    <HealthbarComponent :currentHealth="enemy.health" :maxHealth="enemy.base.maxHealth" :shield="enemy.shield"/>
   </div>
 </template>
 
 <script>
 import HealthbarComponent from '../common/HealthbarComponent.vue';
 import enemyAction from '../common/enemyAction';
-//import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -30,10 +31,6 @@ export default {
   },
   props: {
     enemy: Object,
-  },
-  data() {
-    return {
-    };
   },
   computed: {
     actions() {
@@ -60,7 +57,7 @@ export default {
     width: fit-content;
     line-height: 30px;
 
-    img {
+    &__sprite {
       height: 100%;
     }
 

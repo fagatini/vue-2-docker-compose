@@ -29,7 +29,7 @@
       <div class="mana">
         2/3
       </div>
-      <DeckComponent :bus="bus"/>
+      <DeckComponent/>
       <div class="btn" @click="() => endTurn()">
         end
       </div>
@@ -37,12 +37,11 @@
         discard
       </div>
     </div>
-    <CardPile :bus="bus"/>
+    <CardPile/>
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
 import { mapGetters, mapActions } from "vuex";
 import CardPile from '../card/CardPile.vue';
 import DeckComponent from '../deck/DeckComponent.vue';
@@ -55,11 +54,6 @@ export default {
     CardPile,
     PlayerComponent,
     EnemyComponent,
-  },
-  data() {
-    return {
-      bus: new Vue(),
-    }
   },
   computed: {
     ...mapGetters("deck", [
@@ -93,19 +87,17 @@ export default {
     ]),
 
     showCardPile(cards) {
-      this.bus.$emit('setPile', cards);
-      this.bus.$emit('showPile', cards);
+      this.$root.$emit('setPile', cards);
+      this.$root.$emit('showPile', cards);
     },
 
     handleEnemyClick(enemy) {
       console.log(enemy);
       //this.tryPlayCard(enemy)
-      this.applyEnemyDamage({enemy: enemy, damage: 12});
     },
 
     tryPlayCard(target) {
       console.log("tryPlayCard", target);
-      this.enemies[0].health -= 1;
     },
 
     endTurn() {

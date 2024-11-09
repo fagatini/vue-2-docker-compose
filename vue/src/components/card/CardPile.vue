@@ -25,14 +25,10 @@
 
 <script>
 import CardComponent from './CardComponent.vue';
-import Vue from 'vue';
 
 export default {
   components: {
     CardComponent,
-  },
-  props: {
-    bus: Vue,
   },
   data() {
     return {
@@ -43,8 +39,8 @@ export default {
     };
   },
   mounted() {
-    this.bus.$on('setPile', (cards) => this.setCardList(cards));
-    this.bus.$on('showPile', () => this.show());
+    this.$root.$on('setPile', (cards) => this.setCardList(cards));
+    this.$root.$on('showPile', () => this.show());
   },
   computed: {
     getScaling() {

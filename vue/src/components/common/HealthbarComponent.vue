@@ -1,6 +1,6 @@
 <template>
   <div class="healthbar">
-    <span>{{this.health[0]}}/{{this.health[1]}}</span>
+    <span class="healthbar__text">{{ currentHealth }}/{{maxHealth}}</span>
       <div class="healthbar__fill" 
         :style="{ '--health': `${healthPercent}%` }">
       </div>
@@ -11,23 +11,18 @@
 </template>
 
 <script>
-//import { mapGetters } from "vuex";
-
 export default {
   props: {
-    health: [],
+    currentHealth: Number,
+    maxHealth: Number,
     shield: Number,
-  },
-  data() {
-    return {
-    };
   },
   computed: {
     healthPercent() {
-      return (Math.max(0, Math.min((100, this.health[0] / this.health[1])*100)));
+      return (Math.max(0, Math.min((100, this.currentHealth / this.maxHealth)*100)));
     },
     shieldPercent() {
-      return (Math.max(0, Math.min(100, this.shield / this.health[1])*100));
+      return (Math.max(0, Math.min(100, this.shield / this.maxHealth)*100));
     }
   },
 };
@@ -45,7 +40,7 @@ export default {
   display: flex;
   z-index: 0;
   
-  span {
+  &__text {
     position: absolute;
     width: 100%;
     top: -3px;
