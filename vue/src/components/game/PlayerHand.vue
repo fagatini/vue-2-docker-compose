@@ -8,13 +8,14 @@
           :style="index === 1 ? {'margin-left': '0'} : {}"
       >
         <GameCard
-            :type=card.type
-            :score=card.score
-            :key="index"
-            :face-down="opponent"
-            :enlarged="!opponent"
-            :index="index"
-            @onDrop="(index, clientX, clientY) => $emit('onCardDrop', index, clientX, clientY)"
+          :key="index"
+          :type="card.type"
+          :score="card.score"
+          :image-uri="card.image"
+          :face-down="opponent"
+          :enlarged="!opponent"
+          :index="index"
+          @onDrop="(index, clientX, clientY) => $emit('onCardDrop', index, clientX, clientY)"
         />
       </div>
     </div>

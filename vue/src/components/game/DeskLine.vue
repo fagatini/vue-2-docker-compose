@@ -37,6 +37,7 @@
           :key="index"
           :score="card.score"
           :type="card.type"
+          :image-uri="card.image"
       />
     </div>
   </div>
