@@ -1,7 +1,8 @@
 <template>
-  <div class="card"
+  <div class="card noselect"
     @mouseenter="() => onMouseOver(true)"
     @mouseleave="() => onMouseOver(false)"
+    @contextmenu="(event) => onCardRightClick(event)"
     @click="() => onCardClick()"
   >
     <div class="card__content center-horizontal">
@@ -11,10 +12,12 @@
       <div class="card__image center-horizontal">
         <img class="card__image-img"
           src='../../assets/cards/background.png'
+          draggable="false"
         />
         <img v-if="card.image"
           class="card__image-img"
           :src="card.image"
+          draggable="false"
         />
       </div>
       <div class="card__info">
@@ -47,6 +50,11 @@ export default {
   methods: {
     onCardClick() {
       this.$emit('onCardClick', this.card);
+    },
+
+    onCardRightClick(event) {
+      event.preventDefault();
+      this.$emit('onCardRightClick', this.card);
     },
 
     onMouseOver(isHovered) {
@@ -108,6 +116,7 @@ export default {
   width: @cardWidth;
   transform-origin: center;
   cursor: pointer;
+  border-radius: 15px;
 
   &__content {
     display: flex;
