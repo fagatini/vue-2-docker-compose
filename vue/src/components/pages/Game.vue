@@ -122,17 +122,13 @@ export default {
       }
       const result = mapValidator.validateFlower(this.getGrid);
       if (result !== "Всё ок") {
-        console.log(result);
         this.lose();
       }
       else if (gameLogic.hasWon(this.getGrid))
       {
-        console.log('btuuuuuh')
-        console.log(gameLogic.hasWon(this.getGrid))
-        console.log(this.getGrid)
+        gameStorage.saveProgress(this.levelNumber);
         this.win();
       }
-      console.log(action);
     },
   },
 };

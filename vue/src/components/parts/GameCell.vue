@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import CellTypeMap from '../../GameEngine/CellTypes'
+import { CellTypeNames } from '../../GameEngine/CellTypes'
 
 export default {
   props: {
@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     getCellTypeName () {
-      return CellTypeMap[this.cellType];
+      return CellTypeNames[this.cellType];
     }
   }
 };

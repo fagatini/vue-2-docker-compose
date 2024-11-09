@@ -16,7 +16,6 @@ export default {
   },
   methods: {
     handleKeyPress(event) {
-      console.log(event.key)
       const keyEventMap = {
         'arrowup': KeyboardEvents.MOVE_UP,
         'arrowdown': KeyboardEvents.MOVE_DOWN,

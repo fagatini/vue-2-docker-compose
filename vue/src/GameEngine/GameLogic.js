@@ -1,3 +1,5 @@
+import { CellTypes } from "./CellTypes";
+
 const gameLogic = {
   moveFlower(grid, flowerCells, direction) {
     const newGrid = grid.map((row) => [...row]);
@@ -24,22 +26,22 @@ const gameLogic = {
       const cellType = grid[newRow][newCol];
 
       switch (cellType) {
-        case 3: // field
-          newGrid[newRow][newCol] = 8;
+        case CellTypes.FIELD:
+          newGrid[newRow][newCol] = CellTypes.FLOWER_FIELD;
           newFlowerCells[i] = { row: newRow, col: newCol };
           break;
 
-        case 4: // Shadow
+        case CellTypes.SHADOW:
           deleteIndices.push(i);
           break;
 
-        case 7: // Pot
-          newGrid[newRow][newCol] = 9;
+        case CellTypes.POT:
+          newGrid[newRow][newCol] = CellTypes.FLOWER_POT;
           newFlowerCells[i] = { row: newRow, col: newCol };
           break;
 
-        case 8: // Flower-field
-        case 9: // Flower-pot
+        case CellTypes.FLOWER_FIELD:
+        case CellTypes.FLOWER_POT:
           newFlowerCells[i] = { row: newRow, col: newCol };
           break;
 
@@ -61,7 +63,7 @@ const gameLogic = {
       if (
         !newFlowerCells.some((cell) => cell.row === row && cell.col === col)
       ) {
-        newGrid[row][col] = grid[row][col] === 8 ? 3 : 7;
+        newGrid[row][col] = grid[row][col] === CellTypes.FLOWER_FIELD ? CellTypes.FIELD : CellTypes.POT;
       }
     });
 
@@ -74,16 +76,16 @@ const gameLogic = {
     flowerCells.forEach(flower => {
       const {row: i, col: j} = flower;
       let sunCounter = 0
-      if ((grid[i + 1][j] === 5 ? ++sunCounter : 1) && grid[i + 1][j] === 6) {
+      if ((grid[i + 1][j] === CellTypes.SUN ? ++sunCounter : 1) && grid[i + 1][j] === CellTypes.WATER) {
         directions[0]++;
       }
-      if ((grid[i - 1][j] === 5 ? ++sunCounter : 1) && grid[i - 1][j] === 6) {
+      if ((grid[i - 1][j] === CellTypes.SUN ? ++sunCounter : 1) && grid[i - 1][j] === CellTypes.WATER) {
         directions[1]++;
       }
-      if ((grid[i][j + 1] === 5 ? ++sunCounter: 1) && grid[i][j + 1] === 6) {
+      if ((grid[i][j + 1] === CellTypes.SUN ? ++sunCounter: 1) && grid[i][j + 1] === CellTypes.WATER) {
         directions[2]++;
       }
-      if ((grid[i][j - 1] === 5 ? ++sunCounter : 1) && grid[i][j - 1] === 6) {
+      if ((grid[i][j - 1] === CellTypes.SUN ? ++sunCounter : 1) && grid[i][j - 1] === CellTypes.WATER) {
         directions[3]++;
       }
       directions = directions.map(i => i + sunCounter);
@@ -123,14 +125,14 @@ const gameLogic = {
           const cellType = grid[newRow][newCol];
 
           switch (cellType) {
-            case 3: // field
-              newGrid[newRow][newCol] = 8;
+            case CellTypes.FIELD:
+              newGrid[newRow][newCol] = CellTypes.FLOWER_FIELD;
               newFlowerCells.push({ row: newRow, col: newCol });
               expanded = true;
               break;
 
-            case 7: // Pot
-              newGrid[newRow][newCol] = 9;
+            case CellTypes.POT:
+              newGrid[newRow][newCol] = CellTypes.FLOWER_POT;
               newFlowerCells.push({ row: newRow, col: newCol });
               expanded = true;
               break;
@@ -146,7 +148,7 @@ const gameLogic = {
   },
 
   hasWon(grid) {
-    return !grid.some(i => i.some(j => j === 7));
+    return !grid.some(i => i.some(j => j === CellTypes.POT));
   }
 };
 

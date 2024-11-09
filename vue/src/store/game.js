@@ -96,8 +96,6 @@ export default {
     loadLevel({ state, commit }, payload) {
       const { levelNumber, isCustom } = payload;
       const levelData = gameStorage.loadLevel(levelNumber, isCustom);
-      console.log(levelNumber, isCustom);
-      console.log("levelData", levelData);
       if (levelData) {
         commit("setGrid", levelData);
         validateGrid(state);

@@ -2,7 +2,7 @@
   <div class="menu">
     <StartScreen>
       <div class="menu__buttons">
-        <RouterLink to="/" class="menu__button-link">
+        <RouterLink :to="'/level-' + currentLevel" class="menu__button-link">
           <CustomButton type="menu">Продолжить</CustomButton>
         </RouterLink>
         <RouterLink to="/levels" class="menu__button-link">
@@ -20,6 +20,7 @@
 // Импортируем компонент StartScreen
 import StartScreen from "../parts/PageBackground.vue";
 import CustomButton from "../parts/CustomButton.vue";
+import gameStorage from "@/GameEngine/gameStorage";
 
 export default {
   name: "StartMenuView",
@@ -27,6 +28,11 @@ export default {
     StartScreen,
     CustomButton,
   },
+  computed: {
+    currentLevel() {
+      return gameStorage.loadProgress() + 1;
+    }
+  }
 };
 </script>
 
