@@ -30,8 +30,7 @@ class GameEngine {
       this.msRemainToTurn -= COUNTDOWN_STEP_MS;
 
       if (this.msRemainToTurn <= 0) {
-        this.player.pass();
-        this.endPlayerTurn();
+        this.endPlayerTurn(true);
       }
     }, COUNTDOWN_STEP_MS)
   }
