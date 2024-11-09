@@ -1,5 +1,9 @@
 <template>
-  <button :class="['pass-button', this.activated ? 'pass-button__activated' : '']" @click="this.pass" :disabled="this.disabled">Pass</button>
+  <button
+      :class="['pass-button', { 'pass-button__activated': this.activated }]"
+      @click="() => pass()"
+      :disabled="this.disabled"
+  >Pass</button>
 </template>
 
 <script>

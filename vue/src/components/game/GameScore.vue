@@ -1,7 +1,7 @@
 <template>
   <div class="score-container">
-    <div :class="['score-container__indicator', this.opponentHasPoint ? 'score-container__indicator_active' : '']"></div>
-    <div :class="['score-container__indicator', this.playerHasPoint ? 'score-container__indicator_active' : '']"></div>
+    <div :class="opponentDivClasses"></div>
+    <div :class="playerDivClasses"></div>
   </div>
 </template>
 
@@ -18,6 +18,12 @@ export default {
     },
     playerHasPoint() {
       return !!this.getGameEngine.player.gameScore;
+    },
+    opponentDivClasses() {
+      return ['score-container__indicator', this.opponentHasPoint ? 'score-container__indicator__active' : ''];
+    },
+    playerDivClasses() {
+      return ['score-container__indicator', this.playerHasPoint ? 'score-container__indicator__active' : ''];
     },
     ...mapGetters('gameEngine', [
       'getGameEngine',
@@ -45,7 +51,7 @@ export default {
     height: 16px;
     width: 48px;
 
-    &_active {
+    &__active {
       background-color: green;
     }
   }

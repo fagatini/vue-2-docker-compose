@@ -1,9 +1,17 @@
 <template>
   <div class="count-down">
     <svg class="count-down__progress-ring" width="120" height="120">
-      <circle :class="['count-down__progress-ring__circle', circumferenceColor]" :stroke-dasharray="circumference"
-        :stroke-dashoffset="strokeDashoffset" stroke="currentColor" stroke-width="4" fill="transparent" :r="radius"
-        cx="60" cy="60" />
+      <circle
+          :class="['count-down__progress-ring__circle', circumferenceColor]"
+          :stroke-dasharray="circumference"
+          :stroke-dashoffset="strokeDashoffset"
+          stroke="currentColor"
+          stroke-width="4"
+          fill="transparent"
+          :r="radius"
+          cx="60"
+          cy="60"
+      />
     </svg>
     <div class="count-down__timer">{{ currentCountValue }}</div>
   </div>

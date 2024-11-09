@@ -16,7 +16,7 @@
           :enlarged="!opponent"
           :is-opponent="opponent"
           :index="index"
-          @onDrop="(index, clientX, clientY) => $emit('onCardDrop', index, clientX, clientY)"
+          @onDrop="(params) => $emit('onCardDrop', params)"
         />
       </div>
     </div>

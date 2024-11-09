@@ -123,7 +123,7 @@ export default {
       this.$refs.draggableCard.style.left = '0px';
       this.dragInfo.dragged = false;
 
-      this.$emit('onDrop', this.index, event.clientX, event.clientY);
+      this.$emit('onDrop', { index: this.index, x: event.clientX, y: event.clientY });
     }
   }
 };

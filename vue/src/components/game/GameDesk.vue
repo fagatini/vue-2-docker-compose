@@ -90,9 +90,5 @@ export default {
       font-size: 32px;
     }
   }
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
 }
 </style>
