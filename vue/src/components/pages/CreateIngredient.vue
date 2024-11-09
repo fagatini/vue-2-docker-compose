@@ -39,7 +39,6 @@ export default {
   align-items: center;
 
   &__container {
-    width: 900px;
     height: 100%;
     display: flex;
     flex-wrap: wrap;

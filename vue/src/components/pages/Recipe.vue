@@ -199,7 +199,9 @@ export default {
 
 .ingredients-info {
   display: grid;
-  width: 600px;
+  width: -webkit-fill-available;
+  min-width: 400px;
+  max-width: 600px;
 }
 
 .ingredient-row {

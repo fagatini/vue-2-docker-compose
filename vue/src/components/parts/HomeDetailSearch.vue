@@ -218,8 +218,8 @@ export default {
   margin-left: 20px;
 
   &--active {
-    background-color: rgb(230, 205, 255);
-    color: rgb(88, 63, 112);
+    background-color: #ffc845;
+    color: #635435;
     cursor: pointer;
   }
 }

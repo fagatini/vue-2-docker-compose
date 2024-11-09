@@ -1,10 +1,11 @@
 <template>
   <div v-if="ingredient" class="ingredient">
+    <RouterLink :to="{ name: ROUTES.HOME }" class="nav-main">Главная</RouterLink>
 
     <div class="ingredient-header">
       <h2>{{ ingredient.name }}</h2>
       <p>{{ ingredient.description }}</p>
-      <p>{{ ingredient.measure_units}}}</p>
+      <p>{{ ingredient.measure_units}}</p>
     </div>
 
     <div class="ingredient-card">
@@ -22,10 +23,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { ROUTES } from '@/router/routes';
 
 export default {
   name: 'IngredientPage',
   computed: {
+    ROUTES() {
+      return ROUTES
+    },
     ingredient() {
       return this.getIngredientById(this.$route.params.id) || null
     },
@@ -39,7 +44,6 @@ export default {
 <style lang="less" scoped>
 .ingredient {
   text-align: left;
-  padding: 5%;
 }
 
 .ingredient-card {
