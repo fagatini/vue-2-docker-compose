@@ -38,6 +38,7 @@
           :score="card.score"
           :type="card.type"
           :image-uri="card.image"
+          :is-opponent="isOpponent"
       />
     </div>
   </div>

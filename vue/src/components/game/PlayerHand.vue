@@ -14,6 +14,7 @@
           :image-uri="card.image"
           :face-down="opponent"
           :enlarged="!opponent"
+          :is-opponent="opponent"
           :index="index"
           @onDrop="(index, clientX, clientY) => $emit('onCardDrop', index, clientX, clientY)"
         />

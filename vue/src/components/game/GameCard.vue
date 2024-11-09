@@ -45,6 +45,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isOpponent: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -78,7 +82,7 @@ export default {
   },
   methods: {
     tryRemoveCard(index, type) {
-      if (this.faceDown) {
+      if (this.isOpponent || this.faceDown) {
         return;
       }
 
