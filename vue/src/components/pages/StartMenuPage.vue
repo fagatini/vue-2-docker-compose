@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     currentLevel() {
-      return gameStorage.loadProgress() + 1;
+      return Math.min(gameStorage.loadProgress() + 1, gameStorage.getNumberOfLevels(false));
     }
   }
 };
