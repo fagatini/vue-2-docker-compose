@@ -15,6 +15,7 @@ import mapValidator from "@/GameEngine/GridValidationFunctions";
 import { RouteNames } from "@/router/routes";
 import gameLogic from "@/GameEngine/GameLogic";
 import gameStorage from "@/GameEngine/gameStorage";
+import { KeyboardEvents } from "@/GameEngine/GameEvents";
 
 export default {
   name: "GamePage",
@@ -89,31 +90,31 @@ export default {
         return;
       }
       switch (action) {
-        case "move-up":
+        case KeyboardEvents.MOVE_UP:
           this.moveFlower([-1, 0]);
           break;
 
-        case "move-down":
+        case KeyboardEvents.MOVE_DOWN:
           this.moveFlower([1, 0]);
           break;
 
-        case "move-left":
+        case KeyboardEvents.MOVE_LEFT:
           this.moveFlower([0, -1]);
           break;
 
-        case "move-right":
+        case KeyboardEvents.MOVE_RIGHT:
           this.moveFlower([0, 1]);
           break;
 
-        case "action-space":
+        case KeyboardEvents.ACTION_SPACE:
           this.expandFlower();
           break;
         
-        case "restart-level":
+        case KeyboardEvents.RESTART_LEVEL:
           this.loadLevel({ levelNumber: this.levelNumber, isCustom: this.isCustom });
           break;
         
-        case "return-to-menu":
+        case KeyboardEvents.RETURN_TO_MENU:
           this.$router.push({ name: RouteNames.LEVEL_MENU });
           break;
 

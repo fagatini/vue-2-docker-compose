@@ -55,9 +55,7 @@ const gameLogic = {
       return null;
     }
 
-    for (let i = deleteIndices.length - 1; i >= 0; i--) {
-      newFlowerCells.splice(deleteIndices[i], 1);
-    }
+    deleteIndices.reverse().forEach(index => newFlowerCells.splice(index, 1));
 
     flowerCells.forEach(({ row, col }) => {
       if (

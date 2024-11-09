@@ -90,10 +90,19 @@ export default {
     },
     lose(state, hasLost) {
       state.hasLost = hasLost;
+    },
+    reset(state) {
+      state.hasLost = false;
+      state.hasWon = false;
+      state.grid = []
+      state.flowerCells = []
+      state.selectedGrid = []
+      state.currentLevel = null;
     }
   },
   actions: {
     loadLevel({ state, commit }, payload) {
+      commit("reset");
       const { levelNumber, isCustom } = payload;
       const levelData = gameStorage.loadLevel(levelNumber, isCustom);
       if (levelData) {
@@ -105,8 +114,6 @@ export default {
           levelData.map((row) => row.map(() => false))
         );
         commit("setCurrentLevel", { levelNumber, isCustom });
-        commit("win", false);
-        commit("lose", false);
       } else {
         console.error("Level not found");
       }

@@ -2,13 +2,13 @@
   <div class="menu">
     <StartScreen>
       <div class="menu__buttons">
-        <RouterLink :to="'/level-' + currentLevel" class="menu__button-link">
+        <RouterLink :to="{ name: RouteNames.GAME, params: { level_number: currentLevel } }" class="menu__button-link">
           <CustomButton type="menu">Продолжить</CustomButton>
         </RouterLink>
-        <RouterLink to="/levels" class="menu__button-link">
+        <RouterLink :to="{ name: RouteNames.LEVEL_MENU }" class="menu__button-link">
           <CustomButton type="menu">Выбрать уровень</CustomButton>
         </RouterLink>
-        <RouterLink to="/editor" class="menu__button-link">
+        <RouterLink :to="{ name: RouteNames.EDITOR }" class="menu__button-link">
           <CustomButton type="menu">Открыть редактор</CustomButton>
         </RouterLink>
       </div>
@@ -21,12 +21,18 @@
 import StartScreen from "../parts/PageBackground.vue";
 import CustomButton from "../parts/CustomButton.vue";
 import gameStorage from "@/GameEngine/gameStorage";
+import { RouteNames } from "@/router/routes";
 
 export default {
   name: "StartMenuView",
   components: {
     StartScreen,
     CustomButton,
+  },
+  data() {
+    return {
+      RouteNames
+    }
   },
   computed: {
     currentLevel() {
