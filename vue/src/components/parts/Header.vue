@@ -9,7 +9,7 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 18C2.5 17.7239 2.72386 17.5 3 17.5H21C21.2761 17.5 21.5 17.7239 21.5 18C21.5 18.2761 21.2761 18.5 21 18.5H3C2.72386 18.5 2.5 18.2761 2.5 18Z" fill="white"/>
                     </svg>
                     <span class="header__left__catalog-hint">
-                        Каталог
+                        Товары
                     </span>
                 </RouterLink> 
             </div>
