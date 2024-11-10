@@ -1,5 +1,10 @@
 <template>
-  <button class="custom-button" :class="'custom-button--' + type">
+  <button 
+    class="custom-button" 
+    :class="'custom-button--' + type" 
+    :disabled="disabled" 
+    :aria-disabled="disabled.toString()"
+  >
     <slot>Кнопка</slot>
   </button>
 </template>
@@ -11,6 +16,10 @@ export default {
     type: {
       type: String,
       default: "default",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 };
@@ -29,9 +38,18 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s ease;
   z-index: 1;
+
   &:hover {
     opacity: 0.8;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: var(--button-disabled-background-color, #dcdcdc);
+    color: var(--button-disabled-text-color, #aaa);
+  }
+
   &--menu {
     padding: 15px 25px;
     font-size: 42px;
@@ -40,6 +58,7 @@ export default {
     height: 119px;
     margin: 15px 0;
   }
+
   &--level {
     font-size: 70px;
     width: 130px;
