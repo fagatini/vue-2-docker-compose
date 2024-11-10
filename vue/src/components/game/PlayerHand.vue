@@ -1,9 +1,9 @@
 <template>
   <div class="hand-container">
-    <div :class="this.opponent ? 'hand-opponent': 'hand-player'">
+    <div :class="handClass">
       <div
           class="hand__card"
-          v-for="(card, index) in this.cards"
+          v-for="(card, index) in cards"
           :key="index"
           :style="index === 1 ? {'margin-left': '0'} : {}"
       >
@@ -48,6 +48,9 @@ export default {
       return this.opponent ?
           this.getGameEngine.opponent.cards :
           this.getGameEngine.player.cards
+    },
+    handClass() {
+      return this.opponent ? 'hand-opponent': 'hand-player';
     }
   }
 };

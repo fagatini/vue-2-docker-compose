@@ -35,3 +35,9 @@ export default {
   }
 };
 </script>
+
+<style lang="less">
+html {
+  overflow: hidden;
+}
+</style>

@@ -1,8 +1,8 @@
 <template>
   <button
-      :class="['pass-button', { 'pass-button__activated': this.activated }]"
+      :class="['pass-button', { 'pass-button__activated': activated }]"
+      :disabled="disabled"
       @click="() => pass()"
-      :disabled="this.disabled"
   >Pass</button>
 </template>
 

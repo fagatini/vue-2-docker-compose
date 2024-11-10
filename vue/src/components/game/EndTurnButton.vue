@@ -1,5 +1,5 @@
 <template>
-  <button class="end-button" @click="this.endTurn" :disabled="this.disabled">End Turn</button>
+  <button class="end-button" @click="endTurn" :disabled="disabled">End Turn</button>
 </template>
 
 <script>

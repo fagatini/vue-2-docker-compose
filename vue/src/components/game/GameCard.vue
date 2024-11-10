@@ -1,7 +1,7 @@
 <template>
   <div
     class="game-card"
-    :class="[{ enlarged }, { dragged: this.dragInfo.dragged }]"
+    :class="[{ enlarged }, { dragged: dragInfo.dragged }]"
     :style="faceDown ? faceDownStyle : faceUpStyle"
     @mousedown="(e) => enlarged ? startDrag(e) : tryRemoveCard(index, type)" ref="draggableCard">
     <div v-if="!faceDown" class="game-card__content">

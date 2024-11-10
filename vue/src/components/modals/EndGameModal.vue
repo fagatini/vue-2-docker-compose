@@ -4,7 +4,7 @@
       <h1>
         {{ this.getText }}
       </h1>
-      <button class="restart-button" @click="() => this.restart()">
+      <button class="restart-button" @click="() => restart()">
         Restart
       </button>
     </div>
