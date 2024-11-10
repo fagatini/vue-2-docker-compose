@@ -8,7 +8,7 @@ export default {
   getters: {
     getIngredients: (state) => state.ingredients,
     getIngredientById: (state) => (id) => state.ingredients.find(i => i.id === id),
-    getIngredientName: (state) => (id) => state.ingredients.find(i => i.id === id).name
+    getIngredientName: (state) => (id) => state.ingredients.find(i => i.id === id)?.name
   },
   mutations: {
     SET_INGREDIENTS: (state, payload) => {

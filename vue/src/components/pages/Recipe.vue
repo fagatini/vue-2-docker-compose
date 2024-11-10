@@ -77,11 +77,11 @@
     <div class="comment-section">
       <div v-if="userComment">
         <h3> Ваш комментарий </h3>
-        <CommentComponent :comment=userComment></CommentComponent>
+        <CommentComponent :comment="userComment"></CommentComponent>
       </div>
       <CommentForm v-else :recipeId="this.id" :userId="currentUserId"></CommentForm>
       <div class="comment" v-for="comment in otherComments" :key="comment.id">
-        <CommentComponent :comment=comment></CommentComponent>
+        <CommentComponent :comment="comment"></CommentComponent>
       </div>
     </div>
 
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { ROUTES } from '@/router/routes';
 import CommentForm from '../parts/CommentForm.vue';
 import CommentComponent from '../parts/CommentComponent.vue';
@@ -113,6 +113,9 @@ export default {
   created() {
     this.portionCounter = this.recipe.portions
   },
+  mounted() {
+    this.hideDetails
+  },
   computed: {
     ROUTES() {
       return ROUTES
@@ -126,6 +129,9 @@ export default {
     ...mapGetters('comments', [
       'getCommentById',
       'getCommentsByRecipeId'
+    ]),
+    ...mapActions('detail_search', [
+      'hideDetails'
     ]),
     recipe() {
       return this.getRecipeById(this.id) || null

@@ -100,6 +100,14 @@ export default {
 
       return this.recipesToShow
     },
+  },
+  watch: {
+    includeList() {
+      this.changePage(1)
+    },
+    excludeList() {
+      this.changePage(1)
+    }
   }
 }
 </script>

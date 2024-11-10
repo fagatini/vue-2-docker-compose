@@ -7,7 +7,8 @@
         class="search-input" 
         type="text" 
         placeholder="искать на cooking"
-        @keyup.enter="() => findByName()" />
+        @keyup.enter="() => findByName()" 
+      />
     </div>
 
     <div v-if="showDetails" class="details-to-show--show">
@@ -17,22 +18,26 @@
     <div class="app__body" :class="{'details-to-show--show': showDetails, 'details-to-show--hide': !showDetails}"> 
       <nav class="nav">
         <div class="nav__content">
-          <RouterLink class="nav__container"
+          <RouterLink v-for="(baseLink, ROUTE, i) in LINKS" 
             :to="{ name: ROUTE }"
-            v-for="(baseLink, ROUTE, i) in LINKS" 
-            :key="'base' + i">
+            :key="'main navigation' + i"
+            class="nav__container"
+          >
             <div class="nav__container__link">
               {{baseLink}}
             </div> 
           </RouterLink>
+
           <div class="nav__delimeter"></div>
-          <RouterLink class="nav__container"
-            :to="{ name: ROUTES.SEARCH_RESULT, query: { dish_category: dish_category.id} }"
-            v-for="(dish_category, i) in dish_categories" 
-            :key="'categories' + i">
-            <img class="nav__container__icon" :src="dish_category.img">
+
+          <RouterLink v-for="(dishCategory, i) in dish_categories" 
+            :to="{ name: ROUTES.SEARCH_RESULT, query: { dish_category: dishCategory.id} }"
+            :key="'dish categories' + i"
+            class="nav__container"
+          >
+            <img class="nav__container__icon" :src="dishCategory.img">
             <div class="nav__container__link">
-              {{ dish_category.name }}
+              {{ dishCategory.name }}
             </div> 
           </RouterLink>
         </div>

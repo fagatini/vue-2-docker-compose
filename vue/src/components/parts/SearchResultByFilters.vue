@@ -3,28 +3,36 @@
     <RouterLink :to="{ name: ROUTES.HOME }" class="nav-main">Главная</RouterLink>
     <div class="search-title">
       <h2 class="search-title__search">Результаты поиска</h2>
-      <span class="search-title__found">рецептов найдено: {{ getFoundCount() }}</span>
+      <span class="search-title__found">рецептов найдено: {{ foundCount }}</span>
     </div>
     <div class="filter-tags">
-      <p v-if="dish_category" class="selected">{{ getDishCategoryName(dish_category) }}</p>
-      <p v-if="dish_time" class="selected">{{ getDishTimeName(dish_time) }}</p>
-      <p v-if="dish_cuisine" class="selected">{{ getDishCuisineName(dish_cuisine) }}</p>
+      <p v-if="dish_category" class="selected">{{ categoryName }}</p>
+      <p v-if="dish_time" class="selected">{{ timeName }}</p>
+      <p v-if="dish_cuisine" class="selected">{{ cuisineName }}</p>
 
       <p class="filter-tags__group">
-        <span v-for="(include, indx) in includeIngredients" :key="'in' + indx" class="selected">
-          {{ getIngredientName(include) }}
+        <span 
+          v-for="(include, indx) in includeNames" 
+          :key="'in' + indx" 
+          class="selected"
+        >
+          {{ include }}
         </span>
       </p>
       <p class="filter-tags__group">
-        <span v-for="(exclude, indx) in excludeIngredients" :key="'ex' + indx" class="selected selected--exclude">
-          {{ getIngredientName(exclude) }}
+        <span 
+          v-for="(exclude, indx) in excludeNames" 
+          :key="'ex' + indx" 
+          class="selected selected--exclude"
+        >
+          {{ exclude }}
         </span>
       </p>
     </div>
 
-    <span v-if="filter().length > 0">
-      <div class="recipes-container">
-        <RecipeComponent v-for="recipe in filtered" :key="recipe.id" :recipe="recipe" />
+    <span v-if="foundCount > 0">
+      <div v-for="recipe in filtered" :key="recipe.id" class="recipes-container">
+        <RecipeComponent :recipe="recipe" />
         <RouterView />
       </div>
     </span>
@@ -39,11 +47,6 @@ import RecipeComponent from './RecipeComponent.vue';
 
 export default {
   name: 'SearchResultPage',
-  data() {
-    return {
-      filtered: []
-    }
-  },
   components: {
     RecipeComponent
   },
@@ -52,19 +55,19 @@ export default {
       return ROUTES
     },
     dish_category() {
-      return this.$route.query.dish_category
+      return Number(this.$route.query.dish_category) || null
     },
     dish_time() {
-      return this.$route.query.dish_time
+      return Number(this.$route.query.dish_time) || null
     },
     dish_cuisine() {
-      return this.$route.query.dish_cuisine
+      return Number(this.$route.query.dish_cuisine) || null
     },
     includeIngredients() {
-      return this.$route.query.include || []
+      return this.toNumArray(this.$route.query.include || [])
     },
     excludeIngredients() {
-      return this.$route.query.exclude || []  
+      return this.toNumArray(this.$route.query.exclude || [])  
     },
     ...mapGetters('recipes', [
       'getRecipes',
@@ -85,9 +88,34 @@ export default {
     ...mapGetters('dish_cuisine', [
       'getDishCuisineName'
     ]),
+    categoryName() {
+      return this.getDishCategoryName(this.dish_category)
+    },
+    timeName() {
+      return this.getDishTimeName(this.dish_time)
+    },
+    cuisineName() {
+      return this.getDishCuisineName(this.dish_cuisine)
+    },
+    includeNames() {
+      return this.includeIngredients.map( ingredient =>
+        this.getIngredientName(ingredient)
+      )
+    },
+    excludeNames() {
+      return this.excludeIngredients.map( ingredient =>
+        this.getIngredientName(ingredient)
+      )
+    },
+    filtered() {
+      return this.filterRecipes()
+    },
+    foundCount() {
+      return this.filtered.length || 0
+    }
   },
   methods: {
-    filter() {
+    filterRecipes() {
       let recipesWithCategory = this.dish_category ? this.getRecipesByCategoryId(this.dish_category) : this.getRecipes
       let recipesWithTime = this.dish_time ? this.getRecipesByTimeId(this.dish_time) : this.getRecipes
       let recipesWithCuisine = this.dish_cuisine ? this.getRecipesByCuisineId(this.dish_cuisine) : this.getRecipes
@@ -97,16 +125,23 @@ export default {
         excludeList: this.excludeIngredients
       })
 
-      this.filtered = this.getRecipes.filter(value =>
+      let filtered = this.getRecipes.filter(value =>
         recipesWithCategory.includes(value) &&
         recipesWithTime.includes(value) &&
         recipesWithCuisine.includes(value) &&
         recipesByIngredients.includes(value)
       )
-      return this.filtered
+      return filtered
     },
-    getFoundCount() {
-      return this.filtered.length
+    toNumArray(ingredients) {
+      if(typeof ingredients == 'string') {
+        ingredients = Array.from([Number(ingredients)])
+      } else {
+        ingredients = ingredients.map(ingredient =>
+          Number(ingredient)
+        )
+      }
+      return ingredients
     }
   }
 }

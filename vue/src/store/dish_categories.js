@@ -8,7 +8,7 @@ export default {
   getters: {
     getDishCategories: (state) => state.dish_categories,
     getDishCategoryById: (state) => (id) => state.dish_categories.find(i => i.id === id),
-    getDishCategoryName: (state) => (id) => state.dish_categories.find(i => i.id === id).name,
+    getDishCategoryName: (state) => (id) => state.dish_categories.find(i => i.id === id)?.name,
   },
   mutations: {
     SET_DISH_CATEGORIES: (state, payload) => {

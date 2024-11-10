@@ -1,13 +1,13 @@
 <template>
     <div class="add-ingredient">
       <form class="add-ingredient__form">
-        <label class="add-ingredient__label">Name:</label>
+        <label class="add-ingredient__label">Название:</label>
         <input class="add-ingredient__input" type="text" v-model="newIngredient.name"><br>
-        <label class="add-ingredient__label">Description:</label>
+        <label class="add-ingredient__label">Описание:</label>
         <input class="add-ingredient__input" type="text" v-model="newIngredient.description"><br>
-        <label class="add-ingredient__label">Measure units:</label>
+        <label class="add-ingredient__label">Единица измерения:</label>
         <input class="add-ingredient__input" type="text" v-model="newIngredient.measure_units"><br>
-        <label class="add-ingredient__label">Cover:</label>
+        <label class="add-ingredient__label">Обложка:</label>
         <input class="add-ingredient__input" @change="loadTextFromFile" type="file" accept="image/*"><br><br>
         <button class="add-ingredient__button" type="submit" @click="addIngredient">Добавить Ингредиент</button>
       </form>
@@ -89,34 +89,40 @@ export default {
   border: 1px solid #D9D9D9;
   border-radius: 8px;
 
-  &__title {
+  &__label {
     width: 167.14px;
     height: 19px;
-    left: 32px;
-    top: 24px;
-    margin-bottom:10px;
-
-    font-style: normal;
-    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 5px;
     font-size: 16px;
     line-height: 19px;
     display: flex;
     align-items: center;
-    color: #000000;
+    color: inherit;
   }
 
   &__input{
     padding: 8px 24px;
     width: 511px;
     height: auto;
-    left: 32px;
-    top: 55px;
     margin-bottom:15px;
 
     background: #ECECEC;
     border-radius: 8px;
     border-style: none;
   }
+
+  &__button {
+  background-color: #ECECEC;
+  width: max-content;
+  border: none;
+  border-radius: 100px;
+  padding: 15px 32px;
+  font-weight: bold;
+  color: #7D7D7D;
+  font-size: 14px;
+  cursor: pointer;
+}
 
 }
 

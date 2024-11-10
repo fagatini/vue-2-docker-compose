@@ -46,12 +46,12 @@ const routes = [
     })
   },
   {
-    path: '/all-recipes/create-recipe',
+    path: '/create-recipe',
     name: ROUTES.CREATE_RECIPE,
     component: CreateRecipePage
   },
   {
-    path: '/all-ingredients/create-ingredient',
+    path: '/create-ingredient',
     name: ROUTES.CREATE_INGREDIENT,
     component: CreateIngredientPage
   },

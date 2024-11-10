@@ -12,26 +12,26 @@ export default {
       let result = state.recipes
       
       if (includeList.length > 0) {
-        result = result.filter(recipe => {
-          return (recipe.ingredients.map(ingredient =>
-            includeList.includes(ingredient.ingredient_id)))
-            .reduce(
-              (acc, curr) => acc || curr
-            )
-        })
+        result = result.filter(recipe =>
+          recipe.ingredients.map(ingredient =>
+            includeList.includes(ingredient.ingredient_id)
+          ).reduce((acc, curr) => 
+            acc || curr, false
+          )
+        )
       }
 
       if (excludeList.length > 0) {
-        result = result.filter(recipe => {
-          return (recipe.ingredients.map(ingredient =>
-            !excludeList.includes(ingredient.ingredient_id)))
-            .reduce(
-              (acc, curr) => acc && curr
-            )
-        })
+        result = result.filter(recipe =>
+          recipe.ingredients.map(ingredient =>
+            !excludeList.includes(ingredient.ingredient_id)
+          ).reduce((acc, curr) => 
+            acc && curr, true
+          )
+        )
       }
 
-      return result
+      return result ? result : state.recipes
     },
     getRecipesByCategoryId: (state) => (category_id) => state.recipes.filter(recipe => 
       recipe.dish_category_id === category_id
@@ -43,7 +43,7 @@ export default {
       recipe.dish_cuisine_id === cuisine_id
     ),
     getRecipesByTags: (state) => (tags) => state.recipes.filter(recipe => 
-      recipe.tags.some(tag => tags.includes(tag))
+      recipe.tags?.some(tag => tags.includes(tag))
     )
   },
   mutations: {
