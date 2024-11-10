@@ -6,7 +6,7 @@
         <label class="add-ingredient__label">Описание:</label>
         <input class="add-ingredient__input" type="text" v-model="newIngredient.description"><br>
         <label class="add-ingredient__label">Единица измерения:</label>
-        <input class="add-ingredient__input" type="text" v-model="newIngredient.measure_units"><br>
+        <input class="add-ingredient__input" type="text" v-model="newIngredient.measure_unit"><br>
         <label class="add-ingredient__label">Обложка:</label>
         <input class="add-ingredient__input" @change="loadTextFromFile" type="file" accept="image/*"><br><br>
         <button class="add-ingredient__button" type="submit" @click="addIngredient">Добавить Ингредиент</button>
@@ -30,7 +30,7 @@ export default {
         name: "",
         cover: "",
         description: "",
-        measure_units: "",
+        measure_unit: "",
       }
     }
   },

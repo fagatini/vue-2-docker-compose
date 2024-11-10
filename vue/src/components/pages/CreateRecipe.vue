@@ -1,11 +1,12 @@
 <template>
   <div class="create-recipe">
+
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     
     <h2>Редактор нового рецепта</h2>
   
+    <form>
     <!-- Блок с загрузгой обложки -->
     <div class = block-cover>
       <img class="preview-img" v-bind:src="previewCover"/>
@@ -44,9 +45,9 @@
     <div class = "block-parameters">
       <div>
         <label class="inner-block-title">Порции *</label>
-        <button class="portions-btn-minus" @click="minusPortions">-</button>
+        <button type="button" class="portions-btn-minus" @click="minusPortions">-</button>
         <input class="portions-input" v-model="newRecipe.portions" type="text" disabled/>
-        <button class="portions-btn-plus" @click="addPortions">+</button>
+        <button type="button" class="portions-btn-plus" @click="addPortions">+</button>
       </div>
       <div>
         <label class="inner-block-title">Время на приготовление *</label>
@@ -107,7 +108,7 @@
         <label class="inner-block-title">Описание шага</label>
         <textarea class="block__description-textarea" v-model="descriptionList[counter - 1]" placeholder="Например: Почистите овощи, вскипятите воду"></textarea>
       </div>
-      <button class="step-btn" @click="addNewStep">Добавить шаг</button>
+      <button class="step-btn" type="button" @click="addNewStep">Добавить шаг</button>
     </div>
   
     <!-- Подача -->
@@ -122,8 +123,8 @@
     
      <hr class="dashed">
     <!-- Кнопка создания рецепта -->
-     <button class="add-btn"  @click="addRecipe">Создать рецепт</button>
-    
+     <button class="add-btn" type="submit" @click="addRecipe" >Создать рецепт</button>
+    </form>
   
     <!-- вывод -->
     <!-- <div v-for="(recipe, n) in recipes" :key="recipe.id">
@@ -255,11 +256,7 @@
   
       //установить id текущего рецепта
       setRecipeId() {
-        while (this.getRecipeById(this.newRecipe.id) != null)
-        {
-          this.newRecipe.id++;
-        }
-        return this.newRecipe.id;
+        this.newRecipe.id = this.recipes.length + 1
       },
   
       //добавить новый шаг рецепта

@@ -27,12 +27,12 @@ import { ROUTES } from '@/router/routes';
 
 export default {
   name: 'IngredientPage',
-  props: {
-    id: Number
-  },
   computed: {
     ROUTES() {
       return ROUTES
+    },
+    id() {
+      return Number(this.$route.params.id) || undefined
     },
     ingredient() {
       return this.getIngredientById(this.id) || null

@@ -102,9 +102,6 @@ export default {
     CommentForm,
     CommentComponent
   },
-  props: {
-    id: Number 
-  },
   data() {
     return {
       portionCounter: 1
@@ -133,6 +130,9 @@ export default {
     ...mapActions('detail_search', [
       'hideDetails'
     ]),
+    id() {
+      return Number(this.$route.params.id) || undefined
+    },
     recipe() {
       return this.getRecipeById(this.id) || null
     },

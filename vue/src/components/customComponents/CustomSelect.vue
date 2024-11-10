@@ -1,41 +1,41 @@
 <template>
   <div class="custom-select">
     <button 
-      :class="button_class" 
-      role="combobox" 
-      aria-label="select button" 
-      aria-haspopup="listbox" 
-      aria-expanded="false"
-      aria-controls="options" 
-      @click="() => showOptions()"
+    type="button"
+    :class="button_class" 
+    role="combobox" 
+    aria-label="select button" 
+    aria-haspopup="listbox" 
+    aria-expanded="false"
+    aria-controls="options" 
+    @click="() => showOptions()"
     >
-      <span class="selected-value">{{ selected }}</span>
-    </button>
+    <span class="selected-value">{{ selected }}</span>
+  </button>
 
-    <ul v-if="isActive" :class="dropdown_class" role="listbox">
-      <li
-        :value="value"
-        class="options__option" 
-        :class="'option--default'"
-        role="option" 
-        @click="() => selectOption(selectedDefault)"
-      >
-        {{ selectedDefault }}
-      </li>
-      <li 
-        v-for="option in options"
-        :key="option.id" 
-        :value="value"
-        class="options__option" 
-        role="option" 
-        @click="() => selectOption(option)"
-      >
-        {{ option.name }}
-      </li>
-    </ul>
-  </div>
+  <ul v-if="isActive" :class="dropdown_class" role="listbox">
+    <li
+    :value="value"
+    class="options__option" 
+    :class="'option--default'"
+    role="option" 
+    @click="() => selectOption(selectedDefault)"
+    >
+    {{ selectedDefault }}
+  </li>
+  <li 
+  v-for="option in options"
+  :key="option.id" 
+  :value="value"
+  class="options__option" 
+  role="option" 
+  @click="() => selectOption(option)"
+  >
+  {{ option.name }}
+</li>
+</ul>
+</div>
 </template>
-
 <script>
 
 export default {
