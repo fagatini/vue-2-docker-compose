@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomePage from '@/components/pages/Home.vue'
 import RecipePage from '@/components/pages/Recipe.vue'
 import AllRecipesPage from '@/components/pages/AllRecipes.vue'
+import IngredientPage from "@/components/pages/Ingredient.vue";
 import AllIngredientsPage from '@/components/pages/AllIngredients.vue'
 import CreateRecipePage from '@/components/pages/CreateRecipe.vue'
 import CreateIngredientPage from '@/components/pages/CreateIngredient.vue'
@@ -34,12 +35,17 @@ const routes = [
     component: AllIngredientsPage
   },
   {
-    path: '/all-recipes/create-recipe',
+    path: '/all-ingredients/:id',
+    name: ROUTES.INGREDIENT,
+    component: IngredientPage
+  },
+  {
+    path: '/create-recipe',
     name: ROUTES.CREATE_RECIPE,
     component: CreateRecipePage
   },
   {
-    path: '/all-ingredients/create-ingredient',
+    path: '/create-ingredient',
     name: ROUTES.CREATE_INGREDIENT,
     component: CreateIngredientPage
   },

@@ -1,8 +1,12 @@
+
 export default [
     {
       id: 1,
       name: 'Греческий салат с маслинами',
       dish_id: 1,
+      dish_category_id: 4,
+      dish_time_id: 4,
+      dish_cuisine_id: 6,
       cover: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy9yZWNpcGVzLzEyOTA1NS9jb3ZlcnMvM1o3U0FxLmpwZWc.webp',
       description: 'Греческий салат, приготовленный с сыром Фета это лучик солнца в холодный зимний вечер.',
       portions: 2,
@@ -33,11 +37,15 @@ export default [
         }
       ],
       presentation_step: null,
+      tags: ['Рецепты для самых маленьких', 'Ежедневные рецепты']
     },
     {
       id: 2,
       name: 'Морковный суп-пюре',
       dish_id: 2,
+      dish_category_id: 1,
+      dish_time_id: 2,
+      dish_cuisine_id: 5,
       cover: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDI0MDkyMS9Kd3BMSncuanBlZw.webp',
       description: 'краткое описание рецепта 2',
       portions: 3,
@@ -71,12 +79,16 @@ export default [
       {
         img: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDI0MDkyMS96dHhiRW4uanBlZw.webp',
         description: 'Украсьте морковный суп-пюре тыквенными семечками, перцем чили и базиликом.'
-      }
+      },
+      tags: ['Рецепты для самых маленьких', 'Ежедневные рецепты']
     },
     {
       id: 3,
       name: 'Паста с томатами в собственном соку',
       dish_id: 3,
+      dish_category_id: 2,
+      dish_time_id: 3,
+      dish_cuisine_id: 10,
       cover: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDI0MDgwOS80N1lGYXIuanBlZw.webp',
       description: 'Эта паста готовится буквально за 15 минут.',
       portions: 2,
@@ -122,12 +134,16 @@ export default [
       {
         img: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDI0MDgyNC8zRGFNVVAuanBlZw.webp',
         description: 'Подайте пасту с томатами, украсив порцию листочками базилика или сыром моцарелла.'
-      }
+      },
+      tags: ['Рецепты для самых маленьких']
     },
     {
       id: 4,
       name: 'Ночная овсянка с йогуртом',
       dish_id: 4,
+      dish_category_id: 3,
+      dish_time_id: 1,
+      dish_cuisine_id: 25,
       cover: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDIzMTIyMi8zcFdWV3QuanBlZw.webp',
       description: 'краткое описание рецепта 4',
       portions: 1,
@@ -165,12 +181,16 @@ export default [
       {
         img: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDIzMTIyMi8za3ZDWXQuanBlZw.webp',
         description: 'Украсьте овсянку ягодами клубники и подайте на стол.'
-      }
+      },
+      tags: ['Рецепты для самых маленьких','Ежедневные рецепты']
     },
     {
       id: 5,
       name: 'Тест 6',
       dish_id: 6,
+      dish_category_id: 6,
+      dish_time_id: 9,
+      dish_cuisine_id: 25,
       cover: 'https://sun9-77.userapi.com/impg/4fMiOVKsG5HiHUxtesNs5_M7VHxypnmrHagyTw/Q2T79RYScIw.jpg?size=720x785&quality=96&sign=62a447417312edf97bb8a78a314e9324&type=album',
       description: 'Тест 6',
       portions: 1,
@@ -216,12 +236,16 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: ['Рецепты для самых маленьких']
     },
     {
       id: 7,
       name: 'Тест 7',
       dish_id: 7,
+      dish_category_id: 4,
+      dish_time_id: 4,
+      dish_cuisine_id: 6,
       cover: 'https://sun9-77.userapi.com/impg/4fMiOVKsG5HiHUxtesNs5_M7VHxypnmrHagyTw/Q2T79RYScIw.jpg?size=720x785&quality=96&sign=62a447417312edf97bb8a78a314e9324&type=album',
       description: 'Тест 7',
       portions: 1,
@@ -267,12 +291,16 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: []
     },
     {
       id: 8,
       name: 'Тест 8',
       dish_id: 8,
+      dish_category_id: 4,
+      dish_time_id: 4,
+      dish_cuisine_id: 6,
       cover: 'https://sun9-77.userapi.com/impg/4fMiOVKsG5HiHUxtesNs5_M7VHxypnmrHagyTw/Q2T79RYScIw.jpg?size=720x785&quality=96&sign=62a447417312edf97bb8a78a314e9324&type=album',
       description: 'Тест 8',
       portions: 1,
@@ -318,12 +346,16 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: []
     },
     {
       id: 9,
       name: 'Тест 9',
       dish_id: 9,
+      dish_category_id: 4,
+      dish_time_id: 4,
+      dish_cuisine_id: 6,
       cover: 'https://sun9-77.userapi.com/impg/4fMiOVKsG5HiHUxtesNs5_M7VHxypnmrHagyTw/Q2T79RYScIw.jpg?size=720x785&quality=96&sign=62a447417312edf97bb8a78a314e9324&type=album',
       description: 'Тест 9',
       portions: 1,
@@ -369,12 +401,16 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: ['Ежедневные рецепты']
     },
     {
       id: 10,
       name: 'Тест 10',
       dish_id: 10,
+      dish_category_id: 4,
+      dish_time_id: 4,
+      dish_cuisine_id: 6,
       cover: 'https://sun9-77.userapi.com/impg/4fMiOVKsG5HiHUxtesNs5_M7VHxypnmrHagyTw/Q2T79RYScIw.jpg?size=720x785&quality=96&sign=62a447417312edf97bb8a78a314e9324&type=album',
       description: 'Тест 10',
       portions: 1,
@@ -420,12 +456,16 @@ export default [
           description: 'Повторите слои. Закройте банку крышкой. Уберите в холодильник на 8-12 часов или на ночь.'
         }
       ],
-      presentation_step: null
+      presentation_step: null,
+      tags: ['Ежедневные рецепты']
     },
     {
       id: 11,
       name: 'Тест 11',
       dish_id: 11,
+      dish_category_id: 4,
+      dish_time_id: 4,
+      dish_cuisine_id: 6,
       cover: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy9yZWNpcGVzLzEyOTA1NS9jb3ZlcnMvM1o3U0FxLmpwZWc.webp',
       description: 'Тест 11',
       portions: 2,
@@ -456,10 +496,15 @@ export default [
         }
       ],
       presentation_step: null,
-    },   {
+      tags: []
+    },   
+    {
       id: 12,
       name: 'Тест 12',
       dish_id: 12,
+      dish_category_id: 4,
+      dish_time_id: 4,
+      dish_cuisine_id: 6,
       cover: 'https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy9yZWNpcGVzLzEyOTA1NS9jb3ZlcnMvM1o3U0FxLmpwZWc.webp',
       description: 'Тест 12',
       portions: 2,
@@ -490,5 +535,6 @@ export default [
         }
       ],
       presentation_step: null,
+      tags: []
     }
   ]

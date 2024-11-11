@@ -23,6 +23,9 @@ export default {
     ...mapGetters('ingredients', {
       ingredients: 'getIngredients'
     })
+  },
+  mounted() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 }
 
@@ -36,7 +39,6 @@ export default {
   align-items: center;
 
   &__container {
-    width: 900px;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
