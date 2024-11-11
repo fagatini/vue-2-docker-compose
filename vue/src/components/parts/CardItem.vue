@@ -16,23 +16,28 @@
         <div class="card-item__name-cnt">
             <p class="card-item__name">{{ item.name }}</p>
         </div>
-        <button class="card-item__to-cart" @click='() => addItemToCart(item)'> В корзину </button>
+        <div class="card-item__add-to-cart">
+            <ButtonCart :item=this.item />
+        </div>
     </div>
 </template>
 
 <script>
-import ButtonLike from "../parts/ButtonLike.vue";
+import ButtonLike from '../parts/ButtonLike.vue'
+import ButtonCart from '../parts/ButtonCart.vue';
 import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'CartItem',
     components:{
         ButtonLike,
+        ButtonCart,
     },
     props: {
         item: Object,
     },
     computed: {
         ...mapGetters('favorites', ["isFavorites"]),
+        ...mapGetters('cart', ['getCart']),
         showDiscount() {
             return this.item.price.currentPrice !== this.item.price.originalPrice
         },
@@ -41,10 +46,12 @@ export default {
         },
         buttonLikeStyle() {
             return this.isFavorites(this.item)
+        },
+        cartItem() {
+            return this.getCart.find((elem) => elem.id === this.item.id);
         }
     },
     methods: {
-        ...mapActions("cart", ["addItemToCart"]),
         ...mapActions('favorites', ['addToFavorites', 'removeFromFavorites']),
         openItemPage() {
             this.$router.push({ path: `/item/:${this.item.id}` })
@@ -90,22 +97,6 @@ export default {
         position: absolute;
         right: 5%;
         top: 5%;
-    }
-
-    &__button-like {
-        display: flex;
-        justify-content: center;
-        cursor: pointer; 
-        border-radius: 5px;
-        border: 0px;
-        opacity: 0.5;
-        padding: 2px;
-    }
-
-    &__icon-like {
-        width: 20px;
-        height: 20px;
-        fill: none;
     }
 
     &__discount {
@@ -170,6 +161,10 @@ export default {
         font-weight: 400;
         opacity: 0.7;
         margin-right: 10px;
+    }
+
+    &__add-to-cart {
+        width: 94%;
     }
 
     &__to-cart {

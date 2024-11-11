@@ -1,7 +1,7 @@
 <template>
     <PageLayout>
         <div class='favorites-page'>
-            <CardItem v-for="item in getCatalog" :key="item.id" :item="item"/>
+            <CardItem v-for="item in getFavorites" :key="item.id" :item="item"/>
         </div>
     </PageLayout>
 </template>

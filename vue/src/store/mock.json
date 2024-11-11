@@ -19,7 +19,7 @@
         },
         {
           "title": "Состав",
-          "value": "Хлопок 90%, Любовь 10%"
+          "value": "Молоко 90%, Любовь 10%"
         },
         {
           "title": "Энергетическая ценность",
@@ -32,37 +32,65 @@
       },
       "images": [
         {
-          "url": "https://cdn1.ozone.ru/s3/multimedia-r/c600/6855038235.jpg",
+          "url": "https://cdn-img.perekrestok.ru/i/800x800-fit/xdelivery/files/84/ed/2d8df732b3538ebba960e392007d.png",
           "type": "main"
         },
         {
-          "url": "https://media.gq.com/photos/5e6944f74d6be70008ac16c2/master/w_2000,h_1333,c_limit/Uniqlo-U-crew-neck-short-sleeve-T-shirt.jpg",
+          "url": "https://uralmig.ru/files/catalog/items/90/800x800/4500/6179c99dd371c.png",
           "type": "secondary"
         },
         {
-          "url": "https://cdn1.ozone.ru/s3/multimedia-t/c600/6826885913.jpg",
-          "type": "secondary"
-        },
-        {
-          "url": "https://media.gq.com/photos/5e6944f74d6be70008ac16c2/master/w_2000,h_1333,c_limit/Uniqlo-U-crew-neck-short-sleeve-T-shirt.jpg",
-          "type": "secondary"
-        },
-        {
-          "url": "https://cdn1.ozone.ru/s3/multimedia-t/c600/6826885913.jpg",
-          "type": "secondary"
-        },
-        {
-          "url": "https://media.gq.com/photos/5e6944f74d6be70008ac16c2/master/w_2000,h_1333,c_limit/Uniqlo-U-crew-neck-short-sleeve-T-shirt.jpg",
-          "type": "secondary"
-        },
-        {
-          "url": "https://cdn1.ozone.ru/s3/multimedia-t/c600/6826885913.jpg",
+          "url": "https://i2018.otzovik.com/2018/07/22/6740553/img/19156814.jpeg",
           "type": "secondary"
         }
       ],
       "count": "100",
       "category": "Молочка",
       "subcategory": "Творог"
+    },
+    {
+      "id": "222",
+      "name": "Молоко",
+      "description": "Вкуснейшее молоко",
+      "information": [
+        {
+          "title": "Производитель",
+          "value": "Красная цена"
+        },
+        {
+          "title": "Место производства",
+          "value": "Россия"
+        },
+        {
+          "title": "Упаковка",
+          "value": "900 г"
+        },
+        {
+          "title": "Состав",
+          "value": "Молоко 100%"
+        },
+        {
+          "title": "Жирность",
+          "value": "2%"
+        }
+      ],
+      "price": {
+        "currentPrice": "5950",
+        "originalPrice": "7000"
+      },
+      "images": [
+        {
+          "url": "https://cdn-img.perekrestok.ru/i/1600x1600-fit/xdelivery/files/dc/fc/f617e4ed84d024e4e52436f84fd6.jpg",
+          "type": "main"
+        },
+        {
+          "url": "https://cdn-img.perekrestok.ru/i/1600x1600-fit/xdelivery/files/0c/d2/f8757cc4e3b919761fb75b7a069e.jpg",
+          "type": "secondary"
+        }
+      ],
+      "count": "70",
+      "category": "Молочка",
+      "subcategory": "Молоко"
     }
   ]
 }
