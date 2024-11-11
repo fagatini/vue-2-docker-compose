@@ -13,3 +13,7 @@ export const randomInteger = (min, max) => {
   const rand = min + Math.random() * (max - min);
   return Math.round(rand);
 }
+
+export const sleep = (ms) => new Promise(res => {
+  setTimeout(res, ms);
+});

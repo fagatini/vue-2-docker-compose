@@ -31,6 +31,7 @@ export class Player {
   playCard(cardIndex) {
     const card = this.cards[cardIndex];
     this.cards.splice(cardIndex, 1);
+    card.new = true;
     return this.board.addCard(card);
   }
 
@@ -40,6 +41,7 @@ export class Player {
 
   drawCards(amount) {
     const newCards = this.deck.splice(0, amount);
+    newCards.splice(MAX_CARDS_IN_HAND - this.cards.length)
     this.cards.push(...newCards);
   }
 
@@ -47,5 +49,15 @@ export class Player {
     this.passed = false;
     this.board.reset();
     this.drawCards(NEW_ROUND_DRAW_CARDS_QUANTITY);
+  }
+
+  removeCardFromBoard(index, type) {
+    const card = this.board.getCard(index, type);
+    if (!card.new) {
+      return;
+    }
+
+    const removed = this.board.removeCard(index, type);
+    this.cards.push(removed);
   }
 }

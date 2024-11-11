@@ -4,6 +4,7 @@
       Homepage
       <button @click="() => openHelpModal()">Open modal</button>
     </section>
+
   </PageLayout>
 </template>
 
@@ -15,7 +16,7 @@ export default {
   name: 'HomePage',
   mixins: [helpModal],
   components: {
-    PageLayout
+    PageLayout,
   }
 }
 </script>

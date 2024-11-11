@@ -1,4 +1,5 @@
-import { CardType, MAX_CARDS_PER_LINE } from '@/engine/constants';
+import { CardType, MAX_CARDS_PER_LINE, TurnStates } from '@/engine/constants';
+import { getGameEngineSingleton } from '@/engine/game-engine';
 
 export class Board {
   firstLineCards = [];
@@ -17,20 +18,47 @@ export class Board {
   }
 
   addFirstLineCard(card) {
-    return this.addCardToLine(card, this.firstLineCards);
-  }
-
-  addSecondLineCard(card) {
-    return this.addCardToLine(card, this.secondLineCards);
-  }
-
-  addCardToLine(card, line) {
-    if (MAX_CARDS_PER_LINE < line.length) {
-      line.push(card);
+    if (MAX_CARDS_PER_LINE > this.firstLineCards.length) {
+      this.firstLineCards = [...this.firstLineCards, card]
       return true;
     }
 
     return false;
+  }
+
+  addSecondLineCard(card) {
+    if (MAX_CARDS_PER_LINE > this.secondLineCards.length) {
+      this.secondLineCards = [...this.secondLineCards, card]
+      return true;
+    }
+
+    return false;
+  }
+
+  removeCardFromFirstLine(index) {
+    const removed = this.firstLineCards.splice(index, 1);
+    this.firstLineCards = [...this.firstLineCards];
+    return removed[0];
+  }
+
+  removeCardFromSecondLine(index) {
+    const removed = this.secondLineCards.splice(index, 1);
+    this.secondLineCards = [...this.secondLineCards];
+    return removed[0];
+  }
+
+  removeCard(index, type) {
+    const engine = getGameEngineSingleton();
+
+    if (engine.currentTurn !== TurnStates.PLAYER) {
+      return;
+    }
+
+    if (type === CardType.MELEE) {
+      return this.removeCardFromFirstLine(index);
+    } else {
+      return this.removeCardFromSecondLine(index);
+    }
   }
 
   addCard(card) {
@@ -45,6 +73,14 @@ export class Board {
 
       default:
         console.error('Invalid cardType: ', card);
+    }
+  }
+
+  getCard(index, type) {
+    if (type === CardType.MELEE) {
+      return this.firstLineCards[index];
+    } else {
+      return this.secondLineCards[index];
     }
   }
 

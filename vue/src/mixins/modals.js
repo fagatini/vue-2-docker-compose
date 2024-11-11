@@ -1,5 +1,6 @@
 import { mapMutations } from "vuex";
 import HelpModal from "@/components/modals/HelpModal";
+import EndGameModal from '@/components/modals/EndGameModal.vue';
 
 export const helpModal = {
   methods: {
@@ -11,6 +12,17 @@ export const helpModal = {
         component: HelpModal,
         params
       })
+    }
+  }
+}
+
+export const endGameModal = {
+  methods: {
+    ...mapMutations('modals', [
+      'openModal'
+    ]),
+    openEndGameModal() {
+      this.openModal({ component: EndGameModal });
     }
   }
 }
