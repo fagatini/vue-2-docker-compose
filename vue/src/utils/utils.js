@@ -26,7 +26,7 @@ export const getCardDropPosition = (cardNodes, x) => {
     const mid = (left + right) / 2;
 
     if (x < mid) {
-      return position
+      return position;
     }
 
     position++;

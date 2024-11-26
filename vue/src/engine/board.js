@@ -22,7 +22,7 @@ export class Board {
       if (position !== undefined) {
         this.firstLineCards.splice(position, 0, card);
       } else {
-        this.firstLineCards = [...this.firstLineCards, card ]
+        this.firstLineCards = [...this.firstLineCards, card];
       }
       return true;
     }
@@ -35,7 +35,7 @@ export class Board {
       if (position !== undefined) {
         this.secondLineCards.splice(position, 0, card);
       } else {
-        this.secondLineCards = [...this.secondLineCards, card]
+        this.secondLineCards = [...this.secondLineCards, card];
       }
       return true;
     }

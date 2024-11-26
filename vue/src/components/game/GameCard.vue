@@ -116,7 +116,6 @@ export default {
     },
     stopDrag(event) {
       event.preventDefault();
-      console.log(event)
       this.$refs.draggableCard.style.position = 'relative';
       document.onmousemove = null;
       document.onmouseup = null;
