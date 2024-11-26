@@ -30,7 +30,7 @@
         </g>
       </svg>
     </div>
-    <div class="desk-line__cards">
+    <div class="desk-line__cards" ref="cards">
       <GameCard
           v-for="(card, index) in cards"
           :index="index"
