@@ -49,6 +49,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { CellTypeLabels } from '../../GameEngine/CellTypes'
 
 export default {
   name: "DropdownSelect",
@@ -59,17 +60,7 @@ export default {
       isOpen: false,
       isTextHover: false,
       isFocused: false,
-      cellTypeLabels: {
-        1: "Воздух",
-        2: "Стенка",
-        3: "Поле",
-        4: "Тень",
-        5: "Солнце",
-        6: "Капля",
-        7: "Горшок",
-        8: "Цветочек на поле",
-        9: "Цветочек в горшке",
-      }
+      cellTypeLabels: CellTypeLabels,
     };
   },
   props:{
