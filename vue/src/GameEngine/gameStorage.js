@@ -1,7 +1,8 @@
 // src/utils/gameManager.js
 import levels from '@/assets/levels.json';
 
-const LOCAL_STORAGE_KEY = 'customLevels';
+const LOCAL_STORAGE_CUSTOM_LEVELS_KEY = 'customLevels';
+const LOCAL_STORAGE_CURRENT_LEVEL_KEY = 'currentLevel';
 
 const gameStorage = {
   loadLevel(levelNumber, isCustom=false) {
@@ -13,7 +14,7 @@ const gameStorage = {
   },
 
   getCustomLevels() {
-    const savedLevels = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const savedLevels = localStorage.getItem(LOCAL_STORAGE_CUSTOM_LEVELS_KEY);
     return savedLevels ? JSON.parse(savedLevels) : [];
   },
 
@@ -24,7 +25,7 @@ const gameStorage = {
     else
       customLevels[levelNumber] = levelData;
 
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(customLevels));
+    localStorage.setItem(LOCAL_STORAGE_CUSTOM_LEVELS_KEY, JSON.stringify(customLevels));
   },
 
   saveLevelToFile(levelData, fileName = 'level.json') {
@@ -44,7 +45,7 @@ const gameStorage = {
   
           const customLevels = this.getCustomLevels();
           customLevels.push(levelData);
-          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(customLevels));
+          localStorage.setItem(LOCAL_STORAGE_CUSTOM_LEVELS_KEY, JSON.stringify(customLevels));
   
           resolve(levelData);
         } catch (error) {
@@ -57,6 +58,17 @@ const gameStorage = {
 
   getNumberOfLevels(isCustom) {
     return isCustom ? this.getCustomLevels().length : Object.keys(levels.levels).filter(key => key !== "editor").length;
+  },
+
+  saveProgress(currentLevel) {
+    if (this.loadProgress() < currentLevel) {
+      localStorage.setItem(LOCAL_STORAGE_CURRENT_LEVEL_KEY, JSON.stringify(currentLevel));
+    }
+  },
+
+  loadProgress() {
+    const currentLevel = localStorage.getItem(LOCAL_STORAGE_CURRENT_LEVEL_KEY);
+    return currentLevel ? JSON.parse(currentLevel) : 0;
   }
 };
 

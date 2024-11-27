@@ -1,6 +1,8 @@
+import { CellTypes } from "./CellTypes";
+
 const mapValidator = {
   validateFlower(mapMatrix) {
-    const flowerValueList = [8, 9];
+    const flowerValueList = [CellTypes.FLOWER_FIELD, CellTypes.FLOWER_POT];
     let status = "Всё ок";
 
     let flowerFound = false;
@@ -71,11 +73,8 @@ const mapValidator = {
   },
 
   validateWall(mapMatrix) {
-    const airValue = 1;
-    const wallValue = 2;
-    const waterValue = 6;
     const visitedValue = -1;
-    const allowedBorderCellTypeList = [airValue, wallValue, waterValue];
+    const allowedBorderCellTypeList = [CellTypes.AIR, CellTypes.WALL, CellTypes.WATER];
     let status = "Всё ок";
 
     const rows = mapMatrix.length;
@@ -113,7 +112,7 @@ const mapValidator = {
 
           if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
             const currentValue = matrixCopy[newRow][newCol];
-            if (currentValue === airValue) {
+            if (currentValue === CellTypes.AIR) {
               matrixCopy[newRow][newCol] = visitedValue;
               queue.push([newRow, newCol]);
             } else if (
@@ -133,7 +132,7 @@ const mapValidator = {
       foundAir = false;
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
-          if (matrixCopy[row][col] === airValue) {
+          if (matrixCopy[row][col] === CellTypes.AIR) {
             const result = bfs(row, col);
             if (result) return result;
             foundAir = true;
@@ -148,7 +147,7 @@ const mapValidator = {
   },
 
   validatePot(mapMatrix) {
-    const potValueList = [7, 9];
+    const potValueList = [CellTypes.POT, CellTypes.FLOWER_POT];
     const matrixCellList = mapMatrix.flat();
     const containsPot = potValueList.some((cellType) =>
       matrixCellList.includes(cellType)

@@ -13,7 +13,7 @@
           :to="button.path"
           class="level-menu__button-link"
         >
-          <CustomButton type="level">
+          <CustomButton type="level" :disabled="button.disabled">
             {{ button.text }}
           </CustomButton>
         </RouterLink>
@@ -50,7 +50,11 @@ export default {
         text: `${index + 1}`,
         path: `/${this.showCustomLevels? 'custom-' : ''}level-${index + 1}`,
         type: "level",
+        disabled: this.levelProgress < index
       }));
+    },
+    levelProgress() {
+      return gameStorage.loadProgress();
     }
   },
   methods: {
