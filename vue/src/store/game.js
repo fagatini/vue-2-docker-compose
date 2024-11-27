@@ -7,9 +7,14 @@ export default {
   state: {
     grid: [],
     selectedGrid: [],
-    cellTypes: [1, 2, 3, 4],
+    cellTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9],
     currentLevel: null,
     isCustomLevel: false,
+    validationResults: {
+      flower: "",
+      wall: "",
+      ground: "",
+    }
   },
   getters: {
     getGrid: (state) => state.grid,
@@ -19,6 +24,7 @@ export default {
     cellTypes: (state) => state.cellTypes,
     currentLevel: (state) => state.currentLevel,
     isCustomLevel: (state) => state.isCustomLevel,
+    getValidationResults: (state) => state.validationResults,
   },
   mutations: {
     setGrid(state, grid) {
