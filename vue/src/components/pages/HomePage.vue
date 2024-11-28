@@ -17,7 +17,6 @@
 import StartScreen from "../parts/PageBackground.vue";
 import CustomButton from "../parts/CustomButton.vue";
 import FlowerAnimation from "../parts/FlowerAnimation.vue";
-import { onMounted } from "vue";
 
 export default {
   name: "HomeView",
@@ -26,9 +25,6 @@ export default {
     CustomButton,
     FlowerAnimation,
   },
-  setup() {
-    onMounted(() => {});
-  }
 };
 </script>
 

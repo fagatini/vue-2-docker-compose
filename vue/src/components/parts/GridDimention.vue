@@ -89,7 +89,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-
 @import "../../assets/styles/variables.less";
 
 .matrix-dimension {
