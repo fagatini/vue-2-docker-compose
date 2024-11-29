@@ -71,21 +71,21 @@ export default {
   .custom-button {
   border-radius: 18px;
 
-  &--menu {
-    padding: 9px 15px;
-    font-size: 25px;
-    letter-spacing: 5px;
-    width: 314px;
-    height: 71px;
-    margin: 9px 0;
-  }
+    &--menu {
+      padding: 9px 15px;
+      font-size: 25px;
+      letter-spacing: 5px;
+      width: 314px;
+      height: 71px;
+      margin: 9px 0;
+    }
 
-  &--level {
-    font-size: 42px;
-    width: 78px;
-    height: 78px;
-    margin: 30px 0;
+    &--level {
+      font-size: 42px;
+      width: 78px;
+      height: 78px;
+      margin: 30px 0;
+    }
   }
-}
 }
 </style>
