@@ -25,5 +25,21 @@ module.exports = defineConfig({
         additionalData: `@import '@/less/const.less';`
       }
     }
+  },
+  devServer: {
+    allowedHosts: 'all',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    client: {
+      overlay: false,
+      webSocketURL: {
+        protocol: 'wss',
+        hostname: process.env.VUE_APP_WEBSITE_URL,
+        port: 443,
+        pathname: '/ws',
+      }
+    },
+    hot: true,
   }
 })
