@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <StartScreen>
+      <div class="animation-container">
+          <FlowerAnimation />
+      </div>
       <div class="home__buttons">
         <RouterLink to="/menu" class="home__button-link">
           <CustomButton type="menu">Начать игру</CustomButton>
@@ -13,12 +16,14 @@
 <script>
 import StartScreen from "../parts/PageBackground.vue";
 import CustomButton from "../parts/CustomButton.vue";
+import FlowerAnimation from "../parts/FlowerAnimation.vue";
 
 export default {
   name: "HomeView",
   components: {
     StartScreen,
     CustomButton,
+    FlowerAnimation,
   },
 };
 </script>
@@ -42,6 +47,14 @@ export default {
   &__button-link {
     text-decoration: none;
     z-index: 1;
+  }
+
+  .animation-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
   }
 }
 </style>

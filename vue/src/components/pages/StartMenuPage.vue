@@ -46,11 +46,10 @@ export default {
 @import "../../assets/styles/variables.less";
 
 .menu {
-  background-color: var(--main-background-color);
-  min-height: 100vh;
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  height: 100vh;
 
   &__buttons {
     display: flex;

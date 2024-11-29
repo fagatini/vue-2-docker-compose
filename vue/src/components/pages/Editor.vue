@@ -43,20 +43,22 @@ export default {
   &__left {
     flex: 3;
     display: flex;
-    border-right: 1px solid #ccc;
-    padding: 16px;
+    border-right: 1px solid var(--main-background-color);
+    padding: 20px;
     justify-content: center;
     align-items: center;
     user-select: none;
   }
 
   &__right {
+    background-color: var(--main-background-color);
     flex: 1;
-    padding: 16px;
+    padding: 20px;
+    padding-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
   }
 }
 </style>

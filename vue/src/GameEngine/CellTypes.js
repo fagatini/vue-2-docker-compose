@@ -21,3 +21,15 @@ export const CellTypeNames = {
   8: 'flower-field',
   9: 'flower-pot',
 };
+
+export const CellTypeLabels = {
+  1: 'Воздух',
+  2: 'Стенка',
+  3: 'Поле',
+  4: 'Тень',
+  5: 'Солнце',
+  6: 'Капля',
+  7: 'Горшок',
+  8: 'Цветочек в поле',
+  9: 'Цветочек в горшке',
+};

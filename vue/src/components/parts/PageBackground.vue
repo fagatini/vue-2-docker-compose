@@ -1,5 +1,10 @@
 <template>
   <div class="start-screen">
+    <div class="start-screen__image--plant-left"></div>
+    <div class="start-screen__image--plant-right"></div>
+    <div class="start-screen__image--draw-plant-right-bot"></div>
+    <div class="start-screen__image--draw-plant-right-top"></div>
+    <div class="start-screen__image--draw-plant-left"></div>
     <div class="circle"></div>
     <header class="start-screen__header">
       <h1 class="start-screen__title">GROW UP</h1>
@@ -24,6 +29,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: var(--main-background-color);
 
   &__header {
     padding: 80px 0 30px 0;
@@ -51,5 +57,63 @@ export default {
     z-index: 0;
     pointer-events: none;
   }
+
+  &__image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+
+    &--plant-left {
+      position: absolute;
+      background-image: url(../../assets/images/plant-left.png);
+      width: 393px;
+      height: 525px;
+      top: 0px;
+      left: 0px;
+      z-index: 1;
+    }
+
+    &--plant-right {
+      position: absolute;
+      background-image: url(../../assets/images/plant-right.png);
+      width: 460px;
+      height: 709px;
+      top: 150px;
+      right: 0px;
+      z-index: 1;
+    }
+
+    &--draw-plant-right-bot {
+      position: absolute;
+      background-image: url(../../assets/images/draw-plant-right-bot.png);
+      width: 326px;
+      height: 399px;
+      bottom: 0px;
+      right: 40px;
+      z-index: 1;
+    }
+
+    &--draw-plant-right-top {
+      position: absolute;
+      background-image: url(../../assets/images/draw-plant-right-top.png);
+      width: 227px;
+      height: 539px;
+      bottom: 450px;
+      right: 0px;
+      z-index: 0;
+    }
+
+    &--draw-plant-left {
+      position: absolute;
+      background-image: url(../../assets/images/draw-plant-left.png);
+      width: 322px;
+      height: 400px;
+      bottom: 0px;
+      left: 0px;
+      z-index: 1;
+    }
+  }
+
+
 }
 </style>

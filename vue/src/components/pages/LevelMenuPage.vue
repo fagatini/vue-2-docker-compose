@@ -69,11 +69,10 @@ export default {
 @import "../../assets/styles/variables.less";
 
 .level-menu {
-  background-color: var(--main-background-color);
-  min-height: 100vh;
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  height: 100vh;
 
   &__toggle {
     display: flex;
@@ -85,7 +84,7 @@ export default {
   &__buttons {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: center;
     gap: 40px;
     margin: 40px;
   }
