@@ -94,4 +94,14 @@ export default {
     z-index: 1;
   }
 }
+
+@media (max-width: 480px) {
+  .level-menu {
+
+    &__buttons {
+      gap: 24px;
+      margin: 24px;
+    }
+  }
+}
 </style>
