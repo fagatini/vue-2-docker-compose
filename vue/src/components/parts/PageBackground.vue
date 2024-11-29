@@ -115,7 +115,7 @@ export default {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 480px) {
   .start-screen {
   position: relative;
   display: flex;
