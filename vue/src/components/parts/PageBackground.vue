@@ -113,7 +113,106 @@ export default {
       z-index: 1;
     }
   }
+}
 
+@media (max-width: 720px) {
+  .start-screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  --bg-size: 60%;
 
+    &__header {
+      padding: 250px 0 18px 0;
+      top: 0;
+      text-align: center;
+      z-index: 1;
+    }
+
+    &__title {
+      color: var(--title-color);
+      font-size: 100px;
+      font-family: "Adigiana Ultra", sans-serif;
+      margin: 0;
+    }
+
+    .circle {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px;
+      height: 900px;
+      background-color: var(--cicle-color);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    &__image {
+      position: relative;
+
+      &--plant-left {
+        position: absolute;
+        background-image: url(../../assets/images/plant-left.png);
+        background-size: var(--bg-size);
+        background-repeat: no-repeat;
+        width: 235px;
+        height: 315px;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+      }
+
+      &--plant-right {
+        position: absolute;
+        background-image: url(../../assets/images/plant-right.png);
+        background-size: var(--bg-size);
+        background-repeat: no-repeat;
+        width: 270px;
+        height: 425px;
+        top: 450px;
+        right: -175px;
+        z-index: 1;
+      }
+
+      &--draw-plant-right-bot {
+        position: absolute;
+        background-image: url(../../assets/images/draw-plant-right-bot.png);
+        background-size: var(--bg-size);
+        background-repeat: no-repeat;
+        width: 195px;
+        height: 239px;
+        bottom: -100px;
+        right: -30px;
+        z-index: 1;
+      }
+
+      &--draw-plant-right-top {
+        position: absolute;
+        background-image: url(../../assets/images/draw-plant-right-top.png);
+        background-size: var(--bg-size);
+        background-repeat: no-repeat;
+        width: 136px;
+        height: 323px;
+        bottom: 490px;
+        right: -60px;
+        z-index: 1;
+      }
+
+      &--draw-plant-left {
+        position: absolute;
+        background-image: url(../../assets/images/draw-plant-left.png);
+        background-size: var(--bg-size);
+        background-repeat: no-repeat;
+        width: 193px;
+        height: 240px;
+        bottom: -100px;
+        left: 50px;
+        z-index: 1;
+      }
+    }
+  }
 }
 </style>
