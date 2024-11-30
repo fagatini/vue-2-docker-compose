@@ -71,8 +71,7 @@ class GameEngine {
       return;
     }
 
-    this.cardPlayed = true;
-    this.player.playCard(cardIndex, position);
+    this.cardPlayed = this.player.tryPlayCard(cardIndex, position);
   }
 
   endOpponentTurn(passed) {
@@ -102,16 +101,20 @@ class GameEngine {
 
     await sleep(Math.floor(Math.random() * MAX_OPPONENT_WAIT_MS));
 
-    const cards = this.opponent.cards;
+    const cards = [...this.opponent.cards];
 
-    if (!cards.length) {
-      return;
+    while (cards.length > 0) {
+      const bestCardIndex = cards.reduce((bestCardIndex, card, i) => card.getScore() > cards[bestCardIndex].getScore() ? i : bestCardIndex, 0);
+      const isTurnSuccess = this.opponent.tryPlayCard(bestCardIndex);
+
+      if (isTurnSuccess) {
+        this.opponentTurnsQuantity++;
+        this.endOpponentTurn(this.opponentTurnsQuantity >= OPPONENT_TURNS_PER_ROUND);
+        break;
+      }
+
+      cards.splice(bestCardIndex, 1);
     }
-
-    const bestCardIndex = cards.reduce((bestCardIndex, card, i) => card.getScore() > cards[bestCardIndex].getScore() ? i : bestCardIndex, 0);
-    this.opponent.playCard(bestCardIndex);
-    this.opponentTurnsQuantity++;
-    this.endOpponentTurn(this.opponentTurnsQuantity >= OPPONENT_TURNS_PER_ROUND);
   }
 
   endRound() {

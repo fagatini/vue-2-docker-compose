@@ -80,7 +80,7 @@ export class Board {
         break;
 
       default:
-        console.error('Invalid cardType: ', card);
+        throw new Error('Invalid cardType');
     }
   }
 
