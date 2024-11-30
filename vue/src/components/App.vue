@@ -4,6 +4,11 @@
   </div>
 </template>
 
+<script>
+let tg = window.Telegram.WebApp;
+tg.disableVerticalSwipes()
+</script>
+
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

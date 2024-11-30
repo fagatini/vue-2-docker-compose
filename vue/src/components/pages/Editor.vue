@@ -27,7 +27,7 @@ export default {
     GridValidation,
   },
   beforeMount() {
-    this.loadLevel({levelNumber: "editor"});
+    this.loadLevel({ levelNumber: "editor" });
   },
   methods: {
     ...mapActions("game", ["loadLevel"]),
@@ -59,6 +59,33 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .editor-page {
+    flex-direction: column;
+
+    &__left {
+      order: 1;
+      border-right: none;
+      border-bottom: 1px solid var(--main-background-color);
+      padding: 2vw;
+      overflow-y: auto;
+      max-height: 50vh;
+      max-width: 100vw;
+    }
+
+    &__left * {
+      max-width: 100%;
+      max-height: 100%;
+      box-sizing: border-box;
+    }
+
+    &__right {
+      order: 2;
+      padding: 10px;
+    }
   }
 }
 </style>

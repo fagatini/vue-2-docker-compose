@@ -18,6 +18,11 @@
           </CustomButton>
         </RouterLink>
       </div>
+      <RouterLink class="level-menu__toggle" to="/">
+        <CustomButton type="menu">
+          Домой
+        </CustomButton>
+      </RouterLink>
     </StartScreen>
   </div>
 </template>
@@ -76,6 +81,7 @@ export default {
 
   &__toggle {
     display: flex;
+    text-decoration: none;
     flex-direction: row;
     justify-content: center;
     z-index: 1;
@@ -92,6 +98,16 @@ export default {
   &__button-link {
     text-decoration: none;
     z-index: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .level-menu {
+
+    &__buttons {
+      gap: 24px;
+      margin: 24px;
+    }
   }
 }
 </style>
