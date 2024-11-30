@@ -19,7 +19,7 @@ export class Board {
 
   addFirstLineCard(card, position) {
     if (MAX_CARDS_PER_LINE > this.firstLineCards.length) {
-      if (position !== undefined) {
+      if (position !== null) {
         this.firstLineCards.splice(position, 0, card);
       } else {
         this.firstLineCards = [...this.firstLineCards, card];
@@ -32,7 +32,7 @@ export class Board {
 
   addSecondLineCard(card, position) {
     if (MAX_CARDS_PER_LINE > this.secondLineCards.length) {
-      if (position !== undefined) {
+      if (position !== null) {
         this.secondLineCards.splice(position, 0, card);
       } else {
         this.secondLineCards = [...this.secondLineCards, card];

@@ -66,7 +66,7 @@ class GameEngine {
     return this.msRemainToTurn / 1000;
   }
 
-  playCard(cardIndex, position) {
+  playCard(cardIndex, position = null) {
     if (this.currentTurn !== TurnStates.PLAYER || this.cardPlayed) {
       return;
     }
