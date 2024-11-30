@@ -26,8 +26,9 @@ export default {
       const engine = this.getGameEngine;
       const { left, right, top, bottom } = this.$refs.playerDesk.$refs.lines.getBoundingClientRect();
       const card = engine.player.cards[cardIndex];
-      const refName = card.type === CardType.MELEE ? 'meleeLine' : 'rangeLine';
-      let { childNodes: cardsNodes } =  this.$refs.playerDesk.$refs[refName].$refs.cards;
+      const lineId = card.type === CardType.MELEE ? 'player-melee-cards' : 'player-range-cards';
+      const line = document.querySelector(`#${lineId} > .desk-line__cards`);
+      const cardsNodes = line.childNodes;
 
       if (x > left && x < right && y < bottom && y > top) {
         const position = getCardDropPosition(cardsNodes, cursor.x);

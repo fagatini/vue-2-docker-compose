@@ -14,8 +14,8 @@
       <EndTurnButton />
     </div>
     <div ref="lines">
-      <GameDeskLine :cards="playerMeleeCards" :isMelee="true" :isOpponent="false" ref="meleeLine"/>
-      <GameDeskLine :cards="playerRangeCards" :isMelee="false" :isOpponent="false" ref="rangeLine"/>
+      <GameDeskLine :cards="playerMeleeCards" :isMelee="true" :isOpponent="false" id="player-melee-cards" />
+      <GameDeskLine :cards="playerRangeCards" :isMelee="false" :isOpponent="false" id="player-range-cards" />
     </div>
   </div>
 </template>
