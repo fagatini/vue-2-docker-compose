@@ -41,8 +41,8 @@ class GameEngine {
   }
 
   endPlayerTurn(passed) {
-    this.player.board.firstLineCards.map(card => card.new = false)
-    this.player.board.secondLineCards.map(card => card.new = false)
+    this.player.board.firstLineCards.map(card => card.setNew(false))
+    this.player.board.secondLineCards.map(card => card.setNew(false))
 
     if (this.opponent.passed) {
       if (passed) {
@@ -108,7 +108,7 @@ class GameEngine {
       return;
     }
 
-    const bestCardIndex = cards.reduce((bestCardIndex, card, i) => card.score > cards[bestCardIndex].score ? i : bestCardIndex, 0);
+    const bestCardIndex = cards.reduce((bestCardIndex, card, i) => card.getScore() > cards[bestCardIndex].getScore() ? i : bestCardIndex, 0);
     this.opponent.playCard(bestCardIndex);
     this.opponentTurnsQuantity++;
     this.endOpponentTurn(this.opponentTurnsQuantity >= OPPONENT_TURNS_PER_ROUND);

@@ -31,7 +31,7 @@ export class Player {
   playCard(cardIndex, position) {
     const card = this.cards[cardIndex];
     this.cards.splice(cardIndex, 1);
-    card.new = true;
+    card.setNew(true);
     return this.board.addCard(card, position);
   }
 
@@ -53,7 +53,7 @@ export class Player {
 
   removeCardFromBoard(index, type) {
     const card = this.board.getCard(index, type);
-    if (!card.new) {
+    if (!card.getNew()) {
       return;
     }
 
