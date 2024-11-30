@@ -1,5 +1,5 @@
 <template>
-  <div class="game-grid-wrapper">
+  <div class="game-grid__wrapper">
     <div class="game-grid" :style="gridStyle">
       <div v-for="(row, rowIndex) in getGrid" :key="rowIndex" class="game-grid__row">
         <GameCell
@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.game-grid-wrapper {
+.game-grid__wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,6 +88,16 @@ export default {
   margin: auto;
   margin-top: 0;
   transition: transform 0.2s ease-in-out;
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
 
   &__row {
     display: flex;
