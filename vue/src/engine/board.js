@@ -17,18 +17,26 @@ export class Board {
     return this.getFirstLineScore() + this.getSecondLineScore();
   }
 
-  addFirstLineCard(card) {
+  addFirstLineCard(card, position) {
     if (MAX_CARDS_PER_LINE > this.firstLineCards.length) {
-      this.firstLineCards = [...this.firstLineCards, card]
+      if (position !== null) {
+        this.firstLineCards.splice(position, 0, card);
+      } else {
+        this.firstLineCards = [...this.firstLineCards, card];
+      }
       return true;
     }
 
     return false;
   }
 
-  addSecondLineCard(card) {
+  addSecondLineCard(card, position) {
     if (MAX_CARDS_PER_LINE > this.secondLineCards.length) {
-      this.secondLineCards = [...this.secondLineCards, card]
+      if (position !== null) {
+        this.secondLineCards.splice(position, 0, card);
+      } else {
+        this.secondLineCards = [...this.secondLineCards, card];
+      }
       return true;
     }
 
@@ -61,14 +69,14 @@ export class Board {
     }
   }
 
-  addCard(card) {
+  addCard(card, position) {
     switch (card.type) {
       case CardType.MELEE:
-        this.addFirstLineCard(card);
+        this.addFirstLineCard(card, position);
         break;
 
       case CardType.RANGE:
-        this.addSecondLineCard(card);
+        this.addSecondLineCard(card, position);
         break;
 
       default:

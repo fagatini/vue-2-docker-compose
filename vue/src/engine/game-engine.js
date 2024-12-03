@@ -66,13 +66,13 @@ class GameEngine {
     return this.msRemainToTurn / 1000;
   }
 
-  playCard(cardIndex) {
+  playCard(cardIndex, position = null) {
     if (this.currentTurn !== TurnStates.PLAYER || this.cardPlayed) {
       return;
     }
 
     this.cardPlayed = true;
-    this.player.playCard(cardIndex);
+    this.player.playCard(cardIndex, position);
   }
 
   endOpponentTurn(passed) {

@@ -28,11 +28,11 @@ export class Player {
     this.deck = shuffleArray(this.deck);
   }
 
-  playCard(cardIndex) {
+  playCard(cardIndex, position) {
     const card = this.cards[cardIndex];
     this.cards.splice(cardIndex, 1);
     card.new = true;
-    return this.board.addCard(card);
+    return this.board.addCard(card, position);
   }
 
   pass() {

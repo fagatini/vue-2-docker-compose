@@ -17,3 +17,20 @@ export const randomInteger = (min, max) => {
 export const sleep = (ms) => new Promise(res => {
   setTimeout(res, ms);
 });
+
+export const getCardDropPosition = (cardNodes, x) => {
+  let position = 0;
+
+  for (const node of cardNodes) {
+    const { left, right } = node.getBoundingClientRect();
+    const mid = (left + right) / 2;
+
+    if (x < mid) {
+      return position;
+    }
+
+    position++;
+  }
+
+  return position;
+}
