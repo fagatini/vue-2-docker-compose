@@ -9,9 +9,9 @@
       >
         <GameCard
           :key="index"
-          :type="card.type"
-          :score="card.score"
-          :image-uri="card.image"
+          :type="card.getType()"
+          :score="card.getScore()"
+          :image-uri="card.getImage()"
           :face-down="opponent"
           :enlarged="!opponent"
           :is-opponent="opponent"
