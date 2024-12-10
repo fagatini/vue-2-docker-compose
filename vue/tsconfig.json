@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
     "target": "esnext",
     "strict": true,
     "module": "es2015",
@@ -8,10 +9,8 @@
     "allowJs": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
-  }
+  },
+  "exclude": ["./dist/**/*"]
 }
-

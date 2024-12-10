@@ -1,24 +1,30 @@
 <template>
-  <PageLayout>
-    <section class="p-16">
-      Homepage
-      <button @click="() => openHelpModal()">Open modal</button>
-    </section>
-  </PageLayout>
+  <div class="game">
+    <GameStatus />
+    <GameField />
+  </div>
 </template>
 
 <script>
-import PageLayout from '../parts/PageLayout'
-import { helpModal } from "@/mixins/modals";
+import GameField from "../visual/GameField.vue";
+import GameStatus from "../visual/GameStatusHeader.vue";
 
 export default {
   name: 'HomePage',
-  mixins: [helpModal],
   components: {
-    PageLayout
+    GameField,
+    GameStatus
   }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.game {
+  width: 100%;
+  height: 100vh;
+  min-width: 302px;
+  min-height: 438px;
+  display: flex;
+  flex-direction: column;
+}
 </style>

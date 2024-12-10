@@ -1,14 +1,16 @@
 import { mapMutations } from "vuex";
-import HelpModal from "@/components/modals/HelpModal";
+import ResultGameModal from "@/components/modals/ResultGameModal.vue";
 
-export const helpModal = {
+export const resultGameModal = {
+
   methods: {
     ...mapMutations('modals', [
       'openModal'
     ]),
-    openHelpModal (params = {}) {
+
+    openResultGameModal (params = {}) {
       this.openModal({
-        component: HelpModal,
+        component: ResultGameModal,
         params
       })
     }
