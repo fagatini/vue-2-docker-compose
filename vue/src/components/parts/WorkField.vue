@@ -1,11 +1,20 @@
 <template>
-    <div class="work-field" @pointermove="handlePointerMove">
+    <div
+        class="work-field"
+        @pointermove="handlePointerMove"
+        @pointerup="handlePointerUp"
+        @pointerdown="handlePointerDown"
+        @keydown="handleKeyDown"
+        @keyup="handleKeyUp"
+        tabindex="0"
+    >
         <MovableBlock
             v-for="block in getBlocks"
             :key="block.id"
             :data-id="block.id"
             :startLeft="block.left"
             :startTop="block.top"
+            :selected="block.selected"
             :handleMoved="
                 (left, top) => {
                     handleBlockMoved(left, top, block.id);
@@ -23,6 +32,11 @@
             v-if="this.current.start.blockId"
             :connection="this.current"
         />
+        <div
+            v-if="selectionStartPoint.top"
+            class="work-field__selection-area"
+            :style="computeSelectionAreaStyle"
+        ></div>
     </div>
 </template>
 
@@ -41,14 +55,57 @@ export default {
         return {
             current: { start: {}, end: {} },
             isPointerDown: false,
+            isShiftPressed: false,
+            selectionStartPoint: { top: null, left: null },
+            selectionEndPoint: { top: null, left: null },
         };
     },
     computed: {
-        ...mapGetters('blocks', ['getBlocks', 'getConnections']),
+        ...mapGetters('blocks', ['getBlocks', 'getConnections', 'getBlock']),
+        computeSelectionAreaStyle() {
+            return {
+                top: `${Math.min(
+                    this.selectionEndPoint.top,
+                    this.selectionStartPoint.top
+                )}px`,
+                left: `${Math.min(
+                    this.selectionEndPoint.left,
+                    this.selectionStartPoint.left
+                )}px`,
+                width: `${Math.abs(
+                    this.selectionEndPoint.left - this.selectionStartPoint.left
+                )}px`,
+                height: `${Math.abs(
+                    this.selectionEndPoint.top - this.selectionStartPoint.top
+                )}px`,
+            };
+        },
     },
     methods: {
-        ...mapActions('blocks', ['changeBlockById', 'addConnection']),
+        ...mapActions('blocks', [
+            'changeBlockById',
+            'addConnection',
+            'chooseBlockByArea',
+            'clearSelection',
+        ]),
+        handleKeyDown(e) {
+            if (e.key === 'Shift') {
+                this.isShiftPressed = true;
+            }
+        },
+        handleKeyUp(e) {
+            if (e.key === 'Shift') {
+                this.isShiftPressed = false;
+                this.selectionStartPoint = { top: null, left: null };
+                this.clearSelection();
+            }
+        },
         handleBlockMoved(left, top, id) {
+            if (!this.getBlock(id).selected) {
+                this.clearSelection();
+                this.selectionStartPoint = { top: null, left: null };
+            }
+
             this.changeBlockById({ id, newBlockData: { left, top } });
         },
         handleStartConnection(event) {
@@ -66,8 +123,47 @@ export default {
             this.addConnection(this.current);
             this.current = { start: {}, end: {} };
         },
+        handlePointerUp(e) {
+            if (this.isShiftPressed) {
+                e.stopPropagation();
+                this.chooseBlockByArea({
+                    top: Math.min(
+                        this.selectionEndPoint.top,
+                        this.selectionStartPoint.top
+                    ),
+                    left: Math.min(
+                        this.selectionEndPoint.left,
+                        this.selectionStartPoint.left
+                    ),
+                    width: Math.abs(
+                        this.selectionEndPoint.left -
+                            this.selectionStartPoint.left
+                    ),
+                    height: Math.abs(
+                        this.selectionEndPoint.top -
+                            this.selectionStartPoint.top
+                    ),
+                });
+                this.selectionStartPoint = { top: null, left: null };
+            }
+        },
+        handlePointerDown(e) {
+            if (this.isShiftPressed) {
+                e.stopPropagation();
+                this.clearSelection();
+                this.selectionStartPoint = {
+                    top: event.pageY,
+                    left: event.pageX,
+                };
+            }
+        },
         handlePointerMove(event) {
-            if (this.isPointerDown) {
+            if (this.isShiftPressed) {
+                this.selectionEndPoint = {
+                    top: event.pageY,
+                    left: event.pageX,
+                };
+            } else if (this.isPointerDown) {
                 this.current = {
                     ...this.current,
                     end: {
@@ -87,5 +183,13 @@ export default {
     height: 800px;
     border-radius: 10px;
     background-color: @cBaseThree;
+
+    &__selection-area {
+        position: absolute;
+        background-color: #ffffff;
+        opacity: 0.3;
+        box-shadow: inset @cBaseBlack 2px;
+        z-index: 2;
+    }
 }
 </style>

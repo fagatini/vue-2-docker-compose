@@ -1,12 +1,8 @@
 <template>
     <div
-        class="moveable-block"
+        :class="computeClassForBlock"
         ref="block"
-        :style="{
-            left: currentLeft + 'px',
-            top: currentTop + 'px',
-            zIndex: zIndex,
-        }"
+        :style="sizeStyle"
         @pointermove="handlePointerMove"
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
@@ -28,6 +24,7 @@ export default {
         handleMoved: Function,
         handleStartConnection: Function,
         handleEndConnection: Function,
+        selected: Boolean,
     },
     data() {
         return {
@@ -37,16 +34,31 @@ export default {
         };
     },
     computed: {
+        sizeStyle() {
+            return {
+                left: this.startLeft + 'px',
+                top: this.startTop + 'px',
+                zIndex: this.zIndex,
+            };
+        },
+        computeClassForBlock() {
+            return [
+                'moveable-block',
+                this.selected ? 'moveable-block_selected' : '',
+            ];
+        },
         zIndex() {
             return this.isPointerDown ? 2 : 1;
         },
     },
     methods: {
         handlePointerDown(event) {
+            event.stopPropagation();
             this.isPointerDown = true;
             this.$refs.block.setPointerCapture(event.pointerId);
         },
         handlePointerUp(event) {
+            event.stopPropagation();
             this.isPointerDown = false;
             this.$refs.block.releasePointerCapture(event.pointerId);
         },
@@ -90,9 +102,14 @@ export default {
     background-color: @cBaseFive;
     border-radius: 10px;
 
-    &:active {
+    &_selected {
+        background-color: green;
+    }
+
+    &:not(&_selected):active {
         background-color: @cBaseFour;
     }
+    
     &__connector {
         z-index: 3;
         position: absolute;
