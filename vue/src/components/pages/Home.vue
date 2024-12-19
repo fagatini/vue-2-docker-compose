@@ -1,7 +1,7 @@
 <template>
     <PageLayout>
         <div class="home-page">
-            <WorkField />
+            <WorkField ref="workField"/>
             <Button @click="handleClickAddItemToBlocks">Добавить блок</Button>
         </div>
     </PageLayout>
@@ -23,10 +23,8 @@ export default {
     methods: {
         ...mapActions('blocks', ['addItemToBlocks']),
         handleClickAddItemToBlocks() {
-            this.addItemToBlocks({
-                left: 0,
-                top: 0,
-            });
+            this.addItemToBlocks();
+            this.$refs.workField.$el.focus()
         },
     },
 };

@@ -6,7 +6,9 @@
         @pointerdown="handlePointerDown"
         @keydown="handleKeyDown"
         @keyup="handleKeyUp"
+        @wheel="handleScale"
         tabindex="0"
+        ref="field"
     >
         <MovableBlock
             v-for="block in getBlocks"
@@ -28,10 +30,7 @@
             :key="connection.id"
             :connection="connection"
         />
-        <ConnectionBlock
-            v-if="this.current.start.blockId"
-            :connection="this.current"
-        />
+        <ConnectionBlock v-if="current.start.blockId" :connection="current" />
         <div
             v-if="selectionStartPoint.top"
             class="work-field__selection-area"
@@ -58,6 +57,9 @@ export default {
             isShiftPressed: false,
             selectionStartPoint: { top: null, left: null },
             selectionEndPoint: { top: null, left: null },
+            isCreatingConnection: false,
+            isMovingField: false,
+            moveStartCoordinates: { top: 0, left: 0 },
         };
     },
     computed: {
@@ -87,6 +89,8 @@ export default {
             'addConnection',
             'chooseBlockByArea',
             'clearSelection',
+            'changeSize',
+            'changeView',
         ]),
         handleKeyDown(e) {
             if (e.key === 'Shift') {
@@ -112,20 +116,71 @@ export default {
             this.current.start = {
                 blockId: event.target.offsetParent.dataset.id,
             };
-            this.isPointerDown = true;
+            this.isCreatingConnection = true;
         },
         handleEndConnection(event) {
             this.current.end = {
                 blockId: event.target.offsetParent.dataset.id,
             };
-            this.isPointerDown = false;
+            this.isCreatingConnection = false;
 
             this.addConnection(this.current);
             this.current = { start: {}, end: {} };
         },
-        handlePointerUp(e) {
+        handlePointerMove(event) {
             if (this.isShiftPressed) {
-                e.stopPropagation();
+                this.selectionEndPoint = {
+                    top: event.pageY,
+                    left: event.pageX,
+                };
+            } else if (this.isCreatingConnection) {
+                this.current = {
+                    ...this.current,
+                    end: {
+                        left: event.pageX,
+                        top: event.pageY,
+                    },
+                };
+            } else if (this.isMovingField) {
+                this.changeView({
+                    left: event.pageX - this.moveStartCoordinates.left,
+                    top: event.pageY - this.moveStartCoordinates.top,
+                });
+                this.moveStartCoordinates.left = event.pageX;
+                this.moveStartCoordinates.top = event.pageY;
+            }
+        },
+        handleScale(event) {
+            const scale = -event.deltaY * 0.001;
+
+            this.changeSize({
+                scale,
+                coords: {
+                    top: event.pageY,
+                    left: event.pageX,
+                },
+            });
+        },
+        handlePointerDown(event) {
+            if (this.isShiftPressed) {
+                event.stopPropagation();
+                this.clearSelection();
+                this.selectionStartPoint = {
+                    top: event.pageY,
+                    left: event.pageX,
+                };
+            } else {
+                this.isMovingField = true;
+                this.moveStartCoordinates = {
+                    left: event.pageX,
+                    top: event.pageY,
+                };
+                this.$refs.field.setPointerCapture(event.pointerId);
+            }
+        },
+        handlePointerUp(event) {
+            if (this.isShiftPressed) {
+                event.stopPropagation();
                 this.chooseBlockByArea({
                     top: Math.min(
                         this.selectionEndPoint.top,
@@ -145,32 +200,16 @@ export default {
                     ),
                 });
                 this.selectionStartPoint = { top: null, left: null };
-            }
-        },
-        handlePointerDown(e) {
-            if (this.isShiftPressed) {
-                e.stopPropagation();
-                this.clearSelection();
-                this.selectionStartPoint = {
-                    top: event.pageY,
-                    left: event.pageX,
+            } else {
+                if (this.isCreatingConnection) {
+                    this.current = { start: {}, end: {} };
+                }
+                this.isMovingField = false;
+                this.moveStartCoordinates = {
+                    left: 0,
+                    top: 0,
                 };
-            }
-        },
-        handlePointerMove(event) {
-            if (this.isShiftPressed) {
-                this.selectionEndPoint = {
-                    top: event.pageY,
-                    left: event.pageX,
-                };
-            } else if (this.isPointerDown) {
-                this.current = {
-                    ...this.current,
-                    end: {
-                        left: event.pageX,
-                        top: event.pageY,
-                    },
-                };
+                this.$refs.field.releasePointerCapture(event.pointerId);
             }
         },
     },
@@ -179,17 +218,19 @@ export default {
 
 <style scoped lang="less">
 .work-field {
+    position: relative;
     width: 800px;
     height: 800px;
     border-radius: 10px;
     background-color: @cBaseThree;
+    overflow: hidden;
 
     &__selection-area {
         position: absolute;
         background-color: #ffffff;
         opacity: 0.3;
         box-shadow: inset @cBaseBlack 2px;
-        z-index: 2;
+        z-index: 5;
     }
 }
 </style>

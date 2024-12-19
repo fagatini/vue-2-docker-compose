@@ -3,16 +3,43 @@ export default {
     state: {
         blocks: [],
         connections: [],
+        size: 100,
+        view: {
+            top: 0,
+            left: 0,
+        },
     },
     getters: {
-        getBlocks: (state) => state.blocks,
-        getBlock: (state) => (id) =>
-            state.blocks.find((block) => block.id == id),
+        getBlocks: (state) => {
+            const view = state.view; // потому что вью тупой и не видит что геттер зависит от стейта view
+            return state.blocks.map((block) => ({
+                ...block,
+                top: block.top - view.top,
+                left: block.left - view.left,
+            }));
+        },
+        getBlock: (state) => (id) => {
+            const view = state.view; // потому что вью тупой и не видит что геттер зависит от стейта view
+
+            const block = state.blocks.find((block) => block.id == id);
+
+            return {
+                ...block,
+                top: block.top - view.top,
+                left: block.left - view.left,
+            };
+        },
         getConnections: (state) => state.connections,
+        getSize: (state) => state.size,
     },
     mutations: {
-        ADD_ITEM_TO_BLOCKS: (state, newItem) => {
-            state.blocks.push({ id: Date.now(), ...newItem, selected: false });
+        ADD_ITEM_TO_BLOCKS: (state) => {
+            state.blocks.push({
+                id: Date.now(),
+                top: state.view.top,
+                left: state.view.left,
+                selected: false,
+            });
         },
         CHANGE_BLOCK: (state, { id, newBlockData }) => {
             const currentBlock = state.blocks.find((block) => block.id === id);
@@ -26,21 +53,21 @@ export default {
                         return {
                             id,
                             ...elem,
-                            left: elem.left - changeX,
-                            top: elem.top - changeY,
+                            left: state.view.left + elem.left - changeX,
+                            top: state.view.top + elem.top - changeY,
                         };
                     }
 
                     return elem;
                 });
-                console.log(JSON.stringify(state.blocks));
             } else {
                 state.blocks = state.blocks.map((elem) => {
                     if (elem.id == id) {
                         return {
                             id,
                             ...elem,
-                            ...newBlockData,
+                            left: state.view.left + newBlockData.left,
+                            top: state.view.top + newBlockData.top,
                         };
                     }
                     return elem;
@@ -52,10 +79,11 @@ export default {
         },
         SELECT_BLOCK_BY_AREA: (state, areaInfo) => {
             state.blocks = state.blocks.map((block) =>
-                block.left + 100 > areaInfo.left &&
-                block.left <= areaInfo.left + areaInfo.width &&
-                block.top + 100 > areaInfo.top &&
-                block.top <= areaInfo.top + areaInfo.height
+                block.left + state.size > state.view.left + areaInfo.left &&
+                block.left <=
+                    state.view.left + areaInfo.left + areaInfo.width &&
+                block.top + state.size > state.view.top + areaInfo.top &&
+                block.top <= state.view.top + areaInfo.top + areaInfo.height
                     ? { ...block, selected: true }
                     : block
             );
@@ -66,10 +94,37 @@ export default {
                 selected: false,
             }));
         },
+        CHANGE_SIZE: (state, { scale, coords }) => {
+            const oldSize = state.size;
+
+            state.size = state.size * (1 + scale);
+
+            const scaleFactor = state.size / oldSize;
+
+            const globalCoords = {
+                top: coords.top + state.view.top,
+                left: coords.left + state.view.left,
+            };
+
+            state.blocks = state.blocks.map((block) => {
+                const deltaX = block.left - globalCoords.left;
+                const deltaY = block.top - globalCoords.top;
+
+                return {
+                    ...block,
+                    left: globalCoords.left + deltaX * scaleFactor,
+                    top: globalCoords.top + deltaY * scaleFactor,
+                };
+            });
+        },
+        CHANGE_VIEW: (state, coordinates) => {
+            state.view.top -= coordinates.top;
+            state.view.left -= coordinates.left;
+        },
     },
     actions: {
-        addItemToBlocks({ commit }, newItem) {
-            commit('ADD_ITEM_TO_BLOCKS', newItem);
+        addItemToBlocks({ commit }) {
+            commit('ADD_ITEM_TO_BLOCKS');
         },
         changeBlockById({ commit }, { id, newBlockData }) {
             commit('CHANGE_BLOCK', { id, newBlockData });
@@ -82,6 +137,12 @@ export default {
         },
         clearSelection({ commit }) {
             commit('CLEAR_SELECTION');
+        },
+        changeSize({ commit }, scale) {
+            commit('CHANGE_SIZE', scale);
+        },
+        changeView({ commit }, scale) {
+            commit('CHANGE_VIEW', scale);
         },
     },
 };
