@@ -9,6 +9,7 @@
     >
         <div
             class="moveable-block__connector"
+            ref="connector"
             @pointerdown="handleConnectorDown"
             @pointerup="handleConnectorUp"
         ></div>
@@ -88,10 +89,12 @@ export default {
             }
         },
         handleConnectorDown(event) {
+            event.preventDefault();
             event.stopPropagation();
             this.handleStartConnection(event);
         },
         handleConnectorUp(event) {
+            event.preventDefault();
             event.stopPropagation();
             this.handleEndConnection(event);
         },
