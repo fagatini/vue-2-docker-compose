@@ -17,6 +17,8 @@
             :startLeft="block.left"
             :startTop="block.top"
             :selected="block.selected"
+            :color="block.color"
+            :textData="{ name: block.name, description: block.description }"
             :handleMoved="
                 (left, top) => {
                     handleBlockMoved(left, top, block.id);
@@ -101,7 +103,6 @@ export default {
             if (e.key === 'Shift') {
                 this.isShiftPressed = false;
                 this.selectionStartPoint = { top: null, left: null };
-                this.clearSelection();
             }
         },
         handleBlockMoved(left, top, id) {
@@ -142,6 +143,8 @@ export default {
                     },
                 };
             } else if (this.isMovingField) {
+                this.clearSelection();
+                this.selectionStartPoint = { top: null, left: null };
                 this.changeView({
                     left: event.pageX - this.moveStartCoordinates.left,
                     top: event.pageY - this.moveStartCoordinates.top,
@@ -162,9 +165,11 @@ export default {
             });
         },
         handlePointerDown(event) {
+            this.clearSelection();
+            this.selectionStartPoint = { top: null, left: null };
+
             if (this.isShiftPressed) {
                 event.stopPropagation();
-                this.clearSelection();
                 this.selectionStartPoint = {
                     top: event.pageY,
                     left: event.pageX,

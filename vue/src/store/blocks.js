@@ -4,6 +4,7 @@ export default {
         blocks: [],
         connections: [],
         size: 100,
+        defaultSize: 100,
         view: {
             top: 0,
             left: 0,
@@ -31,11 +32,13 @@ export default {
         },
         getConnections: (state) => state.connections,
         getSize: (state) => state.size,
+        getDefaultSize: (state) => state.defaultSize,
     },
     mutations: {
-        ADD_ITEM_TO_BLOCKS: (state) => {
+        ADD_ITEM_TO_BLOCKS: (state, { blockData }) => {
             state.blocks.push({
                 id: Date.now(),
+                ...blockData,
                 top: state.view.top,
                 left: state.view.left,
                 selected: false,
@@ -95,6 +98,8 @@ export default {
             }));
         },
         CHANGE_SIZE: (state, { scale, coords }) => {
+            if (state.size * (1 + scale) < 50) return;
+
             const oldSize = state.size;
 
             state.size = state.size * (1 + scale);
@@ -123,8 +128,8 @@ export default {
         },
     },
     actions: {
-        addItemToBlocks({ commit }) {
-            commit('ADD_ITEM_TO_BLOCKS');
+        addItemToBlocks({ commit }, blockData) {
+            commit('ADD_ITEM_TO_BLOCKS', { blockData });
         },
         changeBlockById({ commit }, { id, newBlockData }) {
             commit('CHANGE_BLOCK', { id, newBlockData });
