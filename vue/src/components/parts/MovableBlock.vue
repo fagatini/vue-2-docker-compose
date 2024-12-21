@@ -161,12 +161,11 @@ export default {
     &__connector {
         z-index: 4;
         position: absolute;
-        top: 90%;
-        left: 18%;
-        width: 64%;
-        height: 20%;
+        bottom: -15px;
+        width: 20px;
+        height: 20px;
         background-color: @cBaseTwo;
-        border-radius: 5px;
+        border-radius: 50%;
     }
 }
 </style>
